@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="AccentLightColor6" Color="#00DDDD"/>
+    <SolidColorBrush x:Key="AccentLightColor5" Color="#00CCCC"/>
+    <SolidColorBrush x:Key="AccentLightColor4" Color="#00BBBB"/>
+    <SolidColorBrush x:Key="AccentLightColor3" Color="#00AAAA"/>
+    <SolidColorBrush x:Key="AccentLightColor2" Color="#009999"/>
+    <SolidColorBrush x:Key="AccentLightColor1" Color="#008888"/>
+    <SolidColorBrush x:Key="MainColor" Color="#007777"/>
+    <SolidColorBrush x:Key="AccentDarkColor1" Color="#006666"/>
+    <SolidColorBrush x:Key="AccentDarkColor2" Color="#005555"/>
+    <SolidColorBrush x:Key="AccentDarkColor3" Color="#004444"/>
+    <SolidColorBrush x:Key="AccentDarkColor4" Color="#003333"/>
+    <SolidColorBrush x:Key="AccentDarkColor5" Color="#002222"/>
+    <SolidColorBrush x:Key="AccentDarkColor6" Color ="#001111"/>
+</ResourceDictionary>

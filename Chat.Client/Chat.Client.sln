@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client", "Chat.Client\Chat.Client.csproj", "{343FA881-6B4D-4460-9AFE-8AD5FBA5AE00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{74D529DA-DE89-474E-97DB-3EF18AEDFC09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Shared.Models", "..\Chat.Shared\Chat.Shared.Models\Chat.Shared.Models.csproj", "{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Shared.Responses", "..\Chat.Shared\Chat.Shared.Responses\Chat.Shared.Responses.csproj", "{C0B3763F-B271-4016-AD21-E15D2675312B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.ViewModels", "Chat.Client.ViewModels\Chat.Client.ViewModels.csproj", "{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.Presenters", "Chat.Client.Presenters\Chat.Client.Presenters.csproj", "{5EA9BD41-0888-4668-8DE9-05D5561A26CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.Framework", "Chat.Client.Framework\Chat.Client.Framework.csproj", "{C5EF9D25-638F-408A-AE24-57217CBBA4EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.SignalHelpers", "Chat.Client.SignalHandlers\Chat.Client.SignalHelpers.csproj", "{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.SignalHelpers.Contracts", "Chat.Client.SignalHandlers.Contracts\Chat.Client.SignalHelpers.Contracts.csproj", "{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Texts", "Chat.Texts\Chat.Texts.csproj", "{B29311D8-5B7C-4010-A2D8-10381F4CE602}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataAccess", "Chat.DataAccess\Chat.DataAccess.csproj", "{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{343FA881-6B4D-4460-9AFE-8AD5FBA5AE00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343FA881-6B4D-4460-9AFE-8AD5FBA5AE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343FA881-6B4D-4460-9AFE-8AD5FBA5AE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343FA881-6B4D-4460-9AFE-8AD5FBA5AE00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B3763F-B271-4016-AD21-E15D2675312B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B3763F-B271-4016-AD21-E15D2675312B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B3763F-B271-4016-AD21-E15D2675312B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B3763F-B271-4016-AD21-E15D2675312B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA9BD41-0888-4668-8DE9-05D5561A26CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA9BD41-0888-4668-8DE9-05D5561A26CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA9BD41-0888-4668-8DE9-05D5561A26CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA9BD41-0888-4668-8DE9-05D5561A26CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5EF9D25-638F-408A-AE24-57217CBBA4EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5EF9D25-638F-408A-AE24-57217CBBA4EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5EF9D25-638F-408A-AE24-57217CBBA4EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5EF9D25-638F-408A-AE24-57217CBBA4EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B29311D8-5B7C-4010-A2D8-10381F4CE602}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B29311D8-5B7C-4010-A2D8-10381F4CE602}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B29311D8-5B7C-4010-A2D8-10381F4CE602}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B29311D8-5B7C-4010-A2D8-10381F4CE602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19} = {74D529DA-DE89-474E-97DB-3EF18AEDFC09}
+		{C0B3763F-B271-4016-AD21-E15D2675312B} = {74D529DA-DE89-474E-97DB-3EF18AEDFC09}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B41607CE-8EBC-4D94-9848-DDAC57DCAF08}
+	EndGlobalSection
+EndGlobal
