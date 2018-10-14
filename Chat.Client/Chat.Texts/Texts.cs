@@ -36,5 +36,10 @@ namespace Chat.Texts
 
         public static string Vote => "Cappu Vote";
         public static string Chats => "Chats";
+
+        public static string QuestionWatermark => "Whats the question?";
+        public static string Answer => "Whats the answer?";
+
+        public static string CreateVote => "Create vote";
     }
 }

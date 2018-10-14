@@ -20,11 +20,20 @@ namespace Chat.Client.ViewModels
 
         private SimpleUser _user;
 
+        private SimpleVote _simpleVote;
+        public SimpleVote SimpleVote
+        {
+            get { return _simpleVote; }
+            set { _simpleVote = value; OnPropertyChanged(); }
+        }
+
         public ObservableCollection<SimpleUser> OnlineCappuUsers { get; set; } = new ObservableCollection<SimpleUser>();
 
         public RelayCommand<SimpleUser> OpenPrivateChatCommand { get; }
+        public RelayCommand CreateVoteCommand { get; }
 
-        public event OpenChatHandler OpenChat; 
+        public event OpenChatHandler OpenChat;
+        public event VoteCreateHandler VoteCreate;
 
         public CappuVoteViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
@@ -37,6 +46,7 @@ namespace Chat.Client.ViewModels
             _viewProvider = viewProvider;
 
             OpenPrivateChatCommand = new RelayCommand<SimpleUser>(OpenPrivateChat);
+            CreateVoteCommand = new RelayCommand(CreateVote, CanCreateVote);
 
             Initialize();
         }
@@ -44,6 +54,28 @@ namespace Chat.Client.ViewModels
         private void OpenPrivateChat(SimpleUser targetUser)
         {
             OpenChat?.Invoke(targetUser);
+        }
+
+        private bool CanCreateVote()
+        {
+            return _simpleVote == null;
+        }
+
+        private void CreateVote()
+        {
+            VoteCreate?.Invoke();
+        }
+
+        public async Task CreateVote(SimpleVote vote)
+        {
+            try
+            {
+                await _signalHelperFacade.VoteSignalHelper.CreateVote(vote);
+            }
+            catch (CreateVoteFailedException e)
+            {
+                _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
+            }
         }
 
         private void Initialize()
@@ -54,6 +86,7 @@ namespace Chat.Client.ViewModels
         private void InitializeSignalHelperFacadeEvents()
         {
             _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged += ChatSignalHelperFacadeOnOnlineUsersChanged;
+            _signalHelperFacade.VoteSignalHelper.VoteCreated += VoteSignalHelperOnVoteCreated;
         }
 
         public async Task Load(SimpleUser user)
@@ -84,6 +117,12 @@ namespace Chat.Client.ViewModels
                 if (user.Username != _user.Username)
                     OnlineCappuUsers.Add(user);
             }
+        }
+
+        private void VoteSignalHelperOnVoteCreated(SimpleVote createdVote)
+        {
+            SimpleVote = createdVote;
+            CreateVoteCommand.RaiseCanExecuteChanged();
         }
     }
 }

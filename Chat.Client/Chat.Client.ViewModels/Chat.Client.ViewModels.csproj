@@ -49,6 +49,8 @@
     <Compile Include="Delegates\LoginSucceededHandler.cs" />
     <Compile Include="Delegates\OpenChatHandler.cs" />
     <Compile Include="Delegates\PreviewServerCallHandler.cs" />
+    <Compile Include="Delegates\VoteCreateHandler.cs" />
+    <Compile Include="Dialogs\CreateVoteViewModel.cs" />
     <Compile Include="Dialogs\OkCancelDialogViewModel.cs" />
     <Compile Include="Dialogs\RegisterViewModel.cs" />
     <Compile Include="Events\LoginFailedEventArgs.cs" />

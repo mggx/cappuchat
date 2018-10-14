@@ -42,17 +42,22 @@
   <ItemGroup>
     <Compile Include="Delegates\MessageReceivedHandler.cs" />
     <Compile Include="Delegates\OnlineUsersChangedHandler.cs" />
+    <Compile Include="Delegates\VoteChangedHandler.cs" />
+    <Compile Include="Delegates\VoteCreatedHandler.cs" />
     <Compile Include="Events\MessageReceivedEventArgs.cs" />
     <Compile Include="Events\OnlineUsersChangedEventArgs.cs" />
+    <Compile Include="Exceptions\CreateVoteFailedException.cs" />
     <Compile Include="Exceptions\LoginFailedException.cs" />
     <Compile Include="Exceptions\NullServerResponseException.cs" />
     <Compile Include="Exceptions\RegisterFailedException.cs" />
     <Compile Include="Exceptions\RequestFailedException.cs" />
     <Compile Include="Exceptions\SendMessageFailedException.cs" />
+    <Compile Include="Exceptions\VoteFailedException.cs" />
     <Compile Include="IChatSignalHelper.cs" />
     <Compile Include="ILoginSignalHelper.cs" />
     <Compile Include="IRegisterSignalHelper.cs" />
     <Compile Include="ISignalHelperFacade.cs" />
+    <Compile Include="IVoteSignalHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

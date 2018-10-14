@@ -1,12 +1,14 @@
 ﻿<mah:MetroAnimatedSingleRowTabControl x:Class="Chat.Client.Views.CappuMainView"
                                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                       xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
-                                      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                                      xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+                                      xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs;assembly=Chat.Client.ViewModels"
+                                      xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
                                       xmlns:views="clr-namespace:Chat.Client.Views"
+                                      xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
                                       mc:Ignorable="d" 
                                       d:DesignHeight="450" d:DesignWidth="800"
                                       d:DataContext="{d:DesignInstance presenters:CappuMainPresenter}">
@@ -16,8 +18,19 @@
             <Setter Property="Background" Value="Transparent" />
         </Style>
     </mah:MetroAnimatedSingleRowTabControl.Resources>
+
     <mah:MetroTabItem Header="{x:Static texts:Texts.Vote}">
-        <views:CappuVoteView DataContext="{Binding CappuVotePresenter}"/>
+        <mah:MetroTabItem.Resources>
+            <DataTemplate DataType="{x:Type viewModels:CappuVoteViewModel}">
+                <views:CappuVoteView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type dialogs:CreateVoteViewModel}">
+                <views:CreateVoteView />
+            </DataTemplate>
+        </mah:MetroTabItem.Resources>
+        
+        <mah:TransitioningContentControl Content="{Binding CappuVotePresenter.CurrentViewModel}"
+                                         Transition="Up"/>
     </mah:MetroTabItem>
     
     <mah:MetroTabItem Header="{x:Static texts:Texts.Chats}">

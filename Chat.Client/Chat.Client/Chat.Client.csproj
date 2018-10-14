@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET, Version=1.4.11.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.4.11\lib\net40\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -84,11 +87,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingProxies\BindingProxy.cs" />
-    <Compile Include="Contracts\Dispatcher.cs" />
-    <Compile Include="Contracts\IDispatcher.cs" />
+    <Compile Include="Controls\SpecialTextBox.cs" />
+    <Compile Include="Controls\StandardView.xaml.cs">
+      <DependentUpon>StandardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Views\CreateVoteView.xaml.cs">
+      <DependentUpon>CreateVoteView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\OkCancelDialogWindow.xaml.cs">
       <DependentUpon>OkCancelDialogWindow.xaml</DependentUpon>
     </Compile>
@@ -116,6 +126,22 @@
     <Compile Include="Windows\PrivateMessageWindow.xaml.cs">
       <DependentUpon>PrivateMessageWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\StandardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\SpecialTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateVoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\OkCancelDialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

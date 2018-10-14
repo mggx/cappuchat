@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Chat.Responses;
 using Chat.Shared.Models;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 

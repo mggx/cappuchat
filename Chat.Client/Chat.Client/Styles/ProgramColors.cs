@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace Chat.Client.Styles

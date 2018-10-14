@@ -31,6 +31,17 @@ namespace Chat.Server.Hubs
             return UsernameConnectionIdCache.Remove(username);
         }
 
+        protected string GetUsernameByConnectionId(string connectionId)
+        {
+            foreach (var pair in UsernameConnectionIdCache)
+            {
+                if (pair.Value == connectionId)
+                    return pair.Key;
+            }
+
+            return string.Empty;
+        }
+
         public override Task OnConnected()
         {
             Console.WriteLine($"OnConnected called. ConnectionId: {Context.ConnectionId}");

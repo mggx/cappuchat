@@ -55,6 +55,7 @@
     <Compile Include="SignalHelperFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalHubConnectionHelper.cs" />
+    <Compile Include="VoteSignalHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Chat.Shared\Chat.Shared.Models\Chat.Shared.Models.csproj">
@@ -72,7 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
