@@ -29,7 +29,7 @@ namespace Chat.Client.ViewModels
 
         public event EventHandler<SimpleUser> PrivateMessageWindowClosed;
 
-        public AsyncRelayCommand<string> SendMessageCommand { get; }
+        public RelayCommand<string> SendMessageCommand { get; }
 
         public RelayCommand CloseCommand { get; }
 
@@ -40,7 +40,7 @@ namespace Chat.Client.ViewModels
             _targetUser = targetUser;
             _cappuMessageController = new CappuMessageController(user);
 
-            SendMessageCommand = new AsyncRelayCommand<string>(SendMessage, ErrorHandler);
+            SendMessageCommand = new RelayCommand<string>(SendMessage);
             CloseCommand = new RelayCommand(Close);
 
             BindingOperations.EnableCollectionSynchronization(_messages, _lockObject);
@@ -87,17 +87,14 @@ namespace Chat.Client.ViewModels
             PrivateMessageWindowClosed?.Invoke(this, _targetUser);
         }
 
-        protected override void ErrorHandlerOnExceptionOcurred(Exception exception)
+        protected override void Dispose(bool disposing)
         {
-            base.ErrorHandlerOnExceptionOcurred(exception);
-            throw exception;
-        }
+            if (disposing)
+            {
+                _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
+            }
 
-        public override void Dispose()
-        {
-            _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
-
-            base.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

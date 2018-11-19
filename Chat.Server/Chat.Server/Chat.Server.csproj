@@ -83,6 +83,7 @@
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Hubs\LoginHub.cs" />
     <Compile Include="Hubs\RegisterHub.cs" />
+    <Compile Include="Hubs\VoteHub.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

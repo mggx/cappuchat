@@ -1,23 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Chat.Client.Framework.Async;
 
 namespace Chat.Client.Framework
 {
     public class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected readonly IAsyncErrorHandler ErrorHandler;
 
-        public ViewModelBase()
+        ~ViewModelBase()
         {
-            ErrorHandler = new AsyncExceptionHelper();
-            ErrorHandler.ExceptionOcurred += ErrorHandlerOnExceptionOcurred;
-        }
-
-        protected virtual void ErrorHandlerOnExceptionOcurred(Exception exception)
-        {
+            Dispose(false);
         }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -25,9 +18,17 @@ namespace Chat.Client.Framework
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
-            ErrorHandler.ExceptionOcurred -= ErrorHandlerOnExceptionOcurred;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+            }
         }
     }
 }

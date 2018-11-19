@@ -38,7 +38,7 @@ namespace Chat.Client.ViewModels
 
         public ProgressProvider ProgressProvider { get; } = new ProgressProvider();
 
-        public AsyncRelayCommand LoginCommand { get; }
+        public RelayCommand LoginCommand { get; }
         public RelayCommand LogoutCommand { get; }
         public RelayCommand OpenRegisterCommand { get; }
 
@@ -54,7 +54,7 @@ namespace Chat.Client.ViewModels
                 throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuLoginViewModel. Given signalHelperFacade is null.");
             _signalHelperFacade = signalHelperFacade;
 
-            LoginCommand = new AsyncRelayCommand(Login, CanLogin, ErrorHandler);
+            LoginCommand = new RelayCommand(Login, CanLogin);
             LogoutCommand = new RelayCommand(Logout, CanLogout);
             OpenRegisterCommand = new RelayCommand(OpenRegister, CanOpenRegister);
 
@@ -139,16 +139,14 @@ namespace Chat.Client.ViewModels
             OpenRegisterCommand.RaiseCanExecuteChanged();
         }
 
-        protected override void ErrorHandlerOnExceptionOcurred(Exception exception)
+        protected override void Dispose(bool disposing)
         {
-            base.ErrorHandlerOnExceptionOcurred(exception);
-            throw exception;
-        }
+            if (disposing)
+            {
+                _signalHelperFacade.LoginSignalHelper.LoggedOutByServer -= LoginSignalHelperOnLoggedOutByServer;
+            }
 
-        public override void Dispose()
-        {
-            _signalHelperFacade.LoginSignalHelper.LoggedOutByServer -= LoginSignalHelperOnLoggedOutByServer;
-            base.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

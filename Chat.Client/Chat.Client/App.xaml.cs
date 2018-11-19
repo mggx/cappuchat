@@ -1,16 +1,10 @@
-﻿using Chat.Client.Framework;
-using Chat.Client.Presenters;
+﻿using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
+using MahApps.Metro;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Chat.DataAccess;
-using Chat.Shared.Models;
-using MahApps.Metro;
-using Microsoft.SqlServer.Server;
-using WPFNotification.Model;
-using WPFNotification.Services;
 
 namespace Chat.Client
 {
@@ -36,19 +30,10 @@ namespace Chat.Client
                 ThemeManager.GetAccent("CustomTheme"),
                 theme.Item1);
 
-
             _viewProvider = new ViewProvider();
 
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
-
-            var testMessage =
-                new SimpleMessage(new SimpleUser("mgg"), new SimpleUser("mtr"), "Das ist eine Test message!");
-            testMessage.IsLocalMessage = true;
-            testMessage.MessageSentDateTime = DateTime.Now;
-
-            DataAccess.DataAccess.InitializeDatabase();
-            new ChatRepository().InsertMessage(testMessage);
 
             _hubConnectionHelper = new SignalHubConnectionHelper("http://localhost:1232/signalr/hubs");
 
@@ -57,7 +42,8 @@ namespace Chat.Client
             {
                 ChatSignalHelper = new ChatSignalHelper(_hubConnectionHelper.CreateHubProxy("ChatHub")),
                 LoginSignalHelper = new LoginSignalHelper(_hubConnectionHelper.CreateHubProxy("LoginHub")),
-                RegisterSignalHelper = new RegisterSignalHelper(_hubConnectionHelper.CreateHubProxy("RegisterHub"))
+                RegisterSignalHelper = new RegisterSignalHelper(_hubConnectionHelper.CreateHubProxy("RegisterHub")),
+                VoteSignalHelper = new VoteSignalHelper(_hubConnectionHelper.CreateHubProxy("VoteHub"))
             };
 
             await _hubConnectionHelper.Start();
