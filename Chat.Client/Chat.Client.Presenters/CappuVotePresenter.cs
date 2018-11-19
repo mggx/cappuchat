@@ -51,6 +51,7 @@ namespace Chat.Client.Presenters
         private void InitializeCappuVoteViewModelEvents()
         {
             CappuVoteViewModel.VoteCreate += CappuVoteViewModelOnVoteCreate;
+            CappuVoteViewModel.Voted += CappuVoteViewModelOnVoted;
         }
 
         private void CappuVoteViewModelOnVoteCreate()
@@ -58,6 +59,12 @@ namespace Chat.Client.Presenters
             var createVoteViewModel = new CreateVoteViewModel(_user.Username);
             createVoteViewModel.VoteCreated += CreateVoteViewModelOnVoteCreated;
             CurrentViewModel = createVoteViewModel;
+        }
+
+        private void CappuVoteViewModelOnVoted()
+        {
+            var voteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade);
+            CurrentViewModel = voteResultViewModel;
         }
 
         private async void CreateVoteViewModelOnVoteCreated(object sender, SimpleVote e)
@@ -72,6 +79,18 @@ namespace Chat.Client.Presenters
         {
             _user = user;
             await CappuVoteViewModel.Load(user);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                CappuVoteViewModel.VoteCreate -= CappuVoteViewModelOnVoteCreate;
+                CappuVoteViewModel.Voted -= CappuVoteViewModelOnVoted;
+                CappuVoteViewModel.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

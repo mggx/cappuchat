@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Chat.Client.Views"
-             xmlns:extensions="clr-namespace:Chat.Client.Extensions"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:helper="clr-namespace:Chat.Client.Helper"
+             xmlns:controls="clr-namespace:Chat.Client.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border CornerRadius="15"
@@ -23,20 +22,20 @@
                        HorizontalAlignment="Center"
                        FontSize="24"
                        Foreground="{StaticResource AccentDarkColor1}"/>
-            <TextBox x:Name="ShortNameTextBox"
-                     Background="Transparent"
-                     extensions:TextBoxWatermarkExtension.Watermark="{x:Static texts:Texts.UsernameWatermark}" 
-                     Text="{Binding Username, Mode=TwoWay}"
-                     Width="200"
-                     Margin="5" 
-                     HorizontalContentAlignment="Center"/>
+            <controls:SpecialTextBox x:Name="ShortNameTextBox"
+                                    Background="Transparent"
+                                    Watermark="{x:Static texts:Texts.UsernameWatermark}" 
+                                    Text="{Binding Username, Mode=TwoWay}"
+                                    Width="200"
+                                    Margin="5" 
+                                    HorizontalContentAlignment="Center"/>
             <PasswordBox mah:TextBoxHelper.Watermark="Whats your password?"
                          Background="Transparent"
                          mah:PasswordBoxHelper.CapsLockWarningToolTip="Caps on"
                          helper:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
                          Width="200"
                          Margin="5" 
-                         HorizontalContentAlignment="Center" />
+                         HorizontalContentAlignment="Center"/>
 
             <Button Content="Register"
                     Margin="5" 

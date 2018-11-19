@@ -50,6 +50,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatSignalHelper.cs" />
+    <Compile Include="Contracts\Delegates\MessageReceivedHandler.cs" />
+    <Compile Include="Contracts\Delegates\OnlineUsersChangedHandler.cs" />
+    <Compile Include="Contracts\Delegates\VoteChangedHandler.cs" />
+    <Compile Include="Contracts\Delegates\VoteCreatedHandler.cs" />
+    <Compile Include="Contracts\Events\MessageReceivedEventArgs.cs" />
+    <Compile Include="Contracts\Events\OnlineUsersChangedEventArgs.cs" />
+    <Compile Include="Contracts\Exceptions\CreateVoteFailedException.cs" />
+    <Compile Include="Contracts\Exceptions\LoginFailedException.cs" />
+    <Compile Include="Contracts\Exceptions\NullServerResponseException.cs" />
+    <Compile Include="Contracts\Exceptions\RegisterFailedException.cs" />
+    <Compile Include="Contracts\Exceptions\RequestFailedException.cs" />
+    <Compile Include="Contracts\Exceptions\SendMessageFailedException.cs" />
+    <Compile Include="Contracts\Exceptions\VoteFailedException.cs" />
+    <Compile Include="Contracts\IChatSignalHelper.cs" />
+    <Compile Include="Contracts\ILoginSignalHelper.cs" />
+    <Compile Include="Contracts\IRegisterSignalHelper.cs" />
+    <Compile Include="Contracts\ISignalHelperFacade.cs" />
+    <Compile Include="Contracts\IVoteSignalHelper.cs" />
     <Compile Include="LoginSignalHelper.cs" />
     <Compile Include="RegisterSignalHelper.cs" />
     <Compile Include="SignalHelperFacade.cs" />
@@ -65,10 +83,6 @@
     <ProjectReference Include="..\..\Chat.Shared\Chat.Shared.Responses\Chat.Shared.Responses.csproj">
       <Project>{C0B3763F-B271-4016-AD21-E15D2675312B}</Project>
       <Name>Chat.Shared.Responses</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chat.Client.SignalHandlers.Contracts\Chat.Client.SignalHelpers.Contracts.csproj">
-      <Project>{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}</Project>
-      <Name>Chat.Client.SignalHelpers.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

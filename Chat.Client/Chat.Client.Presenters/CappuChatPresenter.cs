@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
@@ -60,7 +58,7 @@ namespace Chat.Client.Presenters
 
         public void Reset()
         {
-            User = null;
+            User = null; 
 
             foreach (var pair in _privateMessageCache)
             {

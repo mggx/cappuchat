@@ -41,12 +41,14 @@ namespace Chat.Client.ViewModels.Dialogs
 
         private bool CanAddAnswer()
         {
-            return !string.IsNullOrWhiteSpace(_answer);
+            return !string.IsNullOrWhiteSpace(_answer) && !Answers.Contains(_answer);
         }
 
         private void AddAnswer()
         {
             Answers.Add(_answer);
+            AddAnswerCommand.RaiseCanExecuteChanged();
+            CreateVoteCommand.RaiseCanExecuteChanged();
         }
 
         private bool CanCreateVote()

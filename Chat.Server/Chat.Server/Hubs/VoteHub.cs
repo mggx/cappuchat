@@ -35,7 +35,7 @@ namespace Chat.Server.Hubs
 
             string username = GetUsernameByConnectionId(Context.ConnectionId);
             if (ActiveVote.Vote(username, answerId))
-                Clients.All.OnVoteAnswersChanged(ActiveVote);
+                Clients.All.OnVoteChanged(ActiveVote);
             else
             {
                 response.Success = false;
@@ -43,6 +43,11 @@ namespace Chat.Server.Hubs
             }
 
             return response;
+        }
+
+        public SimpleGetActiveVoteResponse GetActiveVote()
+        {
+            return new SimpleGetActiveVoteResponse(ActiveVote, true);
         }
     }
 }

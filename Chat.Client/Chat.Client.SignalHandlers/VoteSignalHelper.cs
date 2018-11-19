@@ -53,15 +53,28 @@ namespace Chat.Client.SignalHelpers
                 throw new CreateVoteFailedException(serverResponse.ErrorMessage);
         }
 
-        public async Task Vote(bool choice)
+        public async Task Vote(int answerId)
         {
-            var task = _voteHubProxy.Invoke<SimpleVoteResponse>("Vote", choice);
+            var task = _voteHubProxy.Invoke<SimpleVoteResponse>("Vote", answerId);
             if (task == null)
                 throw new NullServerResponseException("Retrieved null task from server.");
 
             SimpleVoteResponse serverResponse = await task;
             if (!serverResponse.Success)
+                throw new VoteFailedException(serverResponse.ErrorMessage);
+        }
+
+        public async Task<SimpleVote> GetActiveVote()
+        {
+            var task = _voteHubProxy.Invoke<SimpleGetActiveVoteResponse>("GetActiveVote");
+            if (task == null)
+                throw new NullServerResponseException("Retrieved null task from server.");
+
+            SimpleGetActiveVoteResponse serverResponse = await task;
+            if (!serverResponse.Success)
                 throw new CreateVoteFailedException(serverResponse.ErrorMessage);
+
+            return serverResponse.ActiveVote;
         }
     }
 }

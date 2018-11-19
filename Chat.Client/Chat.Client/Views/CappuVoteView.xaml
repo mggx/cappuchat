@@ -3,16 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:Chat.Client.Controls"
-             xmlns:converters="clr-namespace:Chat.Client.Converters"
+             xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
-             xmlns:models="clr-namespace:Chat.Shared.Models;assembly=Chat.Shared.Models"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}">
+             d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}"
+             x:Name="Main">
+    
     <UserControl.Resources>
-        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <bindingProxies:CappuVoteViewModelProxy x:Key="CappuVoteViewModelProxy"
+                                                Data="{Binding}"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center"
@@ -26,27 +27,38 @@
                     Margin="5" 
                     Command="{Binding CreateVoteCommand}"/>
 
-            <!--<controls:StandardView Visibility="{Binding SimpleVote, Converter={StaticResource NullToVisibilityConverter}}"
-                                   BackgroundColor="Transparent">-->
-                <!--<controls:StandardView.ViewContent>-->
-                    <StackPanel>
-                        <TextBlock Text="{Binding SimpleVote.Question}"
-                                   Width="200"
-                                   FontSize="24"
-                                   Foreground="{StaticResource AccentLightColor3}"/>
-                        <ListView ItemsSource="{Binding SimpleVote.Answers}"
-                                  BorderThickness="0"
-                                  Background="Transparent">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding}"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                <!--</controls:StandardView.ViewContent>
-            </controls:StandardView>-->
-            
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="24"
+                       Foreground="{StaticResource AccentLightColor3}"
+                       Margin="5">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{} {0} : {1}">
+                        <Binding Path="SimpleVote.CreatorName"/>
+                        <Binding Path="SimpleVote.Question"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+
+            <ListView x:Name="AnswerListView"
+                      ItemsSource="{Binding SimpleVote.Answers}"
+                      SelectedItem="{Binding Answer, Mode=TwoWay}"
+                      BorderThickness="0"
+                      Background="Transparent"
+                      SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding MouseAction="LeftDoubleClick"
+                                              Command="{Binding Source={StaticResource CappuVoteViewModelProxy}, Path=Data.VoteCommand}"/>
+                            </TextBlock.InputBindings>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Content="Vote"
+                    Command="{Binding VoteCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

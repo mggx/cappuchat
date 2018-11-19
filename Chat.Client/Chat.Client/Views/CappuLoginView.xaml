@@ -5,7 +5,6 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
               xmlns:controls="clr-namespace:Chat.Client.Controls"
-              xmlns:extensions="clr-namespace:Chat.Client.Extensions"
               xmlns:helper="clr-namespace:Chat.Client.Helper"
               xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
               xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
@@ -25,9 +24,7 @@
                            Foreground="{StaticResource AccentLightColor1}"/>
 
                 <controls:SpecialTextBox Width="200" 
-                                         Height="25" 
                                          Margin="5" 
-                                         HorizontalContentAlignment="Center" 
                                          Watermark="{x:Static texts:Texts.UsernameWatermark}"
                                          Text="{Binding CappuLoginViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          BorderBrush="White"/>

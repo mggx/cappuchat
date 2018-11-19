@@ -17,7 +17,7 @@ namespace Chat.Server.DataAccess
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
 
-            dbCommand.CommandText = $"SELECT username FROM users WHERE username = @username AND password = @password";
+            dbCommand.CommandText = $"SELECT username FROM users WHERE username = @username COLLATE NOCASE AND password = @password";
 
             dbCommand.Parameters.Add(new SQLiteParameter("@username", username));
             dbCommand.Parameters.Add(new SQLiteParameter("@password", password));

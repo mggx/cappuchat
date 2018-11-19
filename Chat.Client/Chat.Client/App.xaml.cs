@@ -1,18 +1,10 @@
-﻿using Chat.Client.Framework;
-using Chat.Client.Presenters;
+﻿using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
+using MahApps.Metro;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
-using AutoUpdaterDotNET;
-using Chat.DataAccess;
-using Chat.Shared.Models;
-using MahApps.Metro;
-using Microsoft.SqlServer.Server;
-using WPFNotification.Model;
-using WPFNotification.Services;
 
 namespace Chat.Client
 {

@@ -43,6 +43,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CappuVoteResultViewModel.cs" />
     <Compile Include="CappuVoteViewModel.cs" />
     <Compile Include="Controllers\CappuMessageController.cs" />
     <Compile Include="Delegates\LoginFailedHandler.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Delegates\OpenChatHandler.cs" />
     <Compile Include="Delegates\PreviewServerCallHandler.cs" />
     <Compile Include="Delegates\VoteCreateHandler.cs" />
+    <Compile Include="Delegates\VotedHandler.cs" />
     <Compile Include="Dialogs\CreateVoteViewModel.cs" />
     <Compile Include="Dialogs\OkCancelDialogViewModel.cs" />
     <Compile Include="Dialogs\RegisterViewModel.cs" />
@@ -72,10 +74,6 @@
     <ProjectReference Include="..\Chat.Client.Framework\Chat.Client.Framework.csproj">
       <Project>{C5EF9D25-638F-408A-AE24-57217CBBA4EA}</Project>
       <Name>Chat.Client.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chat.Client.SignalHandlers.Contracts\Chat.Client.SignalHelpers.Contracts.csproj">
-      <Project>{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}</Project>
-      <Name>Chat.Client.SignalHelpers.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chat.Client.SignalHandlers\Chat.Client.SignalHelpers.csproj">
       <Project>{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}</Project>

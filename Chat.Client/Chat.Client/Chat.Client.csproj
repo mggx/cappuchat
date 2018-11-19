@@ -37,9 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoUpdater.NET, Version=1.4.11.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autoupdater.NET.Official.1.4.11\lib\net40\AutoUpdater.NET.dll</HintPath>
-    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -77,9 +74,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFNotification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WPFNotification.1.1.0\lib\WPFNotification.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -87,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingProxies\BindingProxy.cs" />
+    <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
     <Compile Include="Controls\StandardView.xaml.cs">
       <DependentUpon>StandardView.xaml</DependentUpon>
@@ -96,14 +91,15 @@
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Views\CappuVoteResultView.xaml.cs">
+      <DependentUpon>CappuVoteResultView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateVoteView.xaml.cs">
       <DependentUpon>CreateVoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\OkCancelDialogWindow.xaml.cs">
       <DependentUpon>OkCancelDialogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\PasswordBoxFocusedBehaviorExtension.cs" />
-    <Compile Include="Extensions\TextBoxWatermarkExtension.cs" />
     <Compile Include="Helper\PasswordHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Styles\ProgramColors.cs" />
@@ -135,6 +131,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\SpecialTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CappuVoteResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,10 +238,6 @@
     <ProjectReference Include="..\Chat.Client.Presenters\Chat.Client.Presenters.csproj">
       <Project>{5EA9BD41-0888-4668-8DE9-05D5561A26CD}</Project>
       <Name>Chat.Client.Presenters</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chat.Client.SignalHandlers.Contracts\Chat.Client.SignalHelpers.Contracts.csproj">
-      <Project>{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}</Project>
-      <Name>Chat.Client.SignalHelpers.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chat.Client.SignalHandlers\Chat.Client.SignalHelpers.csproj">
       <Project>{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}</Project>

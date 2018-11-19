@@ -5,6 +5,8 @@
         <Style.Setters>
             <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
             <Setter Property="Border.BorderBrush" Value="{StaticResource MainColor}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="controls:SpecialTextBox">
@@ -12,23 +14,37 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}"
                                 Name="border"
-                                SnapsToDevicePixels="True">
+                                SnapsToDevicePixels="True"
+                                Padding="5">
 
-                            <Grid>
-                                <TextBlock x:Name="PART_Watermark" 
-                                           Text="{TemplateBinding Watermark}" 
-                                           Foreground="Gray" 
-                                           HorizontalAlignment="Center"
-                                           Visibility="Collapsed" />
-                                
-                                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
-                                              VerticalScrollBarVisibility="Hidden"
-                                              Name="PART_ContentHost"
-                                              Focusable="False" />
-                            </Grid>
+                                <Grid HorizontalAlignment="Stretch">
+                                    <TextBlock x:Name="PART_Watermark" 
+                                               Text="{TemplateBinding Watermark}" 
+                                               Foreground="Gray" 
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               Visibility="Collapsed" />
 
+                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                                  VerticalScrollBarVisibility="Hidden"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Name="PART_ContentHost"
+                                                  Focusable="False" />
+
+                                <Button x:Name="PART_AdditionalButton"
+                                        HorizontalAlignment="Right" 
+                                        VerticalAlignment="Center"
+                                        Content="{TemplateBinding AdditionalButtonContent}" 
+                                        Command="{TemplateBinding AdditionalButtonCommand}"
+                                        Visibility="Collapsed"
+                                        Focusable="False"/>
+                                </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
+                            <Trigger Property="IsAdditionalButtonVisible" Value="True">
+                                <Setter TargetName="PART_AdditionalButton" Property="Visibility" Value="Visible"/>
+                            </Trigger>
                             <Trigger Property="TextBox.Text" Value="">
                                 <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible"/>
                             </Trigger>

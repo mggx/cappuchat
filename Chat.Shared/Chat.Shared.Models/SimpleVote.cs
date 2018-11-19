@@ -5,7 +5,7 @@ namespace Chat.Shared.Models
 {
     public class SimpleVote
     {
-        private readonly Dictionary<string, int> _voteAnswerCache = new Dictionary<string, int>();
+        public Dictionary<string, int> VoteAnswerCache { get; set; } = new Dictionary<string, int>();
 
         public string CreatorName { get; set; }
 
@@ -28,9 +28,10 @@ namespace Chat.Shared.Models
 
         public bool Vote(string username, int answerId)
         {
-            if (!_voteAnswerCache.ContainsKey(username))
-                _voteAnswerCache.Add(username, answerId);
-            return !_voteAnswerCache.ContainsKey(username);
+            if (VoteAnswerCache.ContainsKey(username))
+                return false;
+            VoteAnswerCache.Add(username, answerId);
+            return true;
         }
     }
 }

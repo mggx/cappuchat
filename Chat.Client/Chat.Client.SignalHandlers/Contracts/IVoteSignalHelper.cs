@@ -10,6 +10,7 @@ namespace Chat.Client.SignalHelpers.Contracts
         event VoteChangedHandler VoteChanged;
 
         Task CreateVote(SimpleVote vote);
-        Task Vote(bool choice);
+        Task Vote(int answerId);
+        Task<SimpleVote> GetActiveVote();
     }
 }

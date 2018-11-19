@@ -114,15 +114,19 @@ namespace Chat.Client.Presenters
 
         private void LoginPresenterOnLoggedOut(string reason)
         {
+            CappuVotePresenter.Dispose();
             CurrentContainer = LoginPresenter;
         }
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            LoginPresenter.CappuLoginViewModel.LoginSucceeded -= LoginPresenterOnLoginSucceeded;
-            LoginPresenter.LoggedOut -= LoginPresenterOnLoggedOut;
+            if (disposing)
+            {
+                LoginPresenter.CappuLoginViewModel.LoginSucceeded -= LoginPresenterOnLoginSucceeded;
+                LoginPresenter.LoggedOut -= LoginPresenterOnLoggedOut;
+            }
 
-            base.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

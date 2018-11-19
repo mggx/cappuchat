@@ -58,9 +58,9 @@
       <Project>{C5EF9D25-638F-408A-AE24-57217CBBA4EA}</Project>
       <Name>Chat.Client.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Chat.Client.SignalHandlers.Contracts\Chat.Client.SignalHelpers.Contracts.csproj">
-      <Project>{2D6898ED-2BFA-4D54-BA38-8B286E444CAF}</Project>
-      <Name>Chat.Client.SignalHelpers.Contracts</Name>
+    <ProjectReference Include="..\Chat.Client.SignalHandlers\Chat.Client.SignalHelpers.csproj">
+      <Project>{6C02F19E-6D24-4EC5-A1A6-71ED554C3A5C}</Project>
+      <Name>Chat.Client.SignalHelpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chat.Client.ViewModels\Chat.Client.ViewModels.csproj">
       <Project>{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}</Project>
@@ -71,8 +71,6 @@
       <Name>Chat.Texts</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

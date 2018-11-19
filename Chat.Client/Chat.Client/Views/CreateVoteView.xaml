@@ -4,9 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs;assembly=Chat.Client.ViewModels"
-        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:controls="clr-namespace:Chat.Client.Controls"
-        xmlns:extensions="clr-namespace:Chat.Client.Extensions"
         xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance dialogs:CreateVoteViewModel}">
@@ -16,33 +14,41 @@
                                VerticalAlignment="Center">
             <controls:StandardView.ViewContent>
                 <StackPanel Margin="5">
-                    <TextBox extensions:TextBoxWatermarkExtension.Watermark="{x:Static texts:Texts.QuestionWatermark}"
-                             Width="200"
-                             Margin="5"
-                             Text="{Binding Question, Mode=TwoWay}"/>
-                    
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox extensions:TextBoxWatermarkExtension.Watermark="{x:Static texts:Texts.Answer}"
-                                 Width="200"
-                                 Margin="5"
-                                 Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                    
+                    <controls:SpecialTextBox Watermark="{x:Static texts:Texts.QuestionWatermark}"
+                                             Width="200"
+                                             Margin="5"
+                                             Text="{Binding Question, Mode=TwoWay}"/>
 
-                    <ListView ItemsSource="{Binding Answers}"
-                              BorderThickness="0">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="ListViewItem"/>
-                        </ListView.ItemContainerStyle>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    <StackPanel Orientation="Horizontal">
+                        <controls:SpecialTextBox Watermark="{x:Static texts:Texts.AnswerWatermark}"
+                                                 Width="200"
+                                                 Margin="5"
+                                                 Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 IsAdditionalButtonVisible="True"
+                                                 AdditionalButtonContent="+"
+                                                 AdditionalButtonCommand="{Binding AddAnswerCommand}"/>
+                    </StackPanel>
                 </StackPanel>
             </controls:StandardView.ViewContent>
         </controls:StandardView>
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBlock Text="{x:Static texts:Texts.Answers}"
+                       Width="200"
+                       FontSize="24"
+                       Foreground="{StaticResource AccentLightColor3}"/>
+
+            <ListView ItemsSource="{Binding Answers}"
+                      BorderThickness="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        
 
         <Button Content="{x:Static texts:Texts.CreateVote}"
                 Command="{Binding CreateVoteCommand}"

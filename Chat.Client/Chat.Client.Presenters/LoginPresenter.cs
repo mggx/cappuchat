@@ -99,12 +99,15 @@ namespace Chat.Client.Presenters
             _viewProvider.ShowMessage(Texts.Texts.LoggedOut, Texts.Texts.LoggedOutReason(reason));
         }
 
-        public override void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            CappuLoginViewModel.PreviewServerCall -= CappuServerCallViewModelPreviewServerCall;
-            CappuLoginViewModel.LoginFailed -= CappuLoginViewModelOnLoginFailed;
+            if (disposing)
+            {
+                CappuLoginViewModel.PreviewServerCall -= CappuServerCallViewModelPreviewServerCall;
+                CappuLoginViewModel.LoginFailed -= CappuLoginViewModelOnLoginFailed;
+            }
 
-            base.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
