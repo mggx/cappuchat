@@ -7,7 +7,7 @@ using Chat.Client.ViewModels.Events;
 
 namespace Chat.Client.Presenters
 {
-    public class LoginPresenter : ViewModelBase, IDialog
+    public class CappuLoginPresenter : ViewModelBase, IDialog
     {
         private readonly ISignalHelperFacade _signalHelperFacade;
         private readonly IViewProvider _viewProvider;
@@ -31,14 +31,14 @@ namespace Chat.Client.Presenters
             remove => CappuLoginViewModel.LoggedOut -= value;
         }
 
-        public LoginPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
+        public CappuLoginPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create LoginPresenter. Given signalHelperFacade is null.");
+                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuLoginPresenter. Given signalHelperFacade is null.");
             _signalHelperFacade = signalHelperFacade;
 
             if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create LoginPresenter. Given viewProvider is null.");
+                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuLoginPresenter. Given viewProvider is null.");
             _viewProvider = viewProvider;
 
             StartServerConnectionCommand = new RelayCommand(StartServerConnection, CanStartServerConnection);

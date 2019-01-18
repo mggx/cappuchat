@@ -50,10 +50,10 @@ namespace Chat.Client
 
             _cappuMainPresenter = new CappuMainPresenter(signalHelperFacade, _viewProvider)
             {
-                LoginPresenter = { ConnectedToServer = _hubConnectionHelper.Connected }
+                CappuLoginPresenter = { ConnectedToServer = _hubConnectionHelper.Connected }
             };
 
-            _cappuMainPresenter.LoginPresenter.StartConnection += LoginPresenterOnStartConnection;
+            _cappuMainPresenter.CappuLoginPresenter.StartConnection += LoginPresenterOnStartConnection;
 
             _viewProvider.Show(_cappuMainPresenter);
         }

@@ -18,19 +18,25 @@
                  Height="500"
                  d:DataContext="{d:DesignInstance presenters1:CappuMainPresenter}"
                  Background="{StaticResource MainColor}"
-                 WindowTitleBrush="{StaticResource AccentDarkColor1}">
+                 WindowTitleBrush="{StaticResource AccentDarkColor2}"
+                 NonActiveWindowTitleBrush="{StaticResource AccentDarkColor1}">
+
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
+    </Window.InputBindings>
+
     <Window.Resources>
-        <DataTemplate DataType="{x:Type presenters1:LoginPresenter}">
+        <DataTemplate DataType="{x:Type presenters1:CappuLoginPresenter}">
             <views:CappuLoginView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type dialogs:RegisterViewModel}">
+        <DataTemplate DataType="{x:Type dialogs:CappuRegisterViewModel}">
             <views:CappuRegisterView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type presenters1:CappuMainPresenter}">
             <views:CappuMainView/>
         </DataTemplate>
 
-        <converters:BooleanToConnectionColorConverter x:Key="BooleanToConnectionColorConverter" />
+        <converters:BooleanToRedGreenColorConverter x:Key="BooleanToConnectionColorConverter" />
         <converters:BooleanToConnectionToolTipConverter x:Key="BooleanToConnectionToolTipConverter" />
         <converters:BooleanToConnectionTextConverter x:Key="BooleanToConnectionTextConverter" />
     </Window.Resources>
@@ -42,20 +48,20 @@
                             Margin="5, 0, 5, 0">
                     <Button Style="{DynamicResource MetroCircleButtonStyle}"
                             IsTabStop="False"
-                            Background="{Binding LoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
-                            Command="{Binding LoginPresenter.StartServerConnectionCommand}"
+                            Background="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
+                            Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
                             Width="25"
                             Height="25" 
-                            ToolTip="{Binding LoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"/>
+                            ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"/>
 
-                    <TextBlock Text="{Binding LoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
-                               Foreground="{Binding LoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
+                    <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
+                               Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
                                VerticalAlignment="Center"/>
                 </StackPanel>
             </mah:WindowCommandsItem>
             <mah:WindowCommandsItem>
                 <Button Content="{x:Static texts:Texts.Logout}" 
-                        Command="{Binding LoginPresenter.CappuLoginViewModel.LogoutCommand}" />
+                        Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}" />
             </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -69,7 +75,7 @@
                             TileMode="Tile"/>
             </Border.Background>
 
-            <mah:TransitioningContentControl Content="{Binding CurrentContainer}"
+            <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
                                              Transition="Left" />
         </Border>
     </Border>

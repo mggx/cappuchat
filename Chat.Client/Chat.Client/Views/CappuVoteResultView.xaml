@@ -2,10 +2,77 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+             xmlns:converters="clr-namespace:Chat.Client.Converters"
+             xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance viewModels:CappuVoteResultViewModel}">
+    <UserControl.Resources>
+        <converters:BooleanToRedGreenColorConverter x:Key="BooleanToRedGreenColorConverter"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <StackPanel HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Margin="5">
+            <TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
+                       HorizontalAlignment="Center"
+                       FontSize="24"
+                       Foreground="{StaticResource AccentLightColor3}"
+                       Margin="5"/>
+
+            <ListView ItemsSource="{Binding UserVotes}"
+                      Background="{StaticResource AccentLightColor1}"
+                      BorderThickness="0"
+                      x:Name="OnlineUsersListView">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <ScaleTransform x:Name="transform"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
+                                                             From="0" 
+                                                             To="1"
+                                                             Duration="0:0:1"/>
+                                            <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY"
+                                                             From="0"
+                                                             Duration="0:0:.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:UsersVotes}">
+                        <TextBlock Text="{Binding Username, Mode=OneTime}"
+                                   TextAlignment="Center"
+                                   Width="100"
+                                   Foreground="{Binding Voted, Mode=OneTime, Converter={StaticResource BooleanToRedGreenColorConverter}}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        
+        <Button BorderThickness="0"
+                FocusVisualStyle="{x:Null}"
+                Background="Transparent"
+                Width="128"
+                Height="128"
+                Command="{Binding FinalCappuCallCommand}">
+            <Image Source="pack://application:,,,/Chat.Client;component/Resources/realtransparentcoffeecup.png"/>
+        </Button>
     </Grid>
 </UserControl>

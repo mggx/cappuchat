@@ -1,4 +1,5 @@
-﻿using Chat.Client.SignalHelpers.Contracts.Delegates;
+﻿using System;
+using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Shared.Models;
 using System.Threading.Tasks;
 
@@ -8,9 +9,11 @@ namespace Chat.Client.SignalHelpers.Contracts
     {
         event VoteCreatedHandler VoteCreated;
         event VoteChangedHandler VoteChanged;
+        event Action FinalCappuCalled;
 
-        Task CreateVote(SimpleVote vote);
-        Task Vote(int answerId);
-        Task<SimpleVote> GetActiveVote();
+        Task CreateVote();
+        Task Vote(bool answer);
+        Task<SimpleCappuVote> GetActiveVote();
+        Task FinalCappuCall();
     }
 }

@@ -11,15 +11,15 @@ namespace Chat.Client.Presenters
         private readonly ISignalHelperFacade _signalHelperFacade;
         private readonly IViewProvider _viewProvider;
 
-        public LoginPresenter LoginPresenter { get; private set; }
+        public CappuLoginPresenter CappuLoginPresenter { get; private set; }
         public CappuChatPresenter CappuChatPresenter { get; private set; }
         public CappuVotePresenter CappuVotePresenter { get; private set; }
 
-        private ViewModelBase _currentContainer;
-        public ViewModelBase CurrentContainer
+        private ViewModelBase _currentPresenter;
+        public ViewModelBase CurrentPresenter
         {
-            get { return _currentContainer; }
-            set { _currentContainer = value; OnPropertyChanged(); }
+            get { return _currentPresenter; }
+            set { _currentPresenter = value; OnPropertyChanged(); }
         }
 
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
@@ -44,51 +44,53 @@ namespace Chat.Client.Presenters
 
         private void InitializeLoginPresenter()
         {
-            LoginPresenter = new LoginPresenter(_signalHelperFacade, _viewProvider);
-            CurrentContainer = LoginPresenter;
+            CappuLoginPresenter = new CappuLoginPresenter(_signalHelperFacade, _viewProvider);
+            CurrentPresenter = CappuLoginPresenter;
         }
 
         private void InitializeLoginPresenterEvents()
         {
-            LoginPresenter.CappuLoginViewModel.LoginSucceeded += LoginPresenterOnLoginSucceeded;
-            LoginPresenter.LoggedOut += LoginPresenterOnLoggedOut;
-            LoginPresenter.CappuLoginViewModel.RegisterOpen += CappuLoginPresenterOnRegisterOpen;
+            CappuLoginPresenter.CappuLoginViewModel.LoginSucceeded += LoginPresenterOnLoginSucceeded;
+            CappuLoginPresenter.LoggedOut += LoginPresenterOnLoggedOut;
+            CappuLoginPresenter.CappuLoginViewModel.RegisterOpen += CappuLoginPresenterOnRegisterOpen;
         }
 
         private void CappuLoginPresenterOnRegisterOpen()
         {
-            var registerViewModel = new RegisterViewModel(_signalHelperFacade.RegisterSignalHelper);
+            var registerViewModel = new CappuRegisterViewModel(_signalHelperFacade.RegisterSignalHelper);
             registerViewModel.RegisterCompleted += RegisterViewModelOnRegisterCompleted;
             registerViewModel.RegisterFailed += RegisterViewModelOnRegisterFailed;
-            CurrentContainer = registerViewModel;
+            registerViewModel.RegisterCanceled += RegisterViewModelOnRegisterCanceled;
+            CurrentPresenter = registerViewModel;
         }
 
         private void RegisterViewModelOnRegisterCompleted(IDialog registerViewModel)
         {
-            RegisterViewModel viewModel = registerViewModel as RegisterViewModel;
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(registerViewModel), "Given registerViewModel is null or not a RegisterViewModel");
-
-            LoginPresenter.CappuLoginViewModel.Username = viewModel.Username;
-
-            viewModel.RegisterCompleted -= RegisterViewModelOnRegisterCompleted;
-            viewModel.RegisterFailed -= RegisterViewModelOnRegisterFailed;
-
-            CurrentContainer = LoginPresenter;
+            CappuLoginPresenter.CappuLoginViewModel.Username = ((CappuRegisterViewModel)registerViewModel).Username;
+            HandleFinishedRegister(registerViewModel);
         }
 
         private void RegisterViewModelOnRegisterFailed(object sender, string e)
         {
-            RegisterViewModel viewModel = sender as RegisterViewModel;
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(sender), "Given sender is null or not a RegisterViewModel");
-
             _viewProvider.ShowMessage(Texts.Texts.RegisterFailed, e);
+            HandleFinishedRegister(sender as IDialog);
+        }
 
-            viewModel.RegisterFailed -= RegisterViewModelOnRegisterFailed;
+        private void RegisterViewModelOnRegisterCanceled(IDialog registerViewModel)
+        {
+            HandleFinishedRegister(registerViewModel);
+        }
+
+        private void HandleFinishedRegister(IDialog registerViewModel)
+        {
+            CappuRegisterViewModel viewModel = registerViewModel as CappuRegisterViewModel;
+            if (viewModel == null)
+                throw new ArgumentNullException(nameof(registerViewModel), "Given registerViewModel is null or not a CappuRegisterViewModel");
+
             viewModel.RegisterCompleted -= RegisterViewModelOnRegisterCompleted;
+            viewModel.RegisterFailed -= RegisterViewModelOnRegisterFailed;
 
-            CurrentContainer = LoginPresenter;
+            CurrentPresenter = CappuLoginPresenter;
         }
 
         private async void LoginPresenterOnLoginSucceeded(LoginSucceededEventArgs eventArgs)
@@ -99,7 +101,7 @@ namespace Chat.Client.Presenters
             await CappuVotePresenter.Load(eventArgs.User);
             CappuChatPresenter.Load(eventArgs.User);
 
-            CurrentContainer = this;
+            CurrentPresenter = this;
         }
 
         private void InitializeCappuVotePresenter()
@@ -115,15 +117,17 @@ namespace Chat.Client.Presenters
         private void LoginPresenterOnLoggedOut(string reason)
         {
             CappuVotePresenter.Dispose();
-            CurrentContainer = LoginPresenter;
+            CappuChatPresenter.Dispose();
+            CurrentPresenter = CappuLoginPresenter;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                LoginPresenter.CappuLoginViewModel.LoginSucceeded -= LoginPresenterOnLoginSucceeded;
-                LoginPresenter.LoggedOut -= LoginPresenterOnLoggedOut;
+                CappuLoginPresenter.CappuLoginViewModel.LoginSucceeded -= LoginPresenterOnLoginSucceeded;
+                CappuLoginPresenter.LoggedOut -= LoginPresenterOnLoggedOut;
+                CappuLoginPresenter.CappuLoginViewModel.RegisterOpen -= CappuLoginPresenterOnRegisterOpen;
             }
 
             base.Dispose(disposing);

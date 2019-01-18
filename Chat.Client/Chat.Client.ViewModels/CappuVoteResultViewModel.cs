@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
+using Chat.Client.SignalHelpers.Contracts.Exceptions;
+using Chat.Client.ViewModels.Models;
 using Chat.Shared.Models;
 
 namespace Chat.Client.ViewModels
@@ -13,18 +16,12 @@ namespace Chat.Client.ViewModels
     {
         private readonly ISignalHelperFacade _signalHelperFacade;
 
-        private SimpleVote _activeVote;
+        private SimpleCappuVote _activeVote;
+        private IEnumerable<SimpleUser> _onlineUsers;
 
-        public ObservableCollection<string> OnlineUserList { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<UsersVotes> UserVotes { get; set; } = new ObservableCollection<UsersVotes>();
 
-        public IEnumerable<string> UsersWhoAnswered => _activeVote.VoteAnswerCache.Keys;
-
-        private double _voteProgress;
-        public double VoteProgress
-        {
-            get => _voteProgress;
-            set { _voteProgress = value; OnPropertyChanged(); }
-        }
+        public RelayCommand FinalCappuCallCommand { get; }
 
         public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade)
         {
@@ -32,12 +29,38 @@ namespace Chat.Client.ViewModels
                 throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuVoteResultViewModel. Given signalHelperFacade is null.");
             _signalHelperFacade = signalHelperFacade;
 
+            FinalCappuCallCommand = new RelayCommand(FinalCappuCall, CanFinalCappuCall);
+
             Initialize();
         }
 
         private void Initialize()
         {
+            UpdateVotes();
             InitializeSignalHelperFacadeEvents();
+        }
+
+        private async void UpdateVotes()
+        {
+            var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers();
+            UpdateVotes(onlineUsers);
+            FinalCappuCallCommand.RaiseCanExecuteChanged();
+        }
+
+        private void UpdateVotes(IEnumerable<SimpleUser> users)
+        {
+            var onlineUsers = users as SimpleUser[] ?? users.ToArray();
+            _onlineUsers = onlineUsers;
+
+            UserVotes.Clear();
+
+            foreach (var user in onlineUsers)
+            {
+                bool voted = _activeVote?.UserAnswerCache.ContainsKey(user.Username) == true;
+                UserVotes.Add(new UsersVotes { Username = user.Username, Voted = voted });
+            }
+
+            OnPropertyChanged(nameof(UserVotes));
         }
 
         private void InitializeSignalHelperFacadeEvents()
@@ -46,26 +69,34 @@ namespace Chat.Client.ViewModels
             _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged += LoginSignalHelperOnOnlineUsersChanged;
         }
 
-        private void VoteSignalHelperOnVoteChanged(SimpleVote changedVote)
+        private void VoteSignalHelperOnVoteChanged(SimpleCappuVote changedVote)
         {
             _activeVote = changedVote;
-            OnPropertyChanged(nameof(UsersWhoAnswered));
-
-            double userCount = OnlineUserList.Count;
-            if (userCount == 0)
-                userCount = 1;
-            double percentagePerUser = 100 / userCount;
-            VoteProgress = UsersWhoAnswered.Count() * percentagePerUser;
+            UpdateVotes();
+            FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
         private void LoginSignalHelperOnOnlineUsersChanged(OnlineUsersChangedEventArgs eventArgs)
         {
-            OnlineUserList.Clear();
+            UpdateVotes(eventArgs.OnlineUsers);
+            FinalCappuCallCommand.RaiseCanExecuteChanged();
+        }
 
-            foreach (SimpleUser user in eventArgs.OnlineUsers)
-            {
-                OnlineUserList.Add(user.Username);
-            }
+        private bool CanFinalCappuCall()
+        {
+            return _activeVote.UserAnswerCache.Values.Count(vote => vote) == _onlineUsers?.Count();
+        }
+
+        private async void FinalCappuCall()
+        {
+            await _signalHelperFacade.VoteSignalHelper.FinalCappuCall();
+        }
+
+        public void Load(SimpleCappuVote cappuVote)
+        {
+            if (cappuVote == null)
+                throw new InvalidOperationException("Cannot load CappuVoteResultViewModel. Given cappuVote is null.");
+            _activeVote = cappuVote;
         }
 
         protected override void Dispose(bool disposing)

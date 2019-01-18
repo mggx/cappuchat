@@ -52,13 +52,13 @@
     <Compile Include="Delegates\PreviewServerCallHandler.cs" />
     <Compile Include="Delegates\VoteCreateHandler.cs" />
     <Compile Include="Delegates\VotedHandler.cs" />
-    <Compile Include="Dialogs\CreateVoteViewModel.cs" />
     <Compile Include="Dialogs\OkCancelDialogViewModel.cs" />
-    <Compile Include="Dialogs\RegisterViewModel.cs" />
+    <Compile Include="Dialogs\CappuRegisterViewModel.cs" />
     <Compile Include="Events\LoginFailedEventArgs.cs" />
     <Compile Include="Events\LoginSucceededEventArgs.cs" />
     <Compile Include="CappuLoginViewModel.cs" />
     <Compile Include="CappuChatViewModel.cs" />
+    <Compile Include="Models\UsersVotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ProgressProvider.cs" />
   </ItemGroup>

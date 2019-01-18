@@ -34,14 +34,19 @@ namespace Chat.Texts
 
         public static string Error => "Error";
 
-        public static string Vote => "Cappu Vote";
+        public static string CappuCallOverview => "Cappu Call Overview";
+        public static string CappuCalled => "Cappu Call! ANSWER NOW!!";
+        public static string GoCall => "Go";
+        public static string GoGoCall => "GOGOOGOGOGOOGOGOGOGOIOGOGOGO";
         public static string Chats => "Chats";
 
         public static string QuestionWatermark => "Whats the question?";
         public static string AnswerWatermark => "Whats the answer?";
         public static string Answers => "Answers";
-        public static string UserAsks => "asks the following:";
+        public static string GoQuestion => "Go?";
+        public static string UsersWhoAnswered => "Users which answered:";
+        public static string OnlineUsers => "Online Users";
 
-        public static string CreateVote => "Create vote";
+        public static string CreateVote => "Cappu Call";
     }
 }

@@ -19,13 +19,10 @@
         </Style>
     </mah:MetroAnimatedSingleRowTabControl.Resources>
 
-    <mah:MetroTabItem Header="{x:Static texts:Texts.Vote}">
+    <mah:MetroTabItem Header="{x:Static texts:Texts.CappuCallOverview}">
         <mah:MetroTabItem.Resources>
             <DataTemplate DataType="{x:Type viewModels:CappuVoteViewModel}">
                 <views:CappuVoteView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type dialogs:CreateVoteViewModel}">
-                <views:CreateVoteView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:CappuVoteResultViewModel}">
                 <views:CappuVoteResultView/>

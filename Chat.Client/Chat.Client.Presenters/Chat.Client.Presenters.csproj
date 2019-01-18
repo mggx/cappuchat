@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="CappuVotePresenter.cs" />
     <Compile Include="Delegates\StartServerConnectionHandler.cs" />
-    <Compile Include="LoginPresenter.cs" />
+    <Compile Include="CappuLoginPresenter.cs" />
     <Compile Include="CappuMainPresenter.cs" />
     <Compile Include="CappuChatPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

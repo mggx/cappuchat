@@ -21,28 +21,20 @@ namespace Chat.Client.ViewModels
 
         private SimpleUser _user;
 
-        private SimpleVote _simpleVote;
-        public SimpleVote SimpleVote
+        private SimpleCappuVote _simpleVote;
+        public SimpleCappuVote SimpleVote
         {
             get { return _simpleVote; }
             set { _simpleVote = value; OnPropertyChanged(); }
         }
 
-        private string _answer;
-        public string Answer
-        {
-            get => _answer;
-            set { _answer = value; VoteCommand.RaiseCanExecuteChanged(); }
-        }
-
         public ObservableCollection<SimpleUser> OnlineCappuUsers { get; set; } = new ObservableCollection<SimpleUser>();
 
         public RelayCommand<SimpleUser> OpenPrivateChatCommand { get; }
-        public RelayCommand CreateVoteCommand { get; }
-        public RelayCommand VoteCommand { get; }
+        public RelayCommand CreateCappuVoteCommand { get; }
+        public RelayCommand GoCommand { get; }
 
         public event OpenChatHandler OpenChat;
-        public event VoteCreateHandler VoteCreate;
         public event VotedHandler Voted;
 
         public CappuVoteViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
@@ -56,8 +48,8 @@ namespace Chat.Client.ViewModels
             _viewProvider = viewProvider;
 
             OpenPrivateChatCommand = new RelayCommand<SimpleUser>(OpenPrivateChat);
-            CreateVoteCommand = new RelayCommand(CreateVote, CanCreateVote);
-            VoteCommand = new RelayCommand(Vote, CanVote);
+            CreateCappuVoteCommand = new RelayCommand(CreateCappuVote, CanCreateVote);
+            GoCommand = new RelayCommand(Vote, CanVote);
 
             Initialize();
         }
@@ -72,38 +64,26 @@ namespace Chat.Client.ViewModels
             return _simpleVote == null;
         }
 
-        private void CreateVote()
+        private void CreateCappuVote()
         {
-            VoteCreate?.Invoke();
+            _signalHelperFacade.VoteSignalHelper.CreateVote();
         }
 
         private bool CanVote()
         {
-            return !string.IsNullOrWhiteSpace(_answer);
+            return true;
         }
 
         private async void Vote()
         {
             try
             {
-                await _signalHelperFacade.VoteSignalHelper.Vote(SimpleVote.Answers.ToList().IndexOf(_answer));
-                Voted?.Invoke();
+                await _signalHelperFacade.VoteSignalHelper.Vote(true);
+                Voted?.Invoke(this, _simpleVote);
             }
             catch (VoteFailedException e)
             {
                 _viewProvider.ShowMessage("Error", e.Message);
-            }
-        }
-
-        public async Task CreateVote(SimpleVote vote)
-        {
-            try
-            {
-                await _signalHelperFacade.VoteSignalHelper.CreateVote(vote);
-            }
-            catch (CreateVoteFailedException e)
-            {
-                _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
             }
         }
 
@@ -115,8 +95,8 @@ namespace Chat.Client.ViewModels
         private void InitializeSignalHelperFacadeEvents()
         {
             _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged += ChatSignalHelperFacadeOnOnlineUsersChanged;
-            _signalHelperFacade.VoteSignalHelper.VoteCreated += VoteSignalHelperOnVoteCreated;
-            _signalHelperFacade.VoteSignalHelper.VoteChanged += VoteSignalHelperOnVoteChanged;
+            _signalHelperFacade.VoteSignalHelper.VoteCreated += VoteSignalHelperOnCappuVoteCreated;
+            _signalHelperFacade.VoteSignalHelper.VoteChanged += VoteSignalHelperOnCappuVoteChanged;
         }
 
         public async Task Load(SimpleUser user)
@@ -126,10 +106,11 @@ namespace Chat.Client.ViewModels
             try
             {
                 var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers();
-                SetOnlineUsers(onlineUsers);
+                UpdateOnlineCappuUsers(onlineUsers);
 
-                SimpleVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
-                SetActiveVote(activeVote);
+                SimpleCappuVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
+                if (activeVote != null)
+                    UpdateActiveVote(activeVote, true);
             }
             catch (RequestFailedException e)
             {
@@ -137,18 +118,22 @@ namespace Chat.Client.ViewModels
             }
         }
 
-        private void SetActiveVote(SimpleVote vote)
+        private void UpdateActiveVote(SimpleCappuVote vote, bool raiseVotedEvent = false)
         {
             SimpleVote = vote;
-            CreateVoteCommand.RaiseCanExecuteChanged();
+            if (vote?.UserAnswerCache.ContainsKey(_user.Username) == true && raiseVotedEvent)
+            {
+                Voted?.Invoke(this, _simpleVote);
+            }
+            CreateCappuVoteCommand.RaiseCanExecuteChanged();
         }
 
         private void ChatSignalHelperFacadeOnOnlineUsersChanged(SignalHelpers.Contracts.Events.OnlineUsersChangedEventArgs eventArgs)
         {
-            SetOnlineUsers(eventArgs.OnlineUsers);
+            UpdateOnlineCappuUsers(eventArgs.OnlineUsers);
         }
 
-        private void SetOnlineUsers(IEnumerable<SimpleUser> onlineUsers)
+        private void UpdateOnlineCappuUsers(IEnumerable<SimpleUser> onlineUsers)
         {
             OnlineCappuUsers.Clear();
             foreach (var user in onlineUsers)
@@ -158,14 +143,15 @@ namespace Chat.Client.ViewModels
             }
         }
 
-        private void VoteSignalHelperOnVoteCreated(SimpleVote createdVote)
+        private void VoteSignalHelperOnCappuVoteCreated(SimpleCappuVote createdVote)
         {
-            SetActiveVote(createdVote);
+            UpdateActiveVote(createdVote);
+            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, NotificationType.Information);
         }
 
-        private void VoteSignalHelperOnVoteChanged(SimpleVote changedVote)
+        private void VoteSignalHelperOnCappuVoteChanged(SimpleCappuVote changedVote)
         {
-            SetActiveVote(changedVote);
+            UpdateActiveVote(changedVote);
         }
 
         protected override void Dispose(bool disposing)
@@ -173,8 +159,8 @@ namespace Chat.Client.ViewModels
             if (disposing)
             {
                 _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged -= ChatSignalHelperFacadeOnOnlineUsersChanged;
-                _signalHelperFacade.VoteSignalHelper.VoteCreated -= VoteSignalHelperOnVoteCreated;
-                _signalHelperFacade.VoteSignalHelper.VoteChanged -= VoteSignalHelperOnVoteChanged;
+                _signalHelperFacade.VoteSignalHelper.VoteCreated -= VoteSignalHelperOnCappuVoteCreated;
+                _signalHelperFacade.VoteSignalHelper.VoteChanged -= VoteSignalHelperOnCappuVoteChanged;
             }
 
             base.Dispose(disposing);

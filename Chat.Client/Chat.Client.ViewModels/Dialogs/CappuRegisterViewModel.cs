@@ -7,7 +7,7 @@ using Chat.Client.ViewModels.Providers;
 
 namespace Chat.Client.ViewModels.Dialogs
 {
-    public class RegisterViewModel : ViewModelBase, IModalDialog<SimpleUser>
+    public class CappuRegisterViewModel : ViewModelBase, IModalDialog<SimpleUser>
     {
         private readonly IRegisterSignalHelper _registerSignalHelper;
 
@@ -29,18 +29,23 @@ namespace Chat.Client.ViewModels.Dialogs
 
         public event EventHandler<string> RegisterFailed;
         public event Action<IDialog> RegisterCompleted;
+        public event Action<IDialog> RegisterCanceled;
+        
 
         public RelayCommand RegisterCommand { get; }
+        public RelayCommand CancelCommand { get; }
 
         public ProgressProvider ProgressProvider { get; }
 
-        public RegisterViewModel(IRegisterSignalHelper registerSignalHelper)
+        public CappuRegisterViewModel(IRegisterSignalHelper registerSignalHelper)
         {
             if (registerSignalHelper == null)
-                throw new ArgumentNullException(nameof(registerSignalHelper), "Cannot create RegisterViewModel. Given registerSignalHelper is null.");
+                throw new ArgumentNullException(nameof(registerSignalHelper), "Cannot create CappuRegisterViewModel. Given registerSignalHelper is null.");
             _registerSignalHelper = registerSignalHelper;
 
             RegisterCommand = new RelayCommand(Register, CanRegister);
+            CancelCommand = new RelayCommand(Cancel);
+
             ProgressProvider = new ProgressProvider();
         }
 
@@ -68,6 +73,11 @@ namespace Chat.Client.ViewModels.Dialogs
             RegisterCompleted?.Invoke(this);
 
             ModalResult = ModalResult.Ok;
+        }
+
+        private void Cancel()
+        {
+            RegisterCanceled?.Invoke(this);
         }
 
         private void RaiseCanExecuteChanged()

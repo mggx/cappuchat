@@ -5,16 +5,38 @@ using Chat.Client.ViewModels.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Management;
 using System.Windows;
 using Chat.Client.Presenters;
 using Chat.Client.Windows;
 using MahApps.Metro.Controls;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Messages;
+using ToastNotifications.Position;
 
 namespace Chat.Client
 {
     public class ViewProvider : IViewProvider
     {
         private readonly Dictionary<IDialog, Window> _windowCache = new Dictionary<IDialog, Window>();
+        private Notifier _notifier;
+
+        public ViewProvider()
+        {
+            _notifier = new Notifier(configuration =>
+            {
+                configuration.PositionProvider = new PrimaryScreenPositionProvider(
+                    corner: Corner.BottomRight,
+                    offsetX: 10,  
+                    offsetY: 10);
+                configuration.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                configuration.Dispatcher = Application.Current.Dispatcher;
+            });
+        }
 
         public void Show(IDialog dialog)
         {
@@ -82,10 +104,6 @@ namespace Chat.Client
             return window;
         }
 
-        private void MainWindowOnClosed(object sender, EventArgs e)
-        {
-        }
-
         private void WindowOnClosed(object sender, EventArgs e)
         {
             Window window = sender as Window;
@@ -127,6 +145,25 @@ namespace Chat.Client
                 OkCancelDialogViewModel viewModel = new OkCancelDialogViewModel(title, message);
                 ShowDialog(viewModel);
             });
+        }
+
+        public void ShowToastNotification(string message, NotificationType notificationType)
+        {
+            switch (notificationType)
+            {
+                case NotificationType.Information:
+                    _notifier.ShowInformation(message);
+                    break;
+                case NotificationType.Success:
+                    _notifier.ShowSuccess(message);
+                    break;
+                case NotificationType.Warning:
+                    _notifier.ShowWarning(message);
+                    break;
+                case NotificationType.Error:
+                    _notifier.ShowError(message);
+                    break;
+            }
         }
 
         public void Focus(IDialog dialog)
