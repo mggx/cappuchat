@@ -8,5 +8,6 @@
         void Hide(IDialog dialog);
         void ShowMessage(string title, string message);
         void Focus(IDialog dialog);
+        void ShowToastNotification(string message, NotificationType notificationType);
     }
 }

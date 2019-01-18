@@ -5,20 +5,20 @@ namespace Chat.Responses
 {
     public class SimpleGetActiveVoteResponse : BaseResponse
     {
-        public SimpleVote ActiveVote { get; set; }
+        public SimpleCappuVote ActiveCappuVote { get; set; }
 
         public SimpleGetActiveVoteResponse()
         {
         }
 
-        public SimpleGetActiveVoteResponse(SimpleVote activeVote, bool success) : base(success)
+        public SimpleGetActiveVoteResponse(SimpleCappuVote activeCappuVote, bool success) : base(success)
         {
-            ActiveVote = activeVote;
+            ActiveCappuVote = activeCappuVote;
         }
 
-        public SimpleGetActiveVoteResponse(SimpleVote activeVote, bool success, string errorMessage) : base(success, errorMessage)
+        public SimpleGetActiveVoteResponse(SimpleCappuVote activeCappuVote, bool success, string errorMessage) : base(success, errorMessage)
         {
-            ActiveVote = activeVote;
+            ActiveCappuVote = activeCappuVote;
         }
     }
 }

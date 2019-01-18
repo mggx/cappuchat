@@ -6,6 +6,7 @@
              xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+             xmlns:converters="clr-namespace:Chat.Client.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}"
@@ -14,10 +15,12 @@
     <UserControl.Resources>
         <bindingProxies:CappuVoteViewModelProxy x:Key="CappuVoteViewModelProxy"
                                                 Data="{Binding}"/>
+        
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Center">
             <Button x:Name="CreateVoteButton"
                     Content="{x:Static texts:Texts.CreateVote}" 
                     Width="200" 
@@ -25,40 +28,20 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Margin="5" 
-                    Command="{Binding CreateVoteCommand}"/>
+                    Command="{Binding CreateCappuVoteCommand}"
+                    Visibility="{Binding ElementName=CreateVoteButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <TextBlock HorizontalAlignment="Center"
-                       FontSize="24"
+                       FontSize="48"
                        Foreground="{StaticResource AccentLightColor3}"
-                       Margin="5">
-                <TextBlock.Text>
-                    <MultiBinding StringFormat="{} {0} : {1}">
-                        <Binding Path="SimpleVote.CreatorName"/>
-                        <Binding Path="SimpleVote.Question"/>
-                    </MultiBinding>
-                </TextBlock.Text>
+                       Margin="5"
+                       Text="{x:Static texts:Texts.GoQuestion}"
+                       Visibility="{Binding SimpleVote, Converter={StaticResource NullToVisibilityConverter}}">
             </TextBlock>
 
-            <ListView x:Name="AnswerListView"
-                      ItemsSource="{Binding SimpleVote.Answers}"
-                      SelectedItem="{Binding Answer, Mode=TwoWay}"
-                      BorderThickness="0"
-                      Background="Transparent"
-                      SelectionMode="Single">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}">
-                            <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftDoubleClick"
-                                              Command="{Binding Source={StaticResource CappuVoteViewModelProxy}, Path=Data.VoteCommand}"/>
-                            </TextBlock.InputBindings>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <Button Content="Vote"
-                    Command="{Binding VoteCommand}"/>
+            <Button Content="{x:Static texts:Texts.GoCall}"
+                    Command="{Binding GoCommand}"
+                    Visibility="{Binding SimpleVote, Converter={StaticResource NullToVisibilityConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>

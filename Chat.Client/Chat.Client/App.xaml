@@ -12,6 +12,8 @@
                 
                 <ResourceDictionary Source="pack://application:,,,/Chat.Client;component/Styles/GreenColors.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Chat.Client;component/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

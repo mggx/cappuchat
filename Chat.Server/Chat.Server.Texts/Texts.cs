@@ -8,7 +8,8 @@
         public static string OtherClientLoggedIn => "Your client was logged out because another client logged in with your username";
         public static string CreatingVoteFailed(string reason) => $"Could not create Vote: {reason}";
         public static string VoteAlreadyCreated => "There is already one active vote.";
+        public static string NoActiveVote => "There is no active vote.";
         public static string UserVoteFailed(string reason) => $"Could not vote: {reason}";
-        public static string UserAlreadyVoted => "Already voted";
+        public static string UserAlreadyVoted => "You bastard already voted.";
     }
 }

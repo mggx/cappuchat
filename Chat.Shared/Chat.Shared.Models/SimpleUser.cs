@@ -6,10 +6,6 @@ namespace Chat.Shared.Models
     {
         public string Username { get; set; }
 
-        public SimpleUser()
-        {
-        }
-
         public SimpleUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))

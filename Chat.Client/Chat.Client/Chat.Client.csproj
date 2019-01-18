@@ -71,6 +71,12 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="ToastNotifications, Version=2.5.0.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+      <HintPath>..\packages\ToastNotifications.2.5.0\lib\net40\ToastNotifications.dll</HintPath>
+    </Reference>
+    <Reference Include="ToastNotifications.Messages, Version=2.5.0.0, Culture=neutral, PublicKeyToken=e89d9d7314a7c797, processorArchitecture=MSIL">
+      <HintPath>..\packages\ToastNotifications.Messages.2.5.0\lib\net40\ToastNotifications.Messages.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -83,19 +89,14 @@
     <Compile Include="BindingProxies\BindingProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
-    <Compile Include="Controls\StandardView.xaml.cs">
-      <DependentUpon>StandardView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
+    <Compile Include="Converters\BooleanToRedGreenColorConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Extensions\MoveFocusExtension.cs" />
     <Compile Include="Views\CappuVoteResultView.xaml.cs">
       <DependentUpon>CappuVoteResultView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CreateVoteView.xaml.cs">
-      <DependentUpon>CreateVoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\OkCancelDialogWindow.xaml.cs">
       <DependentUpon>OkCancelDialogWindow.xaml</DependentUpon>
@@ -122,10 +123,6 @@
     <Compile Include="Windows\PrivateMessageWindow.xaml.cs">
       <DependentUpon>PrivateMessageWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\StandardView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -135,10 +132,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CappuVoteResultView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CreateVoteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,6 +256,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\orgacuptest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\realtransparentcoffeecup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

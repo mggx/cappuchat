@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using ToastNotifications;
 
 namespace Chat.Client.Views
 {
@@ -8,6 +8,8 @@ namespace Chat.Client.Views
     /// </summary>
     public partial class CappuVoteView : UserControl
     {
+        private Notifier _notifier;
+
         public CappuVoteView()
         {
             InitializeComponent();

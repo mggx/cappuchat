@@ -18,7 +18,7 @@ namespace Chat.Client.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username; }
+            get { return _username?.Trim(); }
             set { _username = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 

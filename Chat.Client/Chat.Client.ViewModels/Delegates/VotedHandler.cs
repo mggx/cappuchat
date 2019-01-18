@@ -1,4 +1,6 @@
-﻿namespace Chat.Client.ViewModels.Delegates
+﻿using Chat.Shared.Models;
+
+namespace Chat.Client.ViewModels.Delegates
 {
-    public delegate void VotedHandler();
+    public delegate void VotedHandler(object sender, SimpleCappuVote simpleCappuVote);
 }

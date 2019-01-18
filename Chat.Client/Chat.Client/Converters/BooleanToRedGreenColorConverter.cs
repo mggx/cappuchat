@@ -7,7 +7,7 @@ using System.Windows.Media;
 namespace Chat.Client.Converters
 {
     [ValueConversion(typeof(bool), typeof(SolidColorBrush))]
-    public class BooleanToConnectionColorConverter : IValueConverter
+    public class BooleanToRedGreenColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

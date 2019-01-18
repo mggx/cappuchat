@@ -1,24 +1,22 @@
-﻿using System.Collections.Generic;
-using Chat.Responses;
+﻿using Chat.Responses;
 using Chat.Shared.Models;
 
 namespace Chat.Server.Hubs
 {
     public class VoteHub : BaseHub
     {
-        public static SimpleVote ActiveVote;
+        public static SimpleCappuVote ActiveCappuVote;
 
-        public SimpleCreateVoteResponse CreateVote(SimpleVote createdVote)
+        public SimpleCreateVoteResponse CreateCappuVote()
         {
             SimpleCreateVoteResponse response = new SimpleCreateVoteResponse();
 
-            if (ActiveVote == null)
+            if (ActiveCappuVote == null)
             {
                 string username = GetUsernameByConnectionId(Context.ConnectionId);
-                createdVote.CreatorName = username;
-                ActiveVote = createdVote;
-                response.Success = true;
-                Clients.All.OnVoteCreated(ActiveVote);
+                SimpleCappuVote cappuVote = new SimpleCappuVote(username);
+                ActiveCappuVote = cappuVote;
+                Clients.All.OnVoteCreated(cappuVote);
             }
             else
             {
@@ -29,13 +27,20 @@ namespace Chat.Server.Hubs
             return response;
         }
 
-        public SimpleVoteResponse Vote(int answerId)
+        public SimpleVoteResponse Vote(bool answer)
         {
-            SimpleVoteResponse response = new SimpleVoteResponse { Success = true };
+            SimpleVoteResponse response = new SimpleVoteResponse();
+
+            if (ActiveCappuVote == null)
+            {
+                response.Success = false;
+                response.ErrorMessage = Texts.Texts.NoActiveVote;
+                return response;
+            }
 
             string username = GetUsernameByConnectionId(Context.ConnectionId);
-            if (ActiveVote.Vote(username, answerId))
-                Clients.All.OnVoteChanged(ActiveVote);
+            if (ActiveCappuVote.Vote(username, answer))
+                Clients.All.OnVoteChanged(ActiveCappuVote);
             else
             {
                 response.Success = false;
@@ -47,7 +52,14 @@ namespace Chat.Server.Hubs
 
         public SimpleGetActiveVoteResponse GetActiveVote()
         {
-            return new SimpleGetActiveVoteResponse(ActiveVote, true);
+            return new SimpleGetActiveVoteResponse(ActiveCappuVote, true);
+        }
+
+        public BaseResponse FinalCappuCall()
+        {
+            BaseResponse response = new BaseResponse(true);
+            Clients.Others.OnFinalCappuCall();
+            return response;
         }
     }
 }
