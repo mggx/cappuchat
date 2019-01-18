@@ -255,11 +255,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\orgacuptest.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\realtransparentcoffeecup.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

@@ -21,7 +21,7 @@ namespace Chat.Client.SignalHelpers
             {
                 await _hubConnection.Start();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Connected = false;
                 return Connected;

@@ -48,5 +48,7 @@ namespace Chat.Texts
         public static string OnlineUsers => "Online Users";
 
         public static string CreateVote => "Cappu Call";
+
+        public static string NotImplementedYet => "Not implemented yet.";
     }
 }

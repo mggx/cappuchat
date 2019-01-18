@@ -9,13 +9,9 @@
              xmlns:converters="clr-namespace:Chat.Client.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}"
-             x:Name="Main">
+             d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}">
     
     <UserControl.Resources>
-        <bindingProxies:CappuVoteViewModelProxy x:Key="CappuVoteViewModelProxy"
-                                                Data="{Binding}"/>
-        
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
