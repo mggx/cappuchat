@@ -77,7 +77,7 @@ namespace Chat.Client.ViewModels
 
         private bool CanFinalCappuCall()
         {
-            return _activeVote.UserAnswerCache.Values.Count(vote => vote) == _onlineUsers?.Count();
+            return _activeVote?.UserAnswerCache.Values.Count(vote => vote) == _onlineUsers?.Count();
         }
 
         private async void FinalCappuCall()

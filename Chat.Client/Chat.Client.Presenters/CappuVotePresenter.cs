@@ -62,7 +62,7 @@ namespace Chat.Client.Presenters
 
         private void VoteSignalHelperOnFinalCappuCalled()
         {
-            _viewProvider.ShowToastNotification(Texts.Texts.GoGoCall, NotificationType.Success);
+            _viewProvider.ShowToastNotification(Texts.Texts.GoGoCall, NotificationType.Information);
             CappuVoteViewModel.Reset();
             CurrentViewModel = CappuVoteViewModel;
         }

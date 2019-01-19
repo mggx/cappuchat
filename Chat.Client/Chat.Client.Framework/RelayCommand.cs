@@ -69,11 +69,18 @@ namespace Chat.Client.Framework
         {
             if (_canExecute == null)
                 return true;
+
+            if (parameter == null)
+                parameter = default(T);
+
             return _canExecute.Invoke((T) parameter);
         }
 
         public void Execute(object parameter)
         {
+            if (parameter == null)
+                parameter = default(T);
+
             _action?.Invoke((T) parameter);
         }
 

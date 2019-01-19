@@ -50,6 +50,9 @@ namespace Chat.Texts
 
         public static string CreateVote => "Cappu Call";
 
+        public static string TitleVoteAlreadyCreated => "Already...";
+        public static string VoteAlreadyCreated => "Too late.. vote already created by someone else...";
+
         public static string NotImplementedYet => "Not implemented yet.";
     }
 }

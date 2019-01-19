@@ -2,9 +2,12 @@
 {
     public enum NotificationType
     {
+        //default types
         Information,
         Success,
         Warning,
-        Error
+        Error,
+        //custom types
+        CappuCall
     }
 }

@@ -37,7 +37,6 @@ namespace Chat.Client
 
             _hubConnectionHelper = new SignalHubConnectionHelper("http://localhost:1232/signalr/hubs");
 
-
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
             {
                 ChatSignalHelper = new ChatSignalHelper(_hubConnectionHelper.CreateHubProxy("ChatHub")),

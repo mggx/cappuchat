@@ -96,7 +96,13 @@
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\UsersToHorizontalAlignmentConverter.cs" />
+    <Compile Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml.cs">
+      <DependentUpon>CappuCallDisplayPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomNotifications\Extensions\CustomCallExtensions.cs" />
+    <Compile Include="CustomNotifications\Notifications\CappuCallNotification.cs" />
     <Compile Include="Extensions\MoveFocusExtension.cs" />
+    <Compile Include="CustomNotifications\Notifications\CustomNotificationBase.cs" />
     <Compile Include="Views\CappuVoteResultView.xaml.cs">
       <DependentUpon>CappuVoteResultView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +131,10 @@
     <Compile Include="Windows\PrivateMessageWindow.xaml.cs">
       <DependentUpon>PrivateMessageWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

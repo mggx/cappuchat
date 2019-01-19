@@ -8,12 +8,15 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Management;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
+using Chat.Client.CustomNotifications.Extensions;
 using Chat.Client.Presenters;
 using Chat.Client.Windows;
 using MahApps.Metro.Controls;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
+using ToastNotifications.Lifetime.Clear;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
@@ -151,7 +154,7 @@ namespace Chat.Client
             });
         }
 
-        public void ShowToastNotification(string message, NotificationType notificationType)
+        public void ShowToastNotification(string message, NotificationType notificationType, ICommand command = null)
         {
             switch (notificationType)
             {
@@ -167,16 +170,29 @@ namespace Chat.Client
                 case NotificationType.Error:
                     _notifier.ShowError(message);
                     break;
+                case NotificationType.CappuCall:
+                    _notifier.ShowCappuCallMessage(message, command);
+                    break;
             }
         }
 
-        public void Focus(IDialog dialog)
+        public void BringToFront(IDialog dialog)
         {
             if (_windowCache.ContainsKey(dialog))
             {
                 _windowCache[dialog].WindowState = WindowState.Normal;
                 _windowCache[dialog].Focus();
             }
+        }
+
+        public void BringToFront()
+        {
+            var window = Application.Current.MainWindow;
+            if (window == null)
+                return;
+
+            window.WindowState = WindowState.Normal;
+            window.Focus();
         }
 
         public void FlashWindow(bool checkFocus = true)

@@ -32,7 +32,7 @@ namespace Chat.Client.ViewModels
 
         public RelayCommand<SimpleUser> OpenPrivateChatCommand { get; }
         public RelayCommand CreateCappuVoteCommand { get; }
-        public RelayCommand GoCommand { get; }
+        public RelayCommand<bool> GoCommand { get; }
 
         public event OpenChatHandler OpenChat;
         public event VotedHandler Voted;
@@ -49,7 +49,7 @@ namespace Chat.Client.ViewModels
 
             OpenPrivateChatCommand = new RelayCommand<SimpleUser>(OpenPrivateChat);
             CreateCappuVoteCommand = new RelayCommand(CreateCappuVote, CanCreateVote);
-            GoCommand = new RelayCommand(Vote, CanVote);
+            GoCommand = new RelayCommand<bool>(Vote, CanVote);
 
             Initialize();
         }
@@ -64,27 +64,46 @@ namespace Chat.Client.ViewModels
             return _simpleVote == null;
         }
 
-        private void CreateCappuVote()
+        private async void CreateCappuVote()
         {
-            _signalHelperFacade.VoteSignalHelper.CreateVote();
+            if (await CheckForActiveVote())
+            {
+                _viewProvider.ShowMessage(Texts.Texts.TitleVoteAlreadyCreated, Texts.Texts.VoteAlreadyCreated);
+                return;
+            }
+
+            try
+            {
+                await _signalHelperFacade.VoteSignalHelper.CreateVote();
+            }
+            catch (CreateVoteFailedException e)
+            {
+                _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
+            }
         }
 
-        private bool CanVote()
+        private bool CanVote(bool focus = false)
         {
-            return true;
+            return !_simpleVote?.UserAnswerCache.ContainsKey(_user.Username) == true;
         }
 
-        private async void Vote()
+        private async void Vote(bool focus = false)
         {
             try
             {
                 await _signalHelperFacade.VoteSignalHelper.Vote(true);
+
+                if (focus)
+                    _viewProvider.BringToFront();
+
                 Voted?.Invoke(this, _simpleVote);
             }
             catch (VoteFailedException e)
             {
                 _viewProvider.ShowMessage("Error", e.Message);
             }
+
+            RaiseCanExecuteChanged();
         }
 
         private void Initialize()
@@ -107,15 +126,20 @@ namespace Chat.Client.ViewModels
             {
                 var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers();
                 UpdateOnlineCappuUsers(onlineUsers);
-
-                SimpleCappuVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
-                if (activeVote != null)
-                    UpdateActiveVote(activeVote, true);
+                await CheckForActiveVote();
             }
             catch (RequestFailedException e)
             {
                 _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
             }
+        }
+
+        private async Task<bool> CheckForActiveVote()
+        {
+            SimpleCappuVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
+            if (activeVote != null)
+                UpdateActiveVote(activeVote, true);
+            return activeVote != null;
         }
 
         private void UpdateActiveVote(SimpleCappuVote vote, bool raiseVotedEvent = false)
@@ -125,7 +149,8 @@ namespace Chat.Client.ViewModels
             {
                 Voted?.Invoke(this, _simpleVote);
             }
-            CreateCappuVoteCommand.RaiseCanExecuteChanged();
+
+            RaiseCanExecuteChanged();
         }
 
         private void ChatSignalHelperFacadeOnOnlineUsersChanged(SignalHelpers.Contracts.Events.OnlineUsersChangedEventArgs eventArgs)
@@ -146,7 +171,7 @@ namespace Chat.Client.ViewModels
         private void VoteSignalHelperOnCappuVoteCreated(SimpleCappuVote createdVote)
         {
             UpdateActiveVote(createdVote);
-            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, NotificationType.Information);
+            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, NotificationType.CappuCall, GoCommand);
         }
 
         private void VoteSignalHelperOnCappuVoteChanged(SimpleCappuVote changedVote)
@@ -166,11 +191,16 @@ namespace Chat.Client.ViewModels
             base.Dispose(disposing);
         }
 
+        private void RaiseCanExecuteChanged()
+        {
+            GoCommand.RaiseCanExecuteChanged();
+            CreateCappuVoteCommand.RaiseCanExecuteChanged();
+        }
+
         public void Reset()
         {
             _simpleVote = null;
-            GoCommand.RaiseCanExecuteChanged();
-            CreateCappuVoteCommand.RaiseCanExecuteChanged();
+            
         }
     }
 }

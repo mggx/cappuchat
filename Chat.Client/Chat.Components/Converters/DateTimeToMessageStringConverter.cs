@@ -9,7 +9,7 @@ namespace ChatComponents.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is DateTime dateTime)
-                return $"{DateTime.Now:hh:mm}{dateTime.ToString("tt", CultureInfo.InvariantCulture)}";
+                return $"{DateTime.Now:hh:mm} {dateTime.ToString("tt", CultureInfo.InvariantCulture)}";
             return string.Empty;
         }
 

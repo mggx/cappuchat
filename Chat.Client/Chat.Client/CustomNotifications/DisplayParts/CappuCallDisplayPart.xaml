@@ -1,0 +1,44 @@
+﻿<core:NotificationDisplayPart x:Class="Chat.Client.CustomNotifications.DisplayParts.CappuCallDisplayPart"
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:core="clr-namespace:ToastNotifications.Core;assembly=ToastNotifications"
+                              xmlns:notifications="clr-namespace:Chat.Client.CustomNotifications.Notifications"
+                              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+                              xmlns:system="clr-namespace:System;assembly=mscorlib"
+                              mc:Ignorable="d"  Background="Gray"
+                              d:DesignHeight="60" d:DesignWidth="250"
+                              d:DataContext="{d:DesignInstance notifications:CappuCallNotification, IsDesignTimeCreatable=False}">
+    <core:NotificationDisplayPart.Resources>
+        <system:Boolean x:Key="True">True</system:Boolean>
+    </core:NotificationDisplayPart.Resources>
+    <Grid Background="#464646">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="1" 
+                   VerticalAlignment="Center"
+                   Margin="5"
+                   Text="{Binding Message}" 
+                   FontFamily="Segoe Ui"
+                   FontSize="14"
+                   Foreground="White" 
+                   TextWrapping="Wrap"/>
+
+        <Button Grid.Column="2"
+                HorizontalAlignment="Right"
+                Margin="5"
+                Content="{x:Static texts:Texts.GoCall}"
+                FontSize="18"
+                Width="64"
+                Height="32"
+                Background="#333333"
+                Command="{Binding GoCommand}"
+                CommandParameter="{StaticResource True}"
+                Click="GoButtonOnClick"/>
+    </Grid>
+</core:NotificationDisplayPart>
