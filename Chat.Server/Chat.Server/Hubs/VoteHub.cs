@@ -1,4 +1,5 @@
-﻿using Chat.Responses;
+﻿using System.Configuration;
+using Chat.Responses;
 using Chat.Shared.Models;
 
 namespace Chat.Server.Hubs
@@ -40,7 +41,7 @@ namespace Chat.Server.Hubs
 
             string username = GetUsernameByConnectionId(Context.ConnectionId);
             if (ActiveCappuVote.Vote(username, answer))
-                Clients.All.OnVoteChanged(ActiveCappuVote);
+                InvokeOnVoteChanged();
             else
             {
                 response.Success = false;
@@ -58,7 +59,20 @@ namespace Chat.Server.Hubs
         public BaseResponse FinalCappuCall()
         {
             BaseResponse response = new BaseResponse(true);
-            Clients.Others.OnFinalCappuCall();
+            Clients.All.OnFinalCappuCall();
+            ActiveCappuVote = null;
+            return response;
+        }
+
+        public void InvokeOnVoteChanged()
+        {
+            Clients.All.OnVoteChanged(ActiveCappuVote);
+        }
+
+        public SimpleGetVoteScopeMessagesResponse GetVoteScopeMessages()
+        {
+            SimpleGetVoteScopeMessagesResponse response = new SimpleGetVoteScopeMessagesResponse();
+            response.VoteScopeMessages = ChatHub.VoteScopeMessages;
             return response;
         }
     }

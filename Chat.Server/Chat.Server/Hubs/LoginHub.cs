@@ -6,6 +6,7 @@ using Chat.Responses;
 using Chat.Server.Controller;
 using Chat.Shared.Models;
 using Chat.Server.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace Chat.Server.Hubs
 {
@@ -60,6 +61,7 @@ namespace Chat.Server.Hubs
                 if (username != null)
                 {
                     UsernameConnectionIdCache.Remove(username);
+                    VoteHub.ActiveCappuVote?.UserAnswerCache.Remove(username);
                 }
             }
 

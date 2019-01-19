@@ -49,6 +49,7 @@
     <Compile Include="GetOnlineUsersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleGetActiveVoteResponse.cs" />
+    <Compile Include="SimpleGetVoteScopeMessagesResponse.cs" />
     <Compile Include="SimpleLoginResponse.cs" />
     <Compile Include="SimpleRegisterResponse.cs" />
     <Compile Include="SimpleVoteResponse.cs" />

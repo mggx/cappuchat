@@ -8,6 +8,7 @@ namespace Chat.Client.Signalhelpers.Contracts
 {
     public interface ILoginSignalHelper
     {
+        SimpleUser User { get; }
         event EventHandler<string> ConnectionIdChanged;
         event EventHandler<string> LoggedOutByServer;
         event OnlineUsersChangedHandler OnlineUsersChanged;

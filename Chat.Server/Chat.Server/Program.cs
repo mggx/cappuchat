@@ -11,8 +11,17 @@ namespace Chat.Server
     {
         public static void Main(string[] args)
         {
-            string url = "http://localhost:1232/";
+            //Use localhost as url if -debug is in args
 
+            string url = string.Empty;
+            if (args.Length == 1)
+            {
+                if (args[0] == "-debug")
+                    url = "http://localhost:1232";
+            }
+            else
+                url = "http://*:1232";
+                
             DataAccess.DataAccess.InitializeDatabase();
 
             using (WebApp.Start(url))

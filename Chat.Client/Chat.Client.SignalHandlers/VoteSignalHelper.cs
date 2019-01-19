@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using Chat.Client.SignalHelpers.Contracts;
@@ -93,6 +95,18 @@ namespace Chat.Client.SignalHelpers
             BaseResponse serverResponse = await task;
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
+        }
+
+        public async Task<IEnumerable<SimpleMessage>> GetVoteScopeMessages()
+        {
+            var task = _voteHubProxy.Invoke<SimpleGetVoteScopeMessagesResponse>("GetVoteScopeMessages");
+            if (task == null)
+                throw new NullServerResponseException("Retrieved null task from server.");
+
+            SimpleGetVoteScopeMessagesResponse serverResponse = await task;
+            if (!serverResponse.Success)
+                throw new RequestFailedException(serverResponse.ErrorMessage);
+            return serverResponse.VoteScopeMessages;
         }
     }
 }

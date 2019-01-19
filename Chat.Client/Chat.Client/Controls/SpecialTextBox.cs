@@ -23,6 +23,24 @@ namespace Chat.Client.Controls
         public static readonly DependencyProperty AdditionalButtonCommandProperty = DependencyProperty.Register(
             "AdditionalButtonCommand", typeof(ICommand), typeof(SpecialTextBox), new PropertyMetadata(default(ICommand)));
 
+        public static readonly DependencyProperty EnterCommandProperty = DependencyProperty.Register(
+            "EnterCommand", typeof(ICommand), typeof(SpecialTextBox), new PropertyMetadata(default(ICommand)));
+
+        public static readonly DependencyProperty WatermarkForegroundProperty = DependencyProperty.Register(
+            "WatermarkForeground", typeof(SolidColorBrush), typeof(SpecialTextBox), new PropertyMetadata(default(SolidColorBrush)));
+
+        public SolidColorBrush WatermarkForeground
+        {
+            get { return (SolidColorBrush) GetValue(WatermarkForegroundProperty); }
+            set { SetValue(WatermarkForegroundProperty, value); }
+        }
+
+        public ICommand EnterCommand
+        {
+            get { return (ICommand) GetValue(EnterCommandProperty); }
+            set { SetValue(EnterCommandProperty, value); }
+        }
+
         public ICommand AdditionalButtonCommand
         {
             get { return (ICommand) GetValue(AdditionalButtonCommandProperty); }
@@ -56,6 +74,23 @@ namespace Chat.Client.Controls
         static SpecialTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SpecialTextBox), new FrameworkPropertyMetadata(typeof(SpecialTextBox)));
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.Key != Key.Enter)
+                return;
+
+            if (EnterCommand == null)
+                return;
+
+            if (!EnterCommand.CanExecute(Text))
+                return;
+
+            EnterCommand.Execute(Text);
+            Text = string.Empty;
         }
     }
 }

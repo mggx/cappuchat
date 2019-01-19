@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -36,7 +37,10 @@ namespace Chat.Client.SignalHelpers
 
         private void ChatHubProxyOnMessageReceived(SimpleMessage receivedMessage)
         {
-            MessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(receivedMessage));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(receivedMessage));
+            });
         }
 
         private void ChatHubProxyOnPrivateMessageReceived(SimpleMessage message)

@@ -7,9 +7,12 @@ namespace Chat.Server.Hubs
 {
     public class ChatHub : BaseHub
     {
+        public static IList<SimpleMessage> VoteScopeMessages { get; set; } = new List<SimpleMessage>();
+
         public void SendMessage(SimpleMessage message)
         {
             Console.WriteLine($"SendMessage from {message.Sender.Username} to {message.Receiver.Username} received. {Environment.NewLine} Message: {message.Message}");
+            VoteScopeMessages.Add(message);
             Clients.All.OnMessageReceived(message);
         }
 

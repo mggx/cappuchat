@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Shared.Models;
 using System.Threading.Tasks;
@@ -15,5 +17,6 @@ namespace Chat.Client.SignalHelpers.Contracts
         Task Vote(bool answer);
         Task<SimpleCappuVote> GetActiveVote();
         Task FinalCappuCall();
+        Task<IEnumerable<SimpleMessage>> GetVoteScopeMessages();
     }
 }

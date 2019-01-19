@@ -5,6 +5,7 @@
         <Style.Setters>
             <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
             <Setter Property="Border.BorderBrush" Value="{StaticResource MainColor}"/>
+            <Setter Property="WatermarkForeground" Value="Gray"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="Template">
@@ -20,7 +21,7 @@
                                 <Grid HorizontalAlignment="Stretch">
                                     <TextBlock x:Name="PART_Watermark" 
                                                Text="{TemplateBinding Watermark}" 
-                                               Foreground="Gray" 
+                                               Foreground="{TemplateBinding WatermarkForeground}" 
                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Visibility="Collapsed" />

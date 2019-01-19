@@ -87,6 +87,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingProxies\BindingProxy.cs" />
+    <Compile Include="BindingProxies\CappuVoteResultViewModelProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
     <Compile Include="Converters\BooleanToRedGreenColorConverter.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\UsersToHorizontalAlignmentConverter.cs" />
     <Compile Include="Extensions\MoveFocusExtension.cs" />
     <Compile Include="Views\CappuVoteResultView.xaml.cs">
       <DependentUpon>CappuVoteResultView.xaml</DependentUpon>
@@ -239,6 +241,10 @@
     <ProjectReference Include="..\Chat.Client.ViewModels\Chat.Client.ViewModels.csproj">
       <Project>{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}</Project>
       <Name>Chat.Client.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat.Components\ChatComponents.csproj">
+      <Project>{E889603B-0018-44DD-B50C-47A9E93D2A7A}</Project>
+      <Name>ChatComponents</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chat.DataAccess\Chat.DataAccess.csproj">
       <Project>{323DBCF4-CE12-4E19-A428-8E1A93FE71BE}</Project>

@@ -165,5 +165,12 @@ namespace Chat.Client.ViewModels
 
             base.Dispose(disposing);
         }
+
+        public void Reset()
+        {
+            _simpleVote = null;
+            GoCommand.RaiseCanExecuteChanged();
+            CreateCappuVoteCommand.RaiseCanExecuteChanged();
+        }
     }
 }

@@ -5,8 +5,10 @@ using Chat.Client.ViewModels.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Management;
 using System.Windows;
+using System.Windows.Interop;
 using Chat.Client.Presenters;
 using Chat.Client.Windows;
 using MahApps.Metro.Controls;
@@ -19,6 +21,8 @@ namespace Chat.Client
 {
     public class ViewProvider : IViewProvider
     {
+        [DllImport("user32")] public static extern int FlashWindow(IntPtr hwnd, bool bInvert);
+
         private readonly Dictionary<IDialog, Window> _windowCache = new Dictionary<IDialog, Window>();
         private Notifier _notifier;
 
@@ -173,6 +177,16 @@ namespace Chat.Client
                 _windowCache[dialog].WindowState = WindowState.Normal;
                 _windowCache[dialog].Focus();
             }
+        }
+
+        public void FlashWindow(bool checkFocus = true)
+        {
+            if (Application.Current.MainWindow == null ||
+                (Application.Current.MainWindow.WindowState != WindowState.Minimized || !checkFocus))
+                return;
+
+            WindowInteropHelper wih = new WindowInteropHelper(Application.Current.MainWindow); 
+            FlashWindow(wih.Handle, true);
         }
     }
 }

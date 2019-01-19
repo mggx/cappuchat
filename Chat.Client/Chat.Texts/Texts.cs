@@ -7,6 +7,7 @@ namespace Chat.Texts
         public static string Ok => "Ok";
         public static string Cancel => "Cancel";
 
+        public static string TypeMessage => "Type a message...";
         public static string SendMessage => "Send message";
         public static string Friends => "Friends";
         public static string UsernameWatermark => "Whats your username?...";

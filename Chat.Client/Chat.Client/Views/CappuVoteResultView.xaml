@@ -8,16 +8,36 @@
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              xmlns:converters="clr-namespace:Chat.Client.Converters"
              xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
+             xmlns:models1="clr-namespace:Chat.Shared.Models;assembly=Chat.Shared.Models"
+             xmlns:controls="clr-namespace:Chat.Client.Controls"
+             xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
+             xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CappuVoteResultViewModel}">
     <UserControl.Resources>
         <converters:BooleanToRedGreenColorConverter x:Key="BooleanToRedGreenColorConverter"/>
+
+        <bindingProxies:CappuVoteResultViewModelProxy x:Key="CappuVoteResultViewModelProxy"
+                                                      Data="{Binding}"/>
+
+        <converters:UsersToHorizontalAlignmentConverter x:Key="UsersToHorizontalAlignmentConverter"/>
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <StackPanel HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Margin="5">
+                    Margin="5"
+                    Grid.Row="0"
+                    Grid.Column="0">
             <TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
                        HorizontalAlignment="Center"
                        FontSize="24"
@@ -60,13 +80,17 @@
                         <TextBlock Text="{Binding Username, Mode=OneTime}"
                                    TextAlignment="Center"
                                    Width="100"
-                                   Foreground="{Binding Voted, Mode=OneTime, Converter={StaticResource BooleanToRedGreenColorConverter}}"/>
+                                   Foreground="{Binding Voted, Converter={StaticResource BooleanToRedGreenColorConverter}}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
         
-        <Button BorderThickness="0"
+        <Button HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Grid.Row="1"
+                Grid.Column="0"
+                BorderThickness="0"
                 FocusVisualStyle="{x:Null}"
                 Background="Transparent"
                 Width="128"
@@ -74,5 +98,52 @@
                 Command="{Binding FinalCappuCallCommand}">
             <Image Source="pack://application:,,,/Chat.Client;component/Resources/realtransparentcoffeecup.png"/>
         </Button>
+        
+        <Grid Grid.Column="1"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Grid.Row="0"
+              Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <chatComponents:ChatListView x:Name="BroadcastListView"
+                                         Grid.Row="0"
+                                         ItemsSource="{Binding Broadcasts}"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         HorizontalContentAlignment="Stretch">
+                <chatComponents:ChatListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models1:SimpleMessage}">
+                        <chatComponents:ChatBubble Text="{Binding Message, Mode=OneTime}"
+                                                   Time="{Binding MessageSentDateTime, Mode=OneTime}"
+                                                   Sender="{Binding Sender.Username, Mode=OneTime}"
+                                                   Background="{StaticResource AccentLightColor5}">
+                            <chatComponents:ChatBubble.HorizontalAlignment>
+                                <MultiBinding Converter="{StaticResource UsersToHorizontalAlignmentConverter}">
+                                    <Binding Path="Sender"/>
+                                    <Binding Source="{StaticResource CappuVoteResultViewModelProxy}" Path="Data.User"/>
+                                </MultiBinding>
+                            </chatComponents:ChatBubble.HorizontalAlignment>
+                        </chatComponents:ChatBubble>
+                    </DataTemplate>
+                </chatComponents:ChatListView.ItemTemplate>
+            </chatComponents:ChatListView>
+
+            <Border Grid.Row="1" Background="Teal" Padding="5" Margin="10" CornerRadius="5">
+                <controls:SpecialTextBox Watermark="{x:Static texts:Texts.TypeMessage}"
+                                         EnterCommand="{Binding SendBroadcastCommand}"
+                                         Background="Transparent"
+                                         WatermarkForeground="{StaticResource AccentLightColor5}"
+                                         Foreground="Black"
+                                         BorderThickness="0, 0, 0, 1"
+                                         BorderBrush="{StaticResource AccentDarkColor4}"
+                                         HorizontalContentAlignment="Left"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Bottom"/>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

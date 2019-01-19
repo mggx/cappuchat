@@ -63,12 +63,14 @@ namespace Chat.Client.Presenters
         private void VoteSignalHelperOnFinalCappuCalled()
         {
             _viewProvider.ShowToastNotification(Texts.Texts.GoGoCall, NotificationType.Success);
+            CappuVoteViewModel.Reset();
+            CurrentViewModel = CappuVoteViewModel;
         }
 
-        private void CappuVoteViewModelOnVoted(object sender, SimpleCappuVote simpleCappuVote)
+        private async void CappuVoteViewModelOnVoted(object sender, SimpleCappuVote simpleCappuVote)
         {
-            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade);
-            CappuVoteResultViewModel.Load(simpleCappuVote);
+            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade, _viewProvider);
+            await CappuVoteResultViewModel.Load(simpleCappuVote);
             CurrentViewModel = CappuVoteResultViewModel;
         }
 
@@ -86,7 +88,7 @@ namespace Chat.Client.Presenters
                 _signalHelperFacade.VoteSignalHelper.FinalCappuCalled -= VoteSignalHelperOnFinalCappuCalled;
 
                 CappuVoteViewModel.Dispose();
-                CappuVoteResultViewModel.Dispose();
+                CappuVoteResultViewModel?.Dispose();
             }
 
             base.Dispose(disposing);

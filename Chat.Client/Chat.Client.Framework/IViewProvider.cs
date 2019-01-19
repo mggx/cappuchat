@@ -9,5 +9,6 @@
         void ShowMessage(string title, string message);
         void Focus(IDialog dialog);
         void ShowToastNotification(string message, NotificationType notificationType);
+        void FlashWindow(bool checkFocus = true);
     }
 }

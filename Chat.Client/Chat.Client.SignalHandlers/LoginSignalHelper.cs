@@ -16,6 +16,8 @@ namespace Chat.Client.SignalHelpers
     {
         private readonly IHubProxy _loginHubProxy;
 
+        public SimpleUser User { get; set; }
+
         public event EventHandler<string> ConnectionIdChanged;
         public event EventHandler<string> LoggedOutByServer;
         public event OnlineUsersChangedHandler OnlineUsersChanged;
@@ -60,6 +62,8 @@ namespace Chat.Client.SignalHelpers
             SimpleLoginResponse serverResponse = await task;
             if (!serverResponse.Success)
                 throw new LoginFailedException(serverResponse.ErrorMessage);
+
+            User = serverResponse.User;
 
             return serverResponse.User;
         }
