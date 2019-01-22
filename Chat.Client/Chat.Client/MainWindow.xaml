@@ -36,7 +36,7 @@
             <views:CappuMainView/>
         </DataTemplate>
 
-        <converters:BooleanToRedGreenColorConverter x:Key="BooleanToConnectionColorConverter" />
+        <converters:BooleanToConnectionColorConverter x:Key="BooleanToConnectionColorConverter" />
         <converters:BooleanToConnectionToolTipConverter x:Key="BooleanToConnectionToolTipConverter" />
         <converters:BooleanToConnectionTextConverter x:Key="BooleanToConnectionTextConverter" />
     </Window.Resources>

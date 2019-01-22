@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              xmlns:converters="clr-namespace:Chat.Client.Converters"
              xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
@@ -12,14 +10,18 @@
              xmlns:controls="clr-namespace:Chat.Client.Controls"
              xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
              xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
+             xmlns:views="clr-namespace:Chat.Client.Views"
+             xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance viewModels:CappuVoteResultViewModel}">
+             d:DataContext="{d:DesignInstance presenters:CappuVotePresenter}">
     <UserControl.Resources>
-        <converters:BooleanToRedGreenColorConverter x:Key="BooleanToRedGreenColorConverter"/>
+        <converters:BooleanToOnlineUsernameColorConverter x:Key="BooleanToOnlineUsernameColorConverter"/>
 
         <bindingProxies:CappuVoteResultViewModelProxy x:Key="CappuVoteResultViewModelProxy"
-                                                      Data="{Binding}"/>
+                                                      Data="{Binding CappuVoteResultViewModel}"/>
+
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <converters:UsersToHorizontalAlignmentConverter x:Key="UsersToHorizontalAlignmentConverter"/>
     </UserControl.Resources>
@@ -33,21 +35,27 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Margin="5"
-                    Grid.Row="0"
-                    Grid.Column="0">
+
+        <DockPanel HorizontalAlignment="Center"
+                   VerticalAlignment="Stretch"
+                   LastChildFill="True"
+                   Margin="5"
+                   Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Grid.Column="0">
+
             <TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
                        HorizontalAlignment="Center"
                        FontSize="24"
                        Foreground="{StaticResource AccentLightColor3}"
-                       Margin="5"/>
+                       Margin="5"
+                       DockPanel.Dock="Top"/>
 
-            <ListView ItemsSource="{Binding UserVotes}"
-                      Background="{StaticResource AccentLightColor1}"
+            <ListView x:Name="OnlineUsersListView"
+                      ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}"
+                      Background="Transparent"
                       BorderThickness="0"
-                      x:Name="OnlineUsersListView">
+                      DockPanel.Dock="Top">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
                         <Setter Property="Focusable" Value="False"/>
@@ -77,28 +85,40 @@
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type models:UsersVotes}">
-                        <TextBlock Text="{Binding Username, Mode=OneTime}"
-                                   TextAlignment="Center"
-                                   Width="100"
-                                   Foreground="{Binding Voted, Converter={StaticResource BooleanToRedGreenColorConverter}}"/>
+                        <DockPanel MaxWidth="120">
+                            <TextBlock HorizontalAlignment="Center"
+                                       DockPanel.Dock="Left"
+                                       Text="{Binding Username, Mode=OneTime}"
+                                       TextAlignment="Center"
+                                       Width="100"
+                                       Foreground="{Binding Voted, Converter={StaticResource BooleanToOnlineUsernameColorConverter}}"/>
+                            <Image HorizontalAlignment="Right"
+                                   DockPanel.Dock="Right"
+                                   Source="pack://application:,,,/Chat.Client;component/Resources/check.png"
+                                   Width="16"
+                                   Height="16"
+                                   Visibility="{Binding Voted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
-        
-        <Button HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Grid.Row="1"
-                Grid.Column="0"
-                BorderThickness="0"
-                FocusVisualStyle="{x:Null}"
-                Background="Transparent"
-                Width="128"
-                Height="128"
-                Command="{Binding FinalCappuCallCommand}">
-            <Image Source="pack://application:,,,/Chat.Client;component/Resources/realtransparentcoffeecup.png"/>
-        </Button>
-        
+
+            <Button HorizontalAlignment="Stretch"
+                    BorderThickness="0"
+                    FocusVisualStyle="{x:Null}"
+                    Background="Transparent"
+                    Width="128"
+                    Height="128"
+                    DockPanel.Dock="Bottom"
+                    Command="{Binding CappuVoteResultViewModel.FinalCappuCallCommand}">
+                <Image Source="pack://application:,,,/Chat.Client;component/Resources/realtransparentcoffeecup.png"/>
+            </Button>
+
+            <views:CappuVoteView DataContext="{Binding CappuVoteViewModel}"
+                                 DockPanel.Dock="Bottom"
+                                 HorizontalAlignment="Stretch"/>
+        </DockPanel>
+
         <Grid Grid.Column="1"
               HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
@@ -110,11 +130,12 @@
             </Grid.RowDefinitions>
             <chatComponents:ChatListView x:Name="BroadcastListView"
                                          Grid.Row="0"
-                                         ItemsSource="{Binding Broadcasts}"
+                                         ItemsSource="{Binding CappuVoteResultViewModel.Broadcasts}"
                                          Background="Transparent"
                                          BorderThickness="0"
                                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                         HorizontalContentAlignment="Stretch">
+                                         HorizontalContentAlignment="Stretch"
+                                         UserMessageBooleanPath="IsLocalMessage">
                 <chatComponents:ChatListView.ItemTemplate>
                     <DataTemplate DataType="{x:Type models1:SimpleMessage}">
                         <chatComponents:ChatBubble Text="{Binding Message, Mode=OneTime}"
@@ -134,7 +155,7 @@
 
             <Border Grid.Row="1" Background="Teal" Padding="5" Margin="10" CornerRadius="5">
                 <controls:SpecialTextBox Watermark="{x:Static texts:Texts.TypeMessage}"
-                                         EnterCommand="{Binding SendBroadcastCommand}"
+                                         EnterCommand="{Binding CappuVoteResultViewModel.SendBroadcastCommand}"
                                          Background="Transparent"
                                          WatermarkForeground="{StaticResource AccentLightColor5}"
                                          Foreground="Black"

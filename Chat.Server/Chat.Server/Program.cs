@@ -20,7 +20,7 @@ namespace Chat.Server
                     url = "http://localhost:1232";
             }
             else
-                url = "http://*:1232";
+                url = "http://*:5555";
                 
             DataAccess.DataAccess.InitializeDatabase();
 

@@ -35,7 +35,7 @@ namespace Chat.Texts
 
         public static string Error => "Error";
 
-        public static string CappuCallOverview => "Cappu Call Overview";
+        public static string CappuCallOverview => "Cappu Vote - Overview";
         public static string CappuCalled => "Cappu Call! ANSWER NOW!!";
         public static string GoCall => "Go";
         public static string GoGoCall => "GOGOOGOGOGOOGOGOGOGOIOGOGOGO";
@@ -54,5 +54,10 @@ namespace Chat.Texts
         public static string VoteAlreadyCreated => "Too late.. vote already created by someone else...";
 
         public static string NotImplementedYet => "Not implemented yet.";
+
+        public static string ServerSettings => "Server settings";
+        public static string ServerUrlWatermark => "Server Url...";
+        public static string ServerPortWatermark => "Server Port...";
+        public static string Save => "Save";
     }
 }

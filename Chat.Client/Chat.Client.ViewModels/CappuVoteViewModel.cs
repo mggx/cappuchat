@@ -95,8 +95,6 @@ namespace Chat.Client.ViewModels
 
                 if (focus)
                     _viewProvider.BringToFront();
-
-                Voted?.Invoke(this, _simpleVote);
             }
             catch (VoteFailedException e)
             {
@@ -116,6 +114,7 @@ namespace Chat.Client.ViewModels
             _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged += ChatSignalHelperFacadeOnOnlineUsersChanged;
             _signalHelperFacade.VoteSignalHelper.VoteCreated += VoteSignalHelperOnCappuVoteCreated;
             _signalHelperFacade.VoteSignalHelper.VoteChanged += VoteSignalHelperOnCappuVoteChanged;
+            _signalHelperFacade.VoteSignalHelper.FinalCappuCalled += VoteSignalHelperOnFinalCappuCalled;
         }
 
         public async Task Load(SimpleUser user)
@@ -145,11 +144,6 @@ namespace Chat.Client.ViewModels
         private void UpdateActiveVote(SimpleCappuVote vote, bool raiseVotedEvent = false)
         {
             SimpleVote = vote;
-            if (vote?.UserAnswerCache.ContainsKey(_user.Username) == true && raiseVotedEvent)
-            {
-                Voted?.Invoke(this, _simpleVote);
-            }
-
             RaiseCanExecuteChanged();
         }
 
@@ -179,6 +173,11 @@ namespace Chat.Client.ViewModels
             UpdateActiveVote(changedVote);
         }
 
+        private void VoteSignalHelperOnFinalCappuCalled()
+        {
+            RaiseCanExecuteChanged();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -186,6 +185,7 @@ namespace Chat.Client.ViewModels
                 _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged -= ChatSignalHelperFacadeOnOnlineUsersChanged;
                 _signalHelperFacade.VoteSignalHelper.VoteCreated -= VoteSignalHelperOnCappuVoteCreated;
                 _signalHelperFacade.VoteSignalHelper.VoteChanged -= VoteSignalHelperOnCappuVoteChanged;
+                _signalHelperFacade.VoteSignalHelper.FinalCappuCalled -= VoteSignalHelperOnFinalCappuCalled;
             }
 
             base.Dispose(disposing);
@@ -200,7 +200,6 @@ namespace Chat.Client.ViewModels
         public void Reset()
         {
             _simpleVote = null;
-            
         }
     }
 }

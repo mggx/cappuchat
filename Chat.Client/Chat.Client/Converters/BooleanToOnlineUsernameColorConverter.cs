@@ -1,13 +1,12 @@
-﻿using Chat.Client.Styles;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+using Chat.Client.Styles;
 
 namespace Chat.Client.Converters
 {
-    [ValueConversion(typeof(bool), typeof(SolidColorBrush))]
-    public class BooleanToRedGreenColorConverter : IValueConverter
+    public class BooleanToOnlineUsernameColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -17,7 +16,7 @@ namespace Chat.Client.Converters
             var boolean = (bool) value;
             if (boolean)
                 return ProgramColors.AccentLightColor3;
-            return new SolidColorBrush(Color.FromRgb(128, 0, 0));
+            return Colors.Teal;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

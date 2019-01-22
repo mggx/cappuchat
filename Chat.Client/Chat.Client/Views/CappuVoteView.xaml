@@ -3,23 +3,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels;assembly=Chat.Client.ViewModels"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
-             xmlns:converters="clr-namespace:Chat.Client.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}">
-    
-    <UserControl.Resources>
-        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
-    </UserControl.Resources>
+
     <Grid>
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Button x:Name="CreateVoteButton"
                     Content="{x:Static texts:Texts.CreateVote}" 
-                    Width="200" 
+                    Width="120" 
                     Height="25" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
@@ -27,17 +22,23 @@
                     Command="{Binding CreateCappuVoteCommand}"
                     Visibility="{Binding ElementName=CreateVoteButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <TextBlock HorizontalAlignment="Center"
+            <!--<TextBlock HorizontalAlignment="Center"
                        FontSize="48"
                        Foreground="{StaticResource AccentLightColor3}"
                        Margin="5"
                        Text="{x:Static texts:Texts.GoQuestion}"
-                       Visibility="{Binding SimpleVote, Converter={StaticResource NullToVisibilityConverter}}">
-            </TextBlock>
+                       Visibility="{Binding ElementName=GoCallButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+            </TextBlock>-->
 
-            <Button Content="{x:Static texts:Texts.GoCall}"
+            <Button x:Name="GoCallButton"
+                    Width="120" 
+                    Height="25" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    Margin="5" 
+                    Content="{x:Static texts:Texts.GoCall}"
                     Command="{Binding GoCommand}"
-                    Visibility="{Binding SimpleVote, Converter={StaticResource NullToVisibilityConverter}}"/>
+                    Visibility="{Binding ElementName=GoCallButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>

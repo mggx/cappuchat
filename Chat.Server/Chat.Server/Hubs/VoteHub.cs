@@ -61,6 +61,7 @@ namespace Chat.Server.Hubs
             BaseResponse response = new BaseResponse(true);
             Clients.All.OnFinalCappuCall();
             ActiveCappuVote = null;
+            InvokeOnVoteChanged();
             return response;
         }
 
@@ -72,7 +73,7 @@ namespace Chat.Server.Hubs
         public SimpleGetVoteScopeMessagesResponse GetVoteScopeMessages()
         {
             SimpleGetVoteScopeMessagesResponse response = new SimpleGetVoteScopeMessagesResponse();
-            response.VoteScopeMessages = ChatHub.VoteScopeMessages;
+            response.VoteScopeMessages = ChatHub.PublicChatMessages;
             return response;
         }
     }

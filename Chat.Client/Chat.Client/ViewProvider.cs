@@ -197,12 +197,21 @@ namespace Chat.Client
 
         public void FlashWindow(bool checkFocus = true)
         {
-            if (Application.Current.MainWindow == null ||
-                (Application.Current.MainWindow.WindowState != WindowState.Minimized || !checkFocus))
+            var window = Application.Current.MainWindow;
+            if (window == null)
                 return;
 
-            WindowInteropHelper wih = new WindowInteropHelper(Application.Current.MainWindow); 
-            FlashWindow(wih.Handle, true);
+            WindowInteropHelper wih = new WindowInteropHelper(window); 
+
+            if (window.WindowState == WindowState.Minimized)
+            {
+                FlashWindow(wih.Handle, true);
+            }
+            else if (checkFocus)
+            {
+                if (window.IsFocused)
+                    FlashWindow(wih.Handle, true);
+            }
         }
     }
 }

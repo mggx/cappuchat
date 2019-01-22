@@ -90,18 +90,17 @@ namespace Chat.Client.ViewModels
             return !string.IsNullOrWhiteSpace(message);
         }
 
-        private void SendBroadcast(string message)
+        private async void SendBroadcast(string message)
         {
             var user = _signalHelperFacade.LoginSignalHelper.User;
-            _signalHelperFacade.ChatSignalHelper.SendMessage(new SimpleMessage(user, user, message){MessageSentDateTime = DateTime.Now});
+            var simpleMessage = new SimpleMessage(user, user, message) { MessageSentDateTime = DateTime.Now, IsLocalMessage = true };
+            Broadcasts.Add(simpleMessage);
+            simpleMessage.IsLocalMessage = false;
+            await _signalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage);
         }
 
-        public async Task Load(SimpleCappuVote cappuVote)
+        public async Task Load()
         {
-            if (cappuVote == null)
-                throw new InvalidOperationException("Cannot load CappuVoteResultViewModel. Given cappuVote is null.");
-            _activeVote = cappuVote;
-
             await LoadVotes();
             await LoadVoteScopedBroadcastMessages();
         }

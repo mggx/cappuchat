@@ -17,13 +17,6 @@ namespace Chat.Client.Presenters
         public CappuVoteViewModel CappuVoteViewModel { get; private set; }
         public CappuVoteResultViewModel CappuVoteResultViewModel { get; private set; }
 
-        private ViewModelBase _currentViewModel;
-        public ViewModelBase CurrentViewModel
-        {
-            get { return _currentViewModel; }
-            set { _currentViewModel = value; OnPropertyChanged(); }
-        }
-
         public CappuVotePresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
@@ -40,19 +33,18 @@ namespace Chat.Client.Presenters
         private void Initialize()
         {
             InitializeCappuVoteViewModel();
-            InitializeCappuVoteViewModelEvents();
+            InitializeCappuVoteResultViewModel();
             InitializeVoteSignalHelperEvents();
+        }
+
+        private void InitializeCappuVoteResultViewModel()
+        {
+            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade, _viewProvider);
         }
 
         private void InitializeCappuVoteViewModel()
         {
             CappuVoteViewModel = new CappuVoteViewModel(_signalHelperFacade, _viewProvider);
-            CurrentViewModel = CappuVoteViewModel;
-        }
-
-        private void InitializeCappuVoteViewModelEvents()
-        {
-            CappuVoteViewModel.Voted += CappuVoteViewModelOnVoted;
         }
 
         private void InitializeVoteSignalHelperEvents()
@@ -64,27 +56,19 @@ namespace Chat.Client.Presenters
         {
             _viewProvider.ShowToastNotification(Texts.Texts.GoGoCall, NotificationType.Information);
             CappuVoteViewModel.Reset();
-            CurrentViewModel = CappuVoteViewModel;
-        }
-
-        private async void CappuVoteViewModelOnVoted(object sender, SimpleCappuVote simpleCappuVote)
-        {
-            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade, _viewProvider);
-            await CappuVoteResultViewModel.Load(simpleCappuVote);
-            CurrentViewModel = CappuVoteResultViewModel;
         }
 
         public async Task Load(SimpleUser user)
         {
             _user = user;
             await CappuVoteViewModel.Load(user);
+            await CappuVoteResultViewModel.Load();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                CappuVoteViewModel.Voted -= CappuVoteViewModelOnVoted;
                 _signalHelperFacade.VoteSignalHelper.FinalCappuCalled -= VoteSignalHelperOnFinalCappuCalled;
 
                 CappuVoteViewModel.Dispose();

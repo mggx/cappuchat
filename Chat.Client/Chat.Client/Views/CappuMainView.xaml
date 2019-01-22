@@ -20,17 +20,11 @@
     </mah:MetroAnimatedSingleRowTabControl.Resources>
 
     <mah:MetroTabItem Header="{x:Static texts:Texts.CappuCallOverview}">
-        <mah:MetroTabItem.Resources>
-            <DataTemplate DataType="{x:Type viewModels:CappuVoteViewModel}">
-                <views:CappuVoteView />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:CappuVoteResultViewModel}">
-                <views:CappuVoteResultView/>
-            </DataTemplate>
-        </mah:MetroTabItem.Resources>
-        
-        <mah:TransitioningContentControl Content="{Binding CappuVotePresenter.CurrentViewModel}"
-                                         Transition="Up"/>
+        <mah:TransitioningContentControl Transition="Up">
+            <mah:TransitioningContentControl.Content>
+                <views:CappuVoteResultView DataContext="{Binding CappuVotePresenter}"/>
+            </mah:TransitioningContentControl.Content>
+        </mah:TransitioningContentControl>
     </mah:MetroTabItem>
     
     <mah:MetroTabItem Header="{x:Static texts:Texts.Chats}">

@@ -64,14 +64,10 @@ namespace Chat.Client.SignalHelpers
 
         public async Task SendMessage(SimpleMessage message)
         {
-            var task = _chatHubProxy.Invoke<BaseResponse>("SendMessage", message);
+            var task = _chatHubProxy.Invoke("SendMessage", message);
             if (task == null)
                 throw new NullServerResponseException("Retrieved null task from server.");
-
-            BaseResponse serverResponse = await task;
-            
-            if (!serverResponse.Success)
-                throw new SendMessageFailedException(serverResponse.ErrorMessage);
+            await task;
         }
 
         public async Task SendPrivateMessage(SimpleMessage message)
