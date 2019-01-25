@@ -28,14 +28,10 @@ namespace Chat.Client.ViewModels
             set { _simpleVote = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<SimpleUser> OnlineCappuUsers { get; set; } = new ObservableCollection<SimpleUser>();
+        public ObservableCollection<object> OnlineCappuUsers { get; set; } = new ObservableCollection<object>();
 
-        public RelayCommand<SimpleUser> OpenPrivateChatCommand { get; }
         public RelayCommand CreateCappuVoteCommand { get; }
         public RelayCommand<bool> GoCommand { get; }
-
-        public event OpenChatHandler OpenChat;
-        public event VotedHandler Voted;
 
         public CappuVoteViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
@@ -47,16 +43,10 @@ namespace Chat.Client.ViewModels
                 throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuVoteViewModel. Given viewProvider is null.");
             _viewProvider = viewProvider;
 
-            OpenPrivateChatCommand = new RelayCommand<SimpleUser>(OpenPrivateChat);
             CreateCappuVoteCommand = new RelayCommand(CreateCappuVote, CanCreateVote);
             GoCommand = new RelayCommand<bool>(Vote, CanVote);
 
             Initialize();
-        }
-
-        private void OpenPrivateChat(SimpleUser targetUser)
-        {
-            OpenChat?.Invoke(targetUser);
         }
 
         private bool CanCreateVote()

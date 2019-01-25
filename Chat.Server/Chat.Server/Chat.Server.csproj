@@ -77,10 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GroupController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
+    <Compile Include="Hubs\GroupHub.cs" />
     <Compile Include="Hubs\LoginHub.cs" />
     <Compile Include="Hubs\RegisterHub.cs" />
     <Compile Include="Hubs\VoteHub.cs" />

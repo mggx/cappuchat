@@ -66,6 +66,10 @@
       <Project>{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}</Project>
       <Name>Chat.Client.ViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chat.Models\Chat.Models.csproj">
+      <Project>{AEA6760B-9456-40E0-9FFD-EAD9288452C2}</Project>
+      <Name>Chat.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chat.Texts\Chat.Texts.csproj">
       <Project>{B29311D8-5B7C-4010-A2D8-10381F4CE602}</Project>
       <Name>Chat.Texts</Name>

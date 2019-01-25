@@ -1,18 +1,14 @@
-﻿using System;
+﻿using Chat.Server.DataAccess.Exceptions;
 using Chat.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using Chat.Server.DataAccess.Exceptions;
 
 namespace Chat.Server.DataAccess
 {
     public class UserRepository
     {
-        public UserRepository()
-        {
-        }
-
         public SimpleUser Login(string username, string password)
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
@@ -51,7 +47,7 @@ namespace Chat.Server.DataAccess
             dbCommand.ExecuteNonQuery();
         }
 
-        public void CreateSimpleUser(string username, string password)
+        public SimpleUser CreateSimpleUser(string username, string password)
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
 
@@ -71,6 +67,8 @@ namespace Chat.Server.DataAccess
             {
                 throw new UserCreationFailedException(Texts.Texts.CreatingUserFailed(e.Message));
             }
+
+            return new SimpleUser(username);
         }
 
         public IEnumerable<SimpleUser> GetAllUsers()

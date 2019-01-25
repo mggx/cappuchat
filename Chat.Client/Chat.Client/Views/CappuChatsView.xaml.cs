@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Chat.Client.Views
 {
@@ -10,6 +11,11 @@ namespace Chat.Client.Views
         public CappuChatsView()
         {
             InitializeComponent();
+        }
+
+        private void ChatViewOnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ChatView.BroadcastListView.LazyScrollToBottom = true;
         }
     }
 }

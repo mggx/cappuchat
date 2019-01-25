@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using Chat.Shared.Models;
 using Microsoft.AspNet.SignalR;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.SqlServer.Server;
+using Chat.Responses;
 
 namespace Chat.Server.Hubs
 {
@@ -40,6 +39,32 @@ namespace Chat.Server.Hubs
             }
 
             return string.Empty;
+        }
+
+        protected IList<SimpleUser> GetOnlineUsers()
+        {
+            IList<SimpleUser> onlineUsers = new List<SimpleUser>();
+            foreach (var pair in UsernameConnectionIdCache)
+            {
+                onlineUsers.Add(new SimpleUser(pair.Key));
+            }
+
+            return onlineUsers;
+        }
+
+        protected T ExecuteControllerAction<T, T1>(Func<T> controllerAction, T1 response) where T1 : BaseResponse
+        {
+            try
+            {
+                return controllerAction.Invoke();
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.ErrorMessage = e.Message;
+            }
+
+            return default(T);
         }
 
         public override Task OnConnected()

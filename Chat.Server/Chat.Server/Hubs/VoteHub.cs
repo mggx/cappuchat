@@ -70,11 +70,10 @@ namespace Chat.Server.Hubs
             Clients.All.OnVoteChanged(ActiveCappuVote);
         }
 
-        public SimpleGetVoteScopeMessagesResponse GetVoteScopeMessages()
-        {
-            SimpleGetVoteScopeMessagesResponse response = new SimpleGetVoteScopeMessagesResponse();
-            response.VoteScopeMessages = ChatHub.PublicChatMessages;
-            return response;
-        }
+        //public SimpleGetVoteScopeMessagesResponse GetVoteScopeMessages()
+        //{
+        //    SimpleGetVoteScopeMessagesResponse response = new SimpleGetVoteScopeMessagesResponse();
+        //    return response;
+        //}
     }
 }

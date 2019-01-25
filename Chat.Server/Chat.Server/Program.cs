@@ -1,9 +1,10 @@
-﻿using Microsoft.Owin.Cors;
+﻿using Chat.Server.Controller;
+using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
 using System;
-using Chat.Server;
-using Microsoft.Owin;
+using Chat.Server.Hubs;
+using Microsoft.AspNet.SignalR;
 
 namespace Chat.Server
 {
@@ -37,7 +38,10 @@ namespace Chat.Server
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
+
+            var hubConfiguration = new HubConfiguration();
+            hubConfiguration.EnableDetailedErrors = true;
+            app.MapSignalR(hubConfiguration);
         }
     }
 }

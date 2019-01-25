@@ -5,93 +5,104 @@ using Chat.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Data;
 using Chat.Client.ViewModels.Controllers;
+using Chat.Client.ViewModels.Delegates;
+using Chat.Models;
 
 namespace Chat.Client.ViewModels
 {
-    public class CappuChatViewModel : ViewModelBase, IDialog
+    public class CappuChatViewModel : CappuChatViewModelBase
     {
-        private readonly object _lockObject = new object();
+        public SimpleConversation Conversation { get; }
 
-        private readonly SimpleUser _user;
-        private readonly SimpleUser _targetUser;
+        private CappuMessageController _cappuMessageController;
 
-        private readonly ISignalHelperFacade _signalHelperFacade;
-        private readonly CappuMessageController _cappuMessageController;
+        public event AddNewMessageHandler AddNewMessage;
 
-        private ObservableCollection<SimpleMessage> _messages = new ObservableCollection<SimpleMessage>();
-        public ObservableCollection<SimpleMessage> Messages
+        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation) : base(signalHelperFacade, false)
         {
-            get { return _messages; }
-            set { _messages = value; OnPropertyChanged(); }
-        }
-
-        public event EventHandler<SimpleUser> PrivateMessageWindowClosed;
-
-        public RelayCommand<string> SendMessageCommand { get; }
-
-        public RelayCommand CloseCommand { get; }
-
-        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleUser user, SimpleUser targetUser)
-        {
-            _signalHelperFacade = signalHelperFacade;
-            _user = user;
-            _targetUser = targetUser;
-            _cappuMessageController = new CappuMessageController(user);
-
-            SendMessageCommand = new RelayCommand<string>(SendMessage);
-            CloseCommand = new RelayCommand(Close);
-
-            BindingOperations.EnableCollectionSynchronization(_messages, _lockObject);
+            if (conversation == null)
+                throw new ArgumentNullException(nameof(conversation),
+                    "Cannot create CappuChatViewModel. Given conversation is null.");
+            Conversation = conversation;
 
             Initialize();
         }
 
-        private void Initialize()
+        protected override void Initialize()
         {
-            IEnumerable<SimpleMessage> conversation = _cappuMessageController.GetConversation(_user, _targetUser);
-            foreach (var message in conversation)
-            {
-                Messages.Add(message);
-            }
-
+            base.Initialize();
+            InitializeCappuMessageController();
+            InitializeConversation();
             InitializeSignalHelperFacadeEvents();
+        }
+
+        private void InitializeCappuMessageController()
+        {
+            _cappuMessageController = new CappuMessageController(User);
+        }
+
+        private void InitializeConversation()
+        {
+            IEnumerable<SimpleMessage> conversation = _cappuMessageController.GetConversation(new SimpleUser(Conversation.TargetUsername));
+            foreach (var message in conversation)
+                Messages.Add(message);
+            Conversation.LastMessage = Messages.LastOrDefault()?.Message;
         }
 
         private void InitializeSignalHelperFacadeEvents()
         {
-            _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += ChatSignalHelperOnMessageReceived;
+            SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += ChatSignalHelperOnMessageReceived;
         }
 
-        private void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
+        protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
-            if (eventArgs.ReceivedMessage.Sender.Username == _targetUser.Username)
-            {
-                Messages.Add(eventArgs.ReceivedMessage);
-                _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
-            }
+            if (eventArgs.ReceivedMessage.Sender.Username != Conversation.TargetUsername)
+                return;
+
+            if (AddNewMessage?.Invoke(this) == true)
+                Conversation.NewMessages++;
+
+            Messages.Add(eventArgs.ReceivedMessage);
+            _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
+
+            Conversation.LastMessage = eventArgs.ReceivedMessage.Message;
         }
 
-        private void SendMessage(string message)
+        protected override void SendMessage(string message)
         {
-            var simpleMessage = new SimpleMessage(_user, _targetUser, message);
+            var simpleMessage = new SimpleMessage(User, new SimpleUser(Conversation.TargetUsername), message);
             simpleMessage.MessageSentDateTime = DateTime.Now;
-            Messages.Add(simpleMessage);
+
             _cappuMessageController.StoreOwnMessage(simpleMessage);
-            _signalHelperFacade.ChatSignalHelper.SendPrivateMessage(simpleMessage);
+            Messages.Add(simpleMessage);
+            simpleMessage.IsLocalMessage = false;
+            SignalHelperFacade.ChatSignalHelper.SendPrivateMessage(simpleMessage);
+
+            Conversation.LastMessage = message;
         }
 
-        private void Close()
+        public void Load(SimpleMessage message)
         {
-            PrivateMessageWindowClosed?.Invoke(this, _targetUser);
+            Messages.Add(message);
+            _cappuMessageController.StoreMessage(message);
+        }
+
+        public void Load(IEnumerable<SimpleMessage> messages)
+        {
+            foreach (var message in messages)
+            {
+                Load(message);
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
+                SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
             }
 
             base.Dispose(disposing);

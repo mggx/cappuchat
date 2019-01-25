@@ -11,8 +11,7 @@
         SizeToContent="Width"
         MaxHeight="300"
         Height="200"
-        d:DataContext="{d:DesignInstance viewModels1:CappuChatViewModel}"
-        Closing="PrivateMessageWindow_OnClosing">
+        d:DataContext="{d:DesignInstance viewModels1:CappuChatViewModel}">
     <Grid>
         <StackPanel HorizontalAlignment="Center"
                     Grid.Column="0">

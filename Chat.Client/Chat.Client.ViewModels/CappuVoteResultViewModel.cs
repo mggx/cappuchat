@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Threading.Tasks;
-using Chat.Client.Framework;
+﻿using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
-using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Chat.Client.ViewModels.Models;
 using Chat.Shared.Models;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Chat.Client.ViewModels
 {
@@ -24,11 +22,9 @@ namespace Chat.Client.ViewModels
         public SimpleUser User => _signalHelperFacade?.LoginSignalHelper.User;
 
         public ObservableCollection<UsersVotes> UserVotes { get; set; } = new ObservableCollection<UsersVotes>();
-        public ObservableCollection<SimpleMessage> Broadcasts { get; set; } = new ObservableCollection<SimpleMessage>();
 
         public RelayCommand FinalCappuCallCommand { get; }
-        public RelayCommand<string> SendBroadcastCommand { get; }
-
+        
         public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
@@ -40,7 +36,6 @@ namespace Chat.Client.ViewModels
             _viewProvider = viewProvider;
 
             FinalCappuCallCommand = new RelayCommand(FinalCappuCall, CanFinalCappuCall);
-            SendBroadcastCommand = new RelayCommand<string>(SendBroadcast, CanSendBroadcast);
 
             Initialize();
         }
@@ -54,7 +49,6 @@ namespace Chat.Client.ViewModels
         {
             _signalHelperFacade.VoteSignalHelper.VoteChanged += VoteSignalHelperOnVoteChanged;
             _signalHelperFacade.LoginSignalHelper.OnlineUsersChanged += LoginSignalHelperOnOnlineUsersChanged;
-            _signalHelperFacade.ChatSignalHelper.MessageReceivedHandler += ChatSignalHelperOnMessageReceived;
         }
 
         private async void VoteSignalHelperOnVoteChanged(SimpleCappuVote changedVote)
@@ -69,12 +63,6 @@ namespace Chat.Client.ViewModels
             FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
-        private void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
-        {
-            Broadcasts.Add(eventArgs.ReceivedMessage);
-            _viewProvider.FlashWindow();
-        }
-
         private bool CanFinalCappuCall()
         {
             return _activeVote?.UserAnswerCache.Values.Count(vote => vote) == _onlineUsers?.Count();
@@ -85,24 +73,9 @@ namespace Chat.Client.ViewModels
             await _signalHelperFacade.VoteSignalHelper.FinalCappuCall();
         }
 
-        private bool CanSendBroadcast(string message)
-        {
-            return !string.IsNullOrWhiteSpace(message);
-        }
-
-        private async void SendBroadcast(string message)
-        {
-            var user = _signalHelperFacade.LoginSignalHelper.User;
-            var simpleMessage = new SimpleMessage(user, user, message) { MessageSentDateTime = DateTime.Now, IsLocalMessage = true };
-            Broadcasts.Add(simpleMessage);
-            simpleMessage.IsLocalMessage = false;
-            await _signalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage);
-        }
-
         public async Task Load()
         {
             await LoadVotes();
-            await LoadVoteScopedBroadcastMessages();
         }
 
         private async Task LoadVotes()
@@ -128,16 +101,6 @@ namespace Chat.Client.ViewModels
             }
 
             OnPropertyChanged(nameof(UserVotes));
-        }
-
-        private async Task LoadVoteScopedBroadcastMessages()
-        {
-            Broadcasts.Clear();
-
-            foreach (SimpleMessage message in await _signalHelperFacade.VoteSignalHelper.GetVoteScopeMessages())
-            {
-                Broadcasts.Add(message);
-            }
         }
 
         protected override void Dispose(bool disposing)

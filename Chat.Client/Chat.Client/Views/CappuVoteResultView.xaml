@@ -1,30 +1,25 @@
 ﻿<UserControl x:Class="Chat.Client.Views.CappuVoteResultView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:Chat.Client.Converters"
-             xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
-             xmlns:models1="clr-namespace:Chat.Shared.Models;assembly=Chat.Shared.Models"
-             xmlns:controls="clr-namespace:Chat.Client.Controls"
-             xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
-             xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
-             xmlns:views="clr-namespace:Chat.Client.Views"
              xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
+             xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
+             xmlns:views="clr-namespace:Chat.Client.Views"
+             xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+             xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
+             xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance presenters:CappuVotePresenter}">
     <UserControl.Resources>
+        <bindingProxies:CappuGroupChatViewModelProxy x:Key="CappuGroupChatViewModelProxy"
+                                                Data="{Binding CappuGroupChatViewModel}"/>
         <converters:BooleanToOnlineUsernameColorConverter x:Key="BooleanToOnlineUsernameColorConverter"/>
-
-        <bindingProxies:CappuVoteResultViewModelProxy x:Key="CappuVoteResultViewModelProxy"
-                                                      Data="{Binding CappuVoteResultViewModel}"/>
-
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-
-        <converters:UsersToHorizontalAlignmentConverter x:Key="UsersToHorizontalAlignmentConverter"/>
     </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -58,7 +53,6 @@
                       DockPanel.Dock="Top">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
-                        <Setter Property="Focusable" Value="False"/>
                         <Setter Property="LayoutTransform">
                             <Setter.Value>
                                 <ScaleTransform x:Name="transform"/>
@@ -119,52 +113,14 @@
                                  HorizontalAlignment="Stretch"/>
         </DockPanel>
 
-        <Grid Grid.Column="1"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Stretch"
-              Grid.Row="0"
-              Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
-            </Grid.RowDefinitions>
-            <chatComponents:ChatListView x:Name="BroadcastListView"
-                                         Grid.Row="0"
-                                         ItemsSource="{Binding CappuVoteResultViewModel.Broadcasts}"
-                                         Background="Transparent"
-                                         BorderThickness="0"
-                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                         HorizontalContentAlignment="Stretch"
-                                         UserMessageBooleanPath="IsLocalMessage">
-                <chatComponents:ChatListView.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models1:SimpleMessage}">
-                        <chatComponents:ChatBubble Text="{Binding Message, Mode=OneTime}"
-                                                   Time="{Binding MessageSentDateTime, Mode=OneTime}"
-                                                   Sender="{Binding Sender.Username, Mode=OneTime}"
-                                                   Background="{StaticResource AccentLightColor5}">
-                            <chatComponents:ChatBubble.HorizontalAlignment>
-                                <MultiBinding Converter="{StaticResource UsersToHorizontalAlignmentConverter}">
-                                    <Binding Path="Sender"/>
-                                    <Binding Source="{StaticResource CappuVoteResultViewModelProxy}" Path="Data.User"/>
-                                </MultiBinding>
-                            </chatComponents:ChatBubble.HorizontalAlignment>
-                        </chatComponents:ChatBubble>
-                    </DataTemplate>
-                </chatComponents:ChatListView.ItemTemplate>
-            </chatComponents:ChatListView>
-
-            <Border Grid.Row="1" Background="Teal" Padding="5" Margin="10" CornerRadius="5">
-                <controls:SpecialTextBox Watermark="{x:Static texts:Texts.TypeMessage}"
-                                         EnterCommand="{Binding CappuVoteResultViewModel.SendBroadcastCommand}"
-                                         Background="Transparent"
-                                         WatermarkForeground="{StaticResource AccentLightColor5}"
-                                         Foreground="Black"
-                                         BorderThickness="0, 0, 0, 1"
-                                         BorderBrush="{StaticResource AccentDarkColor4}"
-                                         HorizontalContentAlignment="Left"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Bottom"/>
-            </Border>
-        </Grid>
+        <views:ChatView Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Grid.Column="1"
+                        DataContext="{Binding CappuGroupChatViewModel}">
+            <views:ChatView.MessageMenuItems>
+                <chatComponents:ChatBubbleMenuItem Header="Send private message"
+                                                   Command="{Binding Data.OpenPrivateChatCommand, Source={StaticResource CappuGroupChatViewModelProxy}}"/>
+            </views:ChatView.MessageMenuItems>
+        </views:ChatView>
     </Grid>
 </UserControl>

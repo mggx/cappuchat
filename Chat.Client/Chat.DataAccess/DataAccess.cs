@@ -51,10 +51,11 @@ namespace Chat.DataAccess
         {
             messagesDbCommand.CommandText = "CREATE TABLE IF NOT EXISTS messages " +
                                             "(ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-                                            "ConversationID INTEGER, " +
-                                            "username TEXT," +
-                                            "Message TEXT," +
-                                            "MessageSentDateTime TEXT);";
+                                            "ConversationID INTEGER NOT NULL, " +
+                                            "username TEXT NOT NULL, " +
+                                            "targetusername TEXT NOT NULL, " +
+                                            "Message TEXT NOT NULL," +
+                                            "MessageSentDateTime TEXT NOT NULL);";
             messagesDbCommand.ExecuteNonQuery();
         }
     }

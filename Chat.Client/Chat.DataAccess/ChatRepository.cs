@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
+using System.Xml.Schema;
+using Chat.Models;
 using Chat.Shared.Models;
 
 namespace Chat.DataAccess
@@ -48,9 +50,11 @@ namespace Chat.DataAccess
         private Int64 GetConversationIdByUsernames(string localusername, string targetUsername)
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
-            dbCommand.CommandText = "SELECT id FROM conversations WHERE targetusername = @targetusername";
 
             dbCommand.Parameters.Add(new SQLiteParameter("@targetusername", targetUsername));
+            dbCommand.Parameters.Add(new SQLiteParameter("@localusername", localusername));
+
+            dbCommand.CommandText = "SELECT id FROM conversations WHERE targetusername = @targetusername AND localusername = @localusername";
 
             IDataReader dataReader = dbCommand.ExecuteReader();
 
@@ -86,20 +90,42 @@ namespace Chat.DataAccess
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
 
-            dbCommand.CommandText =
-                "INSERT INTO messages (conversationid, message, messagesentdatetime, username) values (@conversationid, @message, @messagesentdatetime, @username)";
-
-
+            string username = message.IsLocalMessage ? message.Sender.Username : message.Receiver.Username;
             string targetUsername = message.IsLocalMessage ? message.Receiver.Username : message.Sender.Username;
-            string localusername = message.IsLocalMessage ? message.Sender.Username : message.Receiver.Username;
 
             dbCommand.Parameters.Add(new SQLiteParameter("@conversationid",
-                GetConversationIdByUsernames(localusername, targetUsername)));
+                GetConversationIdByUsernames(username, targetUsername)));
             dbCommand.Parameters.Add(new SQLiteParameter("@message", message.Message));
             dbCommand.Parameters.Add(new SQLiteParameter("@messagesentdatetime",
-                message.MessageSentDateTime.ToString(CultureInfo.InvariantCulture)));
+                message.MessageSentDateTime.ToString(CultureInfo.CurrentCulture)));
             dbCommand.Parameters.Add(new SQLiteParameter("@username", message.Sender.Username));
+            dbCommand.Parameters.Add(new SQLiteParameter("@targetusername", message.Receiver.Username));
+
+            dbCommand.CommandText =
+                "INSERT INTO messages (conversationid, message, messagesentdatetime, username, targetusername) values (@conversationid, @message, @messagesentdatetime, @username, @targetusername)";
+            
             dbCommand.ExecuteNonQuery();
+        }
+
+        public IEnumerable<SimpleConversation> GetConversations(SimpleUser user)
+        {
+            IDbCommand dbCommand = DataAccess.GetDbCommand();
+
+            string localusername = user.Username;
+
+            dbCommand.Parameters.Add(new SQLiteParameter("@localusername", localusername));
+
+            dbCommand.CommandText = "SELECT id, targetusername FROM conversations WHERE localusername = @localusername";
+
+            IDataReader dataReader = dbCommand.ExecuteReader();
+
+            IList<SimpleConversation> conversations = new List<SimpleConversation>();
+            while (dataReader.Read())
+            {
+                conversations.Add(new SimpleConversation(dataReader["targetusername"] as string));
+            }
+
+            return conversations;
         }
     }
 }

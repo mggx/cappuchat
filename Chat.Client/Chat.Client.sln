@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.DataAccess", "Chat.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatComponents", "Chat.Components\ChatComponents.csproj", "{E889603B-0018-44DD-B50C-47A9E93D2A7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Models", "Chat.Models\Chat.Models.csproj", "{AEA6760B-9456-40E0-9FFD-EAD9288452C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{E889603B-0018-44DD-B50C-47A9E93D2A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E889603B-0018-44DD-B50C-47A9E93D2A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E889603B-0018-44DD-B50C-47A9E93D2A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

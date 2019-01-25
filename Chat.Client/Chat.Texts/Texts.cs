@@ -40,6 +40,7 @@ namespace Chat.Texts
         public static string GoCall => "Go";
         public static string GoGoCall => "GOGOOGOGOGOOGOGOGOGOIOGOGOGO";
         public static string Chats => "Chats";
+        public static string NoChatSelected => "No chat selected";
 
         public static string QuestionWatermark => "Whats the question?";
         public static string AnswerWatermark => "Whats the answer?";

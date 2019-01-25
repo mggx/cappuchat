@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Chat.Responses;
+﻿using Chat.Responses;
 using Chat.Shared.Models;
+using System;
 
 namespace Chat.Server.Hubs
 {
     public class ChatHub : BaseHub
     {
-        public static IList<SimpleMessage> PublicChatMessages { get; set; } = new List<SimpleMessage>();
-
         public void SendMessage(SimpleMessage message)
         {
-            Console.WriteLine($"SendMessage from {message.Sender.Username} to {message.Receiver.Username} received. {Environment.NewLine} Message: {message.Message}");
-            PublicChatMessages.Add(message);
+            Console.WriteLine($"SendMessage from {message.Sender?.Username} to {message.Receiver?.Username} received. {Environment.NewLine} Message: {message.Message}");
             Clients.Others.OnMessageReceived(message);
         }
 
@@ -31,15 +27,7 @@ namespace Chat.Server.Hubs
         public GetOnlineUsersResponse GetOnlineUsers()
         {
             Console.WriteLine("GetOnlineUsers received.");
-            GetOnlineUsersResponse response = new GetOnlineUsersResponse{ Success = true };
-
-            IList<SimpleUser> onlineUsers = new List<SimpleUser>();
-            foreach (var pair in UsernameConnectionIdCache)
-            {
-                onlineUsers.Add(new SimpleUser(pair.Key));
-            }
-
-            response.OnlineUserList = onlineUsers;
+            GetOnlineUsersResponse response = new GetOnlineUsersResponse { OnlineUserList = base.GetOnlineUsers() };
             return response;
         }
     }

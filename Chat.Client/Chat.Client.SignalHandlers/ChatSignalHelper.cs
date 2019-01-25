@@ -45,7 +45,10 @@ namespace Chat.Client.SignalHelpers
 
         private void ChatHubProxyOnPrivateMessageReceived(SimpleMessage message)
         {
-            PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(message));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(message));
+            });
         }
 
         public async Task<IEnumerable<SimpleUser>> GetOnlineUsers()
@@ -75,11 +78,7 @@ namespace Chat.Client.SignalHelpers
             var task = _chatHubProxy.Invoke<BaseResponse>("SendPrivateMessage", message);
             if (task == null)
                 throw new NullServerResponseException("Retrieved null task from server.");
-
-            BaseResponse serverResponse = await task;
-
-            if (!serverResponse.Success)
-                throw new SendMessageFailedException(serverResponse.ErrorMessage);
+            await task;
         }
     }
 }

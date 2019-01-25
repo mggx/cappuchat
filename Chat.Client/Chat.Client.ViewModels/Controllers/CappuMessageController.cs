@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chat.DataAccess;
+using Chat.Models;
 using Chat.Shared.Models;
 
 namespace Chat.Client.ViewModels.Controllers
@@ -18,9 +19,14 @@ namespace Chat.Client.ViewModels.Controllers
             _chatRepository = new ChatRepository();
         }
 
-        public IEnumerable<SimpleMessage> GetConversation(SimpleUser user, SimpleUser targetUser)
+        public IEnumerable<SimpleMessage> GetConversation(SimpleUser targetUser)
         {
-            return _chatRepository.GetConversationByUsernames(user.Username, targetUser.Username);
+            return _chatRepository.GetConversationByUsernames(_user.Username, targetUser.Username);
+        }
+
+        public IEnumerable<SimpleConversation> GetConversations()
+        {
+            return _chatRepository.GetConversations(_user);
         }
 
         public void StoreOwnMessage(SimpleMessage message)

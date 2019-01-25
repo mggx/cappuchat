@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseResponse.cs" />
+    <Compile Include="SimpleCreateGroupResponse.cs" />
     <Compile Include="SimpleCreateVoteResponse.cs" />
     <Compile Include="GetOnlineUsersResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

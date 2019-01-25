@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Chat.Responses;
+using Chat.Server.Controller;
+using Chat.Server.DataAccess.Exceptions;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Chat.Responses;
-using Chat.Server.Controller;
-using Chat.Shared.Models;
-using Chat.Server.Hubs;
-using Microsoft.AspNet.SignalR;
 
 namespace Chat.Server.Hubs
 {
@@ -16,8 +13,10 @@ namespace Chat.Server.Hubs
 
         public SimpleLoginResponse Login(string username, string password)
         {
-            SimpleLoginResponse response = UserController.Login(username, password);
-            if (!response.Success)
+            SimpleLoginResponse response = new SimpleLoginResponse();
+
+            response.User = ExecuteControllerAction(() => UserController.Login(username, password), response);
+            if (response.User == null)
                 return response;
 
             response.ConnectionId = Context.ConnectionId;
@@ -30,13 +29,7 @@ namespace Chat.Server.Hubs
 
             Add(username);
 
-            IList<SimpleUser> onlineUsers = new List<SimpleUser>();
-            foreach (var pair in UsernameConnectionIdCache)
-            {
-                onlineUsers.Add(new SimpleUser(pair.Key));
-            }
-
-            Clients.All.OnOnlineUsersChanged(onlineUsers);
+            Clients.All.OnOnlineUsersChanged(GetOnlineUsers());
 
             return response;
         }
@@ -65,13 +58,7 @@ namespace Chat.Server.Hubs
                 }
             }
 
-            IList<SimpleUser> onlineUsers = new List<SimpleUser>();
-            foreach (var pair in UsernameConnectionIdCache)
-            {
-                onlineUsers.Add(new SimpleUser(pair.Key));
-            }
-
-            Clients.All.OnOnlineUsersChanged(onlineUsers);
+            Clients.All.OnOnlineUsersChanged(GetOnlineUsers());
 
             Console.WriteLine($"User with userId {userId} removed from usernames. ConnectionId: {Context.ConnectionId}");
         }

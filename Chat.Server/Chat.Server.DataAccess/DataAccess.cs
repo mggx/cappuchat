@@ -11,22 +11,16 @@ namespace Chat.Server.DataAccess
         private static IDbConnection _dbConnection;
         private static IDbConnection DbConnection
         {
-            get
-            {
-                if (_dbConnection == null)
-                    _dbConnection = SQLiteProviderFactory.Instance.CreateConnection();
-                return _dbConnection;
-            }
+            get { return _dbConnection ?? (_dbConnection = SQLiteProviderFactory.Instance.CreateConnection()); }
         }
 
         public static IDbCommand GetDbCommand()
         {
-            if (DbConnection.State == ConnectionState.Closed)
-            {
-                DbConnection.ConnectionString = _dataSource;
-                DbConnection.Open();
-            }
-            
+            if (DbConnection.State != ConnectionState.Closed)
+                return DbConnection.CreateCommand();
+            DbConnection.ConnectionString = _dataSource;
+            DbConnection.Open();
+
             return DbConnection.CreateCommand();
         }
 
@@ -34,6 +28,8 @@ namespace Chat.Server.DataAccess
         {
             IDbCommand dbCommand = GetDbCommand();
             InitializeUsersTable(dbCommand);
+            InitializeGroupsTable(dbCommand);
+            InitializeUserGroupsTable(dbCommand);
         }
 
         private static void InitializeUsersTable(IDbCommand dbCommand)
@@ -43,6 +39,25 @@ namespace Chat.Server.DataAccess
                                     "username TEXT NOT NULL, " +
                                     "password TEXT NOT NULL, " +
                                     "online INTEGER NOT NULL);";
+            dbCommand.ExecuteNonQuery();
+        }
+
+        private static void InitializeGroupsTable(IDbCommand dbCommand)
+        {
+            dbCommand.CommandText = "CREATE TABLE IF NOT EXISTS groups" +
+                                    "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                    "uniquename TEXT NOT NULL UNIQUE, " +
+                                    "name TEXT NOT NULL, " +
+                                    "ownerId INTEGER NOT NULL);";
+            dbCommand.ExecuteNonQuery();
+        }
+
+        private static void InitializeUserGroupsTable(IDbCommand dbCommand)
+        {
+            dbCommand.CommandText = "CREATE TABLE IF NOT EXISTS usergroups" +
+                                    "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                    "groupid INTEGER NOT NULL, " +
+                                    "userid INTEGER NOT NULL);";
             dbCommand.ExecuteNonQuery();
         }
     }

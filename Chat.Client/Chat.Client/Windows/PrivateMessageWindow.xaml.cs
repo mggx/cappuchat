@@ -15,12 +15,6 @@ namespace Chat.Client.Windows
             InitializeComponent();
         }
 
-        private void PrivateMessageWindow_OnClosing(object sender, CancelEventArgs e)
-        {
-            var privateMessageViewModel = DataContext as CappuChatViewModel;
-            privateMessageViewModel?.CloseCommand?.Execute(null);
-        }
-
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             var privateMessageViewModel = DataContext as CappuChatViewModel;

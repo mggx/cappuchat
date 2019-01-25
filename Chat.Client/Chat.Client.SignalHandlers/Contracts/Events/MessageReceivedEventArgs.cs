@@ -15,9 +15,6 @@ namespace Chat.Client.SignalHelpers.Contracts.Events
             if (receivedMessage.Sender == null)
                 throw new ArgumentNullException(nameof(receivedMessage.Sender), "Cannot create MessageReceivedEventArgs. Given receivedMessage.Sender is null.");
 
-            if (receivedMessage.Receiver == null)
-                throw new ArgumentNullException(nameof(receivedMessage.Receiver), "Cannot create MessageReceivedEventArgs. Given receivedMessage.Receiver is null.");
-
             ReceivedMessage = receivedMessage;
         }
     }

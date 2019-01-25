@@ -3,6 +3,7 @@ using Chat.Client.Signalhelpers.Contracts;
 using System;
 using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Dialogs;
+using Chat.Shared.Models;
 
 namespace Chat.Client.Presenters
 {
@@ -14,6 +15,13 @@ namespace Chat.Client.Presenters
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
         public CappuChatPresenter CappuChatPresenter { get; private set; }
         public CappuVotePresenter CappuVotePresenter { get; private set; }
+
+        private int _selectedTabIndex;
+        public int SelectedTabIndex
+        {
+            get { return _selectedTabIndex; }
+            set { _selectedTabIndex = value; OnPropertyChanged(); }
+        }
 
         private ViewModelBase _currentPresenter;
         public ViewModelBase CurrentPresenter
@@ -96,6 +104,7 @@ namespace Chat.Client.Presenters
         private async void LoginPresenterOnLoginSucceeded(LoginSucceededEventArgs eventArgs)
         {
             InitializeCappuVotePresenter();
+            InitializeCappuVotePresenterEvents();
             InitializeCappuChatPresenter();
 
             await CappuVotePresenter.Load(eventArgs.User);
@@ -109,6 +118,17 @@ namespace Chat.Client.Presenters
             CappuVotePresenter = new CappuVotePresenter(_signalHelperFacade, _viewProvider);
         }
 
+        private void InitializeCappuVotePresenterEvents()
+        {
+            CappuVotePresenter.CappuGroupChatViewModel.OpenChat += CappuVoteViewModelOnOpenChat;
+        }
+
+        private void CappuVoteViewModelOnOpenChat(SimpleUser target)
+        {
+            CappuChatPresenter.TryAddCappuChatViewModel(target.Username, true);
+            SelectedTabIndex = 1;
+        }
+
         private void InitializeCappuChatPresenter()
         {
             CappuChatPresenter = new CappuChatPresenter(_signalHelperFacade, _viewProvider);
@@ -116,6 +136,7 @@ namespace Chat.Client.Presenters
 
         private void LoginPresenterOnLoggedOut(string reason)
         {
+            CappuVotePresenter.CappuGroupChatViewModel.OpenChat -= CappuVoteViewModelOnOpenChat;
             CappuVotePresenter.Dispose();
             CappuChatPresenter.Dispose();
             CurrentPresenter = CappuLoginPresenter;

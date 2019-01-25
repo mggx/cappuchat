@@ -16,6 +16,7 @@ namespace Chat.Client.Presenters
 
         public CappuVoteViewModel CappuVoteViewModel { get; private set; }
         public CappuVoteResultViewModel CappuVoteResultViewModel { get; private set; }
+        public CappuGroupChatViewModel CappuGroupChatViewModel { get; private set; }
 
         public CappuVotePresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
@@ -34,6 +35,7 @@ namespace Chat.Client.Presenters
         {
             InitializeCappuVoteViewModel();
             InitializeCappuVoteResultViewModel();
+            InitializeCappuGroupChatViewModel();
             InitializeVoteSignalHelperEvents();
         }
 
@@ -45,6 +47,11 @@ namespace Chat.Client.Presenters
         private void InitializeCappuVoteViewModel()
         {
             CappuVoteViewModel = new CappuVoteViewModel(_signalHelperFacade, _viewProvider);
+        }
+
+        private void InitializeCappuGroupChatViewModel()
+        {
+            CappuGroupChatViewModel = new CappuGroupChatViewModel(_signalHelperFacade);
         }
 
         private void InitializeVoteSignalHelperEvents()

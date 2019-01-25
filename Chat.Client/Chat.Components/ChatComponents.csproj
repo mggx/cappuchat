@@ -38,6 +38,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -54,6 +57,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatBubbleMenuItem.cs" />
     <Compile Include="Converters\BooleanToHorizontalAlignmentConverter.cs" />
     <Compile Include="ChatBubble.cs" />
     <Compile Include="Converters\DateTimeToMessageStringConverter.cs" />
@@ -99,6 +103,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chat.Client.Framework\Chat.Client.Framework.csproj">
+      <Project>{C5EF9D25-638F-408A-AE24-57217CBBA4EA}</Project>
+      <Name>Chat.Client.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

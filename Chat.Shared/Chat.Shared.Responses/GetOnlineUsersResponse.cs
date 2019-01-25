@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Chat.Shared.Models;
+using System;
 using System.Collections.Generic;
-using Chat.Shared.Models;
 
 namespace Chat.Responses
 {

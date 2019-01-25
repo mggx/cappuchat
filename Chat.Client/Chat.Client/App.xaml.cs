@@ -30,6 +30,7 @@ namespace Chat.Client
                 ThemeManager.GetAccent("CustomTheme"),
                 theme.Item1);
 
+            DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
