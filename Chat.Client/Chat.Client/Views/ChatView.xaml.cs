@@ -71,5 +71,17 @@ namespace Chat.Client.Views
             _windowKeyDownHelper.KeyDown -= WindowOnKeyDown;
             _windowKeyDownHelper = null;
         }
+
+        private void SendMessageButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            var chatViewModel = DataContext as CappuChatViewModelBase;
+
+            chatViewModel?.SendMessageCommand?.Execute(InputTextBox.Text);
+
+            InputTextBox.Clear();
+            InputTextBox.Focus();
+
+            chatViewModel?.SendMessageCommand?.RaiseCanExecuteChanged();
+        }
     }
 }

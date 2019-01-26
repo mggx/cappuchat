@@ -20,7 +20,8 @@
                  d:DataContext="{d:DesignInstance presenters1:CappuMainPresenter}"
                  Background="{DynamicResource AccentColorBrush}"
                  WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
-                 NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}">
+                 NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
+                 ShowIconOnTitleBar="True">
 
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
@@ -48,29 +49,22 @@
         <mah:WindowCommands>
             <Button Click="ChangeAppStyleButtonClick">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="24" Height="24" Kind="Cupcake" />
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="PageEdit" />
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Change App Style..." />
                 </StackPanel>
             </Button>
-            <mah:WindowCommandsItem>
-                <StackPanel Orientation="Horizontal"
-                            Margin="5, 0, 5, 0">
-                    <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                            IsTabStop="False"
-                            Background="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
-                            Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
-                            Width="25"
-                            Height="25" 
-                            ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"/>
-
+            <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
+                    ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" />
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
                                Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
                                VerticalAlignment="Center"/>
                 </StackPanel>
-            </mah:WindowCommandsItem>
+            </Button>
             <mah:WindowCommandsItem>
                 <Button Content="{x:Static texts:Texts.Logout}" 
-                        Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}" />
+                        Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
             </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
@@ -88,7 +82,5 @@
                                              Transition="Left" />
         </Border>
     </Border>
-
-    
 </mah:MetroWindow>
 

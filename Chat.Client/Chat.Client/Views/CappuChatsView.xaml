@@ -54,8 +54,7 @@
         </ListView>
 
         <DockPanel Grid.Column="1">
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+            <TextBlock VerticalAlignment="Center"
                        FontSize="48"
                        Foreground="{DynamicResource AccentColorBrush3}"
                        Margin="5"

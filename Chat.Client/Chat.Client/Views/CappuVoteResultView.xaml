@@ -10,13 +10,13 @@
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance presenters:CappuVotePresenter}">
     <UserControl.Resources>
         <bindingProxies:CappuGroupChatViewModelProxy x:Key="CappuGroupChatViewModelProxy"
                                                 Data="{Binding CappuGroupChatViewModel}"/>
-        <converters:BooleanToOnlineUsernameColorConverter x:Key="BooleanToOnlineUsernameColorConverter"/>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
 
@@ -39,12 +39,12 @@
                    Grid.RowSpan="2"
                    Grid.Column="0">
 
-            <TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
+            <!--<TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
                        HorizontalAlignment="Center"
                        FontSize="24"
-                       Foreground="White"
+                       Foreground="{DynamicResource AccentColorBrush}"
                        Margin="5"
-                       DockPanel.Dock="Top"/>
+                       DockPanel.Dock="Top"/>-->
 
             <ListView x:Name="OnlineUsersListView"
                       ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}"
@@ -53,28 +53,6 @@
                       DockPanel.Dock="Top">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <ScaleTransform x:Name="transform"/>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <EventTrigger RoutedEvent="Loaded">
-                                <EventTrigger.Actions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                                             From="0" 
-                                                             To="1"
-                                                             Duration="0:0:1"/>
-                                            <DoubleAnimation Storyboard.TargetProperty="LayoutTransform.ScaleY"
-                                                             From="0"
-                                                             Duration="0:0:.2"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger.Actions>
-                            </EventTrigger>
-                        </Style.Triggers>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
@@ -86,12 +64,7 @@
                                        TextAlignment="Center"
                                        Width="100"
                                        Foreground="White"/>
-                            <Image HorizontalAlignment="Right"
-                                   DockPanel.Dock="Right"
-                                   Source="pack://application:,,,/Chat.Client;component/Resources/check.png"
-                                   Width="16"
-                                   Height="16"
-                                   Visibility="{Binding Voted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <iconPacks:PackIconModern Width="16" Height="16" Kind="Checkmark" Visibility="{Binding Voted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                         </DockPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -105,7 +78,7 @@
                     Height="128"
                     DockPanel.Dock="Bottom"
                     Command="{Binding CappuVoteResultViewModel.FinalCappuCallCommand}">
-                <Image Source="pack://application:,,,/Chat.Client;component/Resources/realtransparentcoffeecup.png"/>
+                <iconPacks:PackIconModern Width="96" Height="96" Kind="Cup" />
             </Button>
 
             <views:CappuVoteView DataContext="{Binding CappuVoteViewModel}"

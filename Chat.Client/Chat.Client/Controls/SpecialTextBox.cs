@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Chat.Client.Framework;
 using Chat.Client.Styles;
 
 namespace Chat.Client.Controls
@@ -79,6 +80,9 @@ namespace Chat.Client.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
+
+            var relayCommand = EnterCommand as RelayCommand<string>;
+            relayCommand?.RaiseCanExecuteChanged();
 
             if (e.Key != Key.Enter)
                 return;
