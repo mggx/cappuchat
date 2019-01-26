@@ -9,17 +9,17 @@ using System.Linq;
 using System.Windows.Data;
 using Chat.Client.ViewModels.Controllers;
 using Chat.Client.ViewModels.Delegates;
+using Chat.Client.ViewModels.Helpers;
 using Chat.Models;
 
 namespace Chat.Client.ViewModels
 {
     public class CappuChatViewModel : CappuChatViewModelBase
     {
-        public SimpleConversation Conversation { get; }
-
         private CappuMessageController _cappuMessageController;
 
-        public event AddNewMessageHandler AddNewMessage;
+        public ConversationHelper ConversationHelper { get; set; } 
+        public SimpleConversation Conversation { get; }
 
         public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation) : base(signalHelperFacade, false)
         {
@@ -49,7 +49,7 @@ namespace Chat.Client.ViewModels
             IEnumerable<SimpleMessage> conversation = _cappuMessageController.GetConversation(new SimpleUser(Conversation.TargetUsername));
             foreach (var message in conversation)
                 Messages.Add(message);
-            Conversation.LastMessage = Messages.LastOrDefault()?.Message;
+            ConversationHelper = new ConversationHelper(Conversation, Messages);
         }
 
         private void InitializeSignalHelperFacadeEvents()
@@ -61,14 +61,8 @@ namespace Chat.Client.ViewModels
         {
             if (eventArgs.ReceivedMessage.Sender.Username != Conversation.TargetUsername)
                 return;
-
-            if (AddNewMessage?.Invoke(this) == true)
-                Conversation.NewMessages++;
-
             Messages.Add(eventArgs.ReceivedMessage);
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
-
-            Conversation.LastMessage = eventArgs.ReceivedMessage.Message;
         }
 
         protected override void SendMessage(string message)
@@ -80,8 +74,6 @@ namespace Chat.Client.ViewModels
             Messages.Add(simpleMessage);
             simpleMessage.IsLocalMessage = false;
             SignalHelperFacade.ChatSignalHelper.SendPrivateMessage(simpleMessage);
-
-            Conversation.LastMessage = message;
         }
 
         public void Load(SimpleMessage message)
@@ -103,6 +95,7 @@ namespace Chat.Client.ViewModels
             if (disposing)
             {
                 SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
+                ConversationHelper.Dispose();
             }
 
             base.Dispose(disposing);

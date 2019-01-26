@@ -19,26 +19,11 @@ namespace Chat.Client.Presenters
 
         private SimpleUser User { get; set; }
 
-        private CappuChatViewModel _selectedConversation;
-        public CappuChatViewModel SelectedConversation
-        {
-            get { return _selectedConversation; }
-            set { _selectedConversation = value; OnPropertyChanged(); OpenChat(value);}
-        }
-
-        private void OpenChat(CappuChatViewModel chatViewModel)
-        {
-            if (chatViewModel == null)
-                return;
-            CurrentChatViewModel = chatViewModel;
-            CurrentChatViewModel.Conversation.NewMessages = 0;
-        }
-
         private CappuChatViewModel _currentChatViewModel;
         public CappuChatViewModel CurrentChatViewModel
         {
             get { return _currentChatViewModel; }
-            set { _currentChatViewModel = value; OnPropertyChanged(); }
+            set { _currentChatViewModel = value; OnPropertyChanged(); _currentChatViewModel?.ConversationHelper.ResetNewMessages(); }
         }
 
         public ObservableCollection<CappuChatViewModel> Conversations { get; set; } = new ObservableCollection<CappuChatViewModel>();
@@ -69,7 +54,7 @@ namespace Chat.Client.Presenters
         private void ChatSignalHelperOnPrivateMessageReceived(MessageReceivedEventArgs eventArgs)
         {
             var username = eventArgs.ReceivedMessage.Sender.Username;
-            TryAddCappuChatViewModel(username);
+            TryAddCappuChatViewModel(username, false, eventArgs.ReceivedMessage);
             _viewProvider.FlashWindow();
         }
 
@@ -79,17 +64,24 @@ namespace Chat.Client.Presenters
             return conversation != null;
         }
 
-        public void TryAddCappuChatViewModel(string username, bool setAsCurrentChatViewModel = false)
+        public void TryAddCappuChatViewModel(string username, bool setAsCurrentChatViewModel = false, params SimpleMessage[] messages)
         {
             if (CheckForExistingConversation(username))
+            {
+                if (setAsCurrentChatViewModel)
+                    CurrentChatViewModel = Conversations.FirstOrDefault(cappuChatViewModel =>
+                        cappuChatViewModel.Conversation.TargetUsername == username);
                 return;
-            AddCappuChatViewModel(new SimpleConversation(username));
+            }
+
+            AddCappuChatViewModel(new SimpleConversation(username), setAsCurrentChatViewModel, messages);
         }
 
-        private void AddCappuChatViewModel(SimpleConversation conversation, bool setAsCurrentChatViewModel = false)
+        private void AddCappuChatViewModel(SimpleConversation conversation, bool setAsCurrentChatViewModel = false, params SimpleMessage[] messages)
         {
             var chatViewModel = new CappuChatViewModel(_signalHelperFacade, conversation);
-            chatViewModel.AddNewMessage += ChatViewModelOnAddNewMessage;
+            chatViewModel.Load(messages);
+            chatViewModel.ConversationHelper.AddNewMessage += ChatViewModelOnAddNewMessage;
 
             Conversations.Add(chatViewModel);
 
@@ -97,9 +89,9 @@ namespace Chat.Client.Presenters
                 CurrentChatViewModel = chatViewModel;
         }
 
-        private bool ChatViewModelOnAddNewMessage(object sender)
+        private bool ChatViewModelOnAddNewMessage(object sender, SimpleConversation conversation)
         {
-            return sender != CurrentChatViewModel;
+            return conversation != CurrentChatViewModel.Conversation;
         }
 
         public void Load(SimpleUser user)
@@ -126,8 +118,8 @@ namespace Chat.Client.Presenters
 
                 foreach (var viewModel in Conversations)
                 {
+                    viewModel.ConversationHelper.AddNewMessage -= ChatViewModelOnAddNewMessage;
                     viewModel.Dispose();
-                    viewModel.AddNewMessage -= ChatViewModelOnAddNewMessage;
                 }
 
                 Conversations.Clear();

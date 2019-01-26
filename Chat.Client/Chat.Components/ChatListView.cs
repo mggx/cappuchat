@@ -124,6 +124,8 @@ namespace ChatComponents
                     if (!IsItemContainerVisible(itemContainer))
                         return;
                 }
+                else
+                    return;
             }
 
             ScrollToBottom();

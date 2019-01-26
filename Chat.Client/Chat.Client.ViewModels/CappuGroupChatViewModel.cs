@@ -9,7 +9,6 @@ namespace Chat.Client.ViewModels
 {
     public class CappuGroupChatViewModel : CappuChatViewModelBase
     {
-        
         public event OpenChatHandler OpenChat;
 
         public RelayCommand OpenPrivateChatCommand { get; set; }

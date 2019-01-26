@@ -16,9 +16,17 @@
              BorderBrush="LightGray">
     <UserControl.Resources>
         <converters:StringToPartialStringConverter x:Key="StringToPartialStringConverter"/>
+        <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" FalseCaseVisibility="Hidden"/>
     </UserControl.Resources>
-    <mah:Badged Badge="{Binding Conversation.NewMessages}"
-                Background="Transparent">
+
+    <DockPanel>
+        <mah:Badged Badge="{Binding Conversation.NewMessages}"
+                    Background="Transparent"
+                    VerticalAlignment="Center"
+                    Margin="10"
+                    DockPanel.Dock="Right"
+                    Visibility="{Binding Conversation.NewMessages, Converter={StaticResource IntegerToVisibilityConverter}}"/>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
@@ -48,5 +56,5 @@
                            Foreground="White"/>
             </StackPanel>
         </Grid>
-    </mah:Badged>
+    </DockPanel>
 </UserControl>
