@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Chat.Client.Framework;
 using Chat.Client.Presenters.Delegates;
 using Chat.Client.Signalhelpers.Contracts;
@@ -51,7 +52,7 @@ namespace Chat.Client.Presenters
             return !ConnectedToServer;
         }
 
-        private async void StartServerConnection()
+        public async void StartServerConnection()
         {
             if (StartConnection == null)
                 throw new InvalidOperationException("No one registered on StartConnection");

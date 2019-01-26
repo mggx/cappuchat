@@ -13,7 +13,6 @@ namespace Chat.Client
     /// </summary>
     public partial class App : Application
     {
-
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
@@ -46,8 +45,6 @@ namespace Chat.Client
                 VoteSignalHelper = new VoteSignalHelper(_hubConnectionHelper.CreateHubProxy("VoteHub"))
             };
 
-            await _hubConnectionHelper.Start();
-
             _cappuMainPresenter = new CappuMainPresenter(signalHelperFacade, _viewProvider)
             {
                 CappuLoginPresenter = { ConnectedToServer = _hubConnectionHelper.Connected }
@@ -56,6 +53,8 @@ namespace Chat.Client
             _cappuMainPresenter.CappuLoginPresenter.StartConnection += LoginPresenterOnStartConnection;
 
             _viewProvider.Show(_cappuMainPresenter);
+
+            _cappuMainPresenter.Load();
         }
 
         private void ApplicationCurrentOnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -81,6 +80,7 @@ namespace Chat.Client
         private void ApplicationCurrentOnExit(object sender, ExitEventArgs e)
         {
             _hubConnectionHelper.Stop();
+            _cappuMainPresenter.CappuLoginPresenter.StartConnection -= LoginPresenterOnStartConnection;
         }
 
         private Task<bool> LoginPresenterOnStartConnection()

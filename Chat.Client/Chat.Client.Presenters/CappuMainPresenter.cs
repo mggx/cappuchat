@@ -1,6 +1,7 @@
 ﻿using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using System;
+using System.Threading.Tasks;
 using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Dialogs;
 using Chat.Shared.Models;
@@ -140,6 +141,11 @@ namespace Chat.Client.Presenters
             CappuVotePresenter.Dispose();
             CappuChatPresenter.Dispose();
             CurrentPresenter = CappuLoginPresenter;
+        }
+
+        public void Load()
+        {
+            CappuLoginPresenter.StartServerConnection();
         }
 
         protected override void Dispose(bool disposing)
