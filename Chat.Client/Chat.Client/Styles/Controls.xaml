@@ -3,13 +3,13 @@
     <Style TargetType="{x:Type PasswordBox}"  BasedOn="{StaticResource {x:Type PasswordBox}}">
         <Style.Setters>
             <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
-            <Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBaseColorBrush}"/>
         </Style.Setters>
     </Style>
     
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Style.Setters>
-            <Setter Property="Background" Value="{StaticResource AccentLightColor1}"/>
+            <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Segoe Ui"/>
@@ -23,13 +23,13 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource AccentLightColor2}"/>
+                                <Setter Property="Background" Value="{DynamicResource HighlightBrush}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.5"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="{StaticResource AccentLightColor1}"/>
+                                <Setter Property="Background" Value="{DynamicResource AccentColorBrush4}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -39,6 +39,7 @@
     </Style>
     
     <Style TargetType="{x:Type ListViewItem}" x:Key="CreepyListViewItem" BasedOn="{StaticResource MetroListViewItem}">
-        <Setter Property="Background" Value="{StaticResource AccentLightColor1}"/>
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 </ResourceDictionary>

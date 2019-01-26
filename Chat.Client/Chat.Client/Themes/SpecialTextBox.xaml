@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type controls:SpecialTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Style.Setters>
             <Setter Property="BorderThickness" Value="0, 0, 0, 1"/>
-            <Setter Property="Border.BorderBrush" Value="{StaticResource MainColor}"/>
+            <Setter Property="Border.BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
             <Setter Property="WatermarkForeground" Value="Gray"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Bottom"/>

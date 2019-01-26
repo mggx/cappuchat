@@ -46,6 +46,9 @@
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro.IconPacks, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.IconPacks.1.6.0\lib\net45\MahApps.Metro.IconPacks.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.3.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
@@ -114,6 +117,7 @@
     <Compile Include="CustomNotifications\Notifications\CappuCallNotification.cs" />
     <Compile Include="Extensions\MoveFocusExtension.cs" />
     <Compile Include="CustomNotifications\Notifications\CustomNotificationBase.cs" />
+    <Compile Include="Helper\ThemeManagerHelper.cs" />
     <Compile Include="Helper\WindowKeyDownHelper.cs" />
     <Compile Include="UserControls\UserContainer.xaml.cs">
       <DependentUpon>UserContainer.xaml</DependentUpon>
@@ -149,8 +153,8 @@
     <Compile Include="Views\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\PrivateMessageWindow.xaml.cs">
-      <DependentUpon>PrivateMessageWindow.xaml</DependentUpon>
+    <Compile Include="Windows\AccentThemeWindow.xaml.cs">
+      <DependentUpon>AccentThemeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml">
       <SubType>Designer</SubType>
@@ -232,7 +236,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\PrivateMessageWindow.xaml">
+    <Page Include="Windows\AccentThemeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,27 +8,14 @@ using System.Windows;
 
 namespace Chat.Client
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public partial class App
     {
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
 
-        private async void AppOnStartup(object sender, StartupEventArgs e)
+        private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            ThemeManager.AddAccent("CustomTheme", new Uri("pack://application:,,,/Chat.Client;component/Styles/CustomTheme.xaml"));
-
-            // get the current app style (theme and accent) from the application
-            Tuple<AppTheme, Accent> theme = ThemeManager.DetectAppStyle(Application.Current);
-
-            // now change app style to the custom accent and current theme
-            ThemeManager.ChangeAppStyle(Application.Current,
-                ThemeManager.GetAccent("CustomTheme"),
-                theme.Item1);
-
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 

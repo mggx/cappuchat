@@ -1,8 +1,10 @@
 ﻿using Chat.Client.Styles;
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using MahApps.Metro;
 
 namespace Chat.Client.Converters
 {
@@ -16,7 +18,7 @@ namespace Chat.Client.Converters
 
             var boolean = (bool) value;
             if (boolean)
-                return ProgramColors.AccentLightColor3;
+                return new SolidColorBrush(Colors.AliceBlue);
             return new SolidColorBrush(Color.FromRgb(128, 0, 0));
         }
 

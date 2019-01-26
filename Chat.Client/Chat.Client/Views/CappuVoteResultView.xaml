@@ -42,7 +42,7 @@
             <TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
                        HorizontalAlignment="Center"
                        FontSize="24"
-                       Foreground="{StaticResource AccentLightColor3}"
+                       Foreground="White"
                        Margin="5"
                        DockPanel.Dock="Top"/>
 
@@ -85,7 +85,7 @@
                                        Text="{Binding Username, Mode=OneTime}"
                                        TextAlignment="Center"
                                        Width="100"
-                                       Foreground="{Binding Voted, Converter={StaticResource BooleanToOnlineUsernameColorConverter}}"/>
+                                       Foreground="White"/>
                             <Image HorizontalAlignment="Right"
                                    DockPanel.Dock="Right"
                                    Source="pack://application:,,,/Chat.Client;component/Resources/check.png"

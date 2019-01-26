@@ -57,7 +57,7 @@
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontSize="48"
-                       Foreground="{StaticResource AccentLightColor3}"
+                       Foreground="{DynamicResource AccentColorBrush3}"
                        Margin="5"
                        Text="{x:Static texts:Texts.NoChatSelected}"
                        Visibility="{Binding CurrentChatViewModel, Converter={StaticResource InversedNullToVisibilityConverter}}"/>

@@ -45,7 +45,7 @@
                     <chatComponents:ChatBubble Text="{Binding Message, Mode=OneTime}"
                                                Time="{Binding MessageSentDateTime, Mode=OneTime}"
                                                Sender="{Binding Sender.Username, Mode=OneTime}"
-                                               Background="{StaticResource AccentLightColor5}">
+                                               Background="{DynamicResource AccentColorBrush}">
                         <chatComponents:ChatBubble.HorizontalAlignment>
                             <MultiBinding Converter="{StaticResource UsersToHorizontalAlignmentConverter}">
                                 <Binding Path="Sender"/>
@@ -57,15 +57,16 @@
             </chatComponents:ChatListView.ItemTemplate>
         </chatComponents:ChatListView>
 
-        <Border Grid.Row="1" Background="Teal" Padding="5" Margin="10" CornerRadius="5">
+        <Border Grid.Row="1" Background="{DynamicResource AccentColorBrush2}" Padding="5" Margin="10" CornerRadius="5">
             <controls:SpecialTextBox x:Name="InputTextBox"
                                      Watermark="{x:Static texts:Texts.TypeMessage}"
                                      EnterCommand="{Binding SendMessageCommand}"
                                      Background="Transparent"
-                                     WatermarkForeground="{StaticResource AccentLightColor5}"
+                                     WatermarkForeground="White"
+                                     FocusedBorderBrush="{DynamicResource HighlightBrush}"
                                      Foreground="Black"
                                      BorderThickness="0, 0, 0, 1"
-                                     BorderBrush="{StaticResource AccentDarkColor4}"
+                                     BorderBrush="White"
                                      HorizontalContentAlignment="Left"
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Bottom"/>

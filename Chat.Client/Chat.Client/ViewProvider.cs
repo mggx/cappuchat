@@ -1,22 +1,18 @@
-﻿using Chat.Client.Dialogs;
+﻿using Chat.Client.CustomNotifications.Extensions;
+using Chat.Client.Dialogs;
 using Chat.Client.Framework;
-using Chat.Client.ViewModels;
+using Chat.Client.Presenters;
 using Chat.Client.ViewModels.Dialogs;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Web.Management;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using Chat.Client.CustomNotifications.Extensions;
-using Chat.Client.Presenters;
-using Chat.Client.Windows;
-using MahApps.Metro.Controls;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
-using ToastNotifications.Lifetime.Clear;
 using ToastNotifications.Messages;
 using ToastNotifications.Position;
 
@@ -85,9 +81,6 @@ namespace Chat.Client
                     break;
                 case CappuMainPresenter _:
                     window = new MainWindow();
-                    break;
-                case CappuChatViewModel _:
-                    window = new PrivateMessageWindow();
                     break;
             }
 

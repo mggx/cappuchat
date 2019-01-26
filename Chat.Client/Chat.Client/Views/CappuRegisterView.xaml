@@ -21,7 +21,7 @@
 
     <Border CornerRadius="15"
             Background="White"
-            BorderBrush="{StaticResource AccentDarkColor3}"
+            BorderBrush="{DynamicResource AccentColorBrush4}"
             BorderThickness="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -31,10 +31,11 @@
             <TextBlock Text="{x:Static texts:Texts.Register}"
                        HorizontalAlignment="Center"
                        FontSize="24"
-                       Foreground="{StaticResource AccentDarkColor1}"/>
+                       Foreground="{DynamicResource AccentColorBrush}"/>
             <controls:SpecialTextBox x:Name="ShortNameTextBox"
                                     Background="Transparent"
                                     Watermark="{x:Static texts:Texts.UsernameWatermark}" 
+                                    FocusedBorderBrush="{DynamicResource AccentBaseColorBrush}"
                                     Text="{Binding Username, Mode=TwoWay}"
                                     Width="200"
                                     Margin="5" 

@@ -16,7 +16,7 @@
 
     <Border CornerRadius="15"
             Background="White"
-            BorderBrush="{StaticResource AccentDarkColor3}"
+            BorderBrush="{DynamicResource AccentColorBrush4}"
             BorderThickness="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -26,21 +26,22 @@
             <TextBlock Text="{x:Static texts:Texts.Login}"
                            HorizontalAlignment="Center"
                            FontSize="24"
-                           Foreground="{StaticResource AccentLightColor1}"/>
+                           Foreground="{DynamicResource AccentColorBrush}"/>
 
             <controls:SpecialTextBox x:Name="UsernameTextBox"
                                          Width="200" 
                                          Margin="5" 
+                                         FocusedBorderBrush="{DynamicResource AccentBaseColorBrush}"
                                          Watermark="{x:Static texts:Texts.UsernameWatermark}"
                                          Text="{Binding CappuLoginViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          BorderBrush="White"/>
 
             <PasswordBox mah:TextBoxHelper.Watermark="{x:Static texts:Texts.PasswordWatermark}"
-                             mah:PasswordBoxHelper.CapsLockWarningToolTip="Caps on"
-                             helper:PasswordHelper.Password="{Binding CappuLoginViewModel.Password, Mode=TwoWay}"
-                             Width="200"
-                             Margin="5" 
-                             HorizontalContentAlignment="Center"/>
+                         mah:PasswordBoxHelper.CapsLockWarningToolTip="Caps on"
+                         helper:PasswordHelper.Password="{Binding CappuLoginViewModel.Password, Mode=TwoWay}"
+                         Width="200"
+                         Margin="5" 
+                         HorizontalContentAlignment="Center"/>
 
             <Button Content="{x:Static texts:Texts.Login}" 
                         Margin="5" 
@@ -53,7 +54,7 @@
                                   Height="25" 
                                   Margin="5" 
                                   IsActive="{Binding CappuLoginViewModel.ProgressProvider.ProgressScope.InProgress, FallbackValue=False,TargetNullValue=False}"
-                                  Foreground="{StaticResource AccentDarkColor1}"/>
+                                  Foreground="{DynamicResource AccentColorBrush2}"/>
         </StackPanel>
     </Border>
 </UserControl>

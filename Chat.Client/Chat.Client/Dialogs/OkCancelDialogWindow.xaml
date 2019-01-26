@@ -10,13 +10,13 @@
                  Title="{Binding Title}"
                  SizeToContent="WidthAndHeight"
                  MinWidth="300"
-                 WindowTitleBrush="{StaticResource AccentDarkColor1}"
+                 WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
                  d:DataContext="{d:DesignInstance dialogs:OkCancelDialogViewModel}"
                  FocusManager.FocusedElement="{Binding ElementName=OkButton}"
-                 Background="{StaticResource MainColor}"
+                 Background="{DynamicResource AccentColorBrush}"
                  ResizeMode="NoResize">
 
-    <Border Background="{StaticResource MainColor}">
+    <Border Background="{DynamicResource AccentColorBrush4}">
         <Border>
             <Border.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"

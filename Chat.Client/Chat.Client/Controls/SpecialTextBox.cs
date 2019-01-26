@@ -12,7 +12,7 @@ namespace Chat.Client.Controls
             "Watermark", typeof(string), typeof(SpecialTextBox), new PropertyMetadata(default(string)));
 
         public static readonly DependencyProperty FocusedBorderBrushProperty = DependencyProperty.Register(
-            "FocusedBorderBrush", typeof(SolidColorBrush), typeof(SpecialTextBox), new PropertyMetadata(ProgramColors.AccentDarkColor1));
+            "FocusedBorderBrush", typeof(SolidColorBrush), typeof(SpecialTextBox), new PropertyMetadata(default(SolidColorBrush)));
 
         public static readonly DependencyProperty IsAdditionalButtonVisibleProperty = DependencyProperty.Register(
             "IsAdditionalButtonVisible", typeof(bool), typeof(SpecialTextBox), new PropertyMetadata(default(bool)));
