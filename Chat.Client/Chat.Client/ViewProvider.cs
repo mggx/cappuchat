@@ -209,7 +209,7 @@ namespace Chat.Client
             }
             else if (checkFocus)
             {
-                if (window.IsFocused)
+                if (!window.IsFocused)
                     FlashWindow(wih.Handle, true);
             }
         }
