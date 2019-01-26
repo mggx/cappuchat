@@ -28,6 +28,7 @@
                   ItemsSource="{Binding Conversations}" 
                   SelectedItem="{Binding CurrentChatViewModel}"
                   Background="Transparent"
+                  HorizontalAlignment="Left"
                   BorderThickness="0"
                   Width="240">
             <ListView.ItemContainerStyle>
@@ -54,7 +55,7 @@
 
         <DockPanel Grid.Column="1">
             <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
+                       VerticalAlignment="Center"
                        FontSize="48"
                        Foreground="{StaticResource AccentLightColor3}"
                        Margin="5"

@@ -147,7 +147,7 @@ namespace Chat.Client.ViewModels
             OnlineCappuUsers.Clear();
             foreach (var user in onlineUsers)
             {
-                if (user.Username != _user.Username)
+                if (!user.Username.Equals(_user.Username, StringComparison.CurrentCultureIgnoreCase))
                     OnlineCappuUsers.Add(user);
             }
         }

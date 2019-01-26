@@ -13,6 +13,7 @@ namespace Chat.Server.Hubs
 
         protected bool Add(string username)
         {
+            username = username.ToLower();
             string connectionId = string.Empty;
             if (UsernameConnectionIdCache.TryGetValue(username, out connectionId))
             {
@@ -27,6 +28,7 @@ namespace Chat.Server.Hubs
 
         protected bool Remove(string username)
         {
+            username = username.ToLower();
             return UsernameConnectionIdCache.Remove(username);
         }
 

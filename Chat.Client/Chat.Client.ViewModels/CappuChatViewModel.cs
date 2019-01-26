@@ -59,7 +59,7 @@ namespace Chat.Client.ViewModels
 
         protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
-            if (eventArgs.ReceivedMessage.Sender.Username != Conversation.TargetUsername)
+            if (!eventArgs.ReceivedMessage.Sender.Username.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
                 return;
             Messages.Add(eventArgs.ReceivedMessage);
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);

@@ -58,19 +58,18 @@ namespace Chat.Client.Presenters
             _viewProvider.FlashWindow();
         }
 
-        private bool CheckForExistingConversation(string targetUsername)
+        private bool CheckForExistingConversation(string targetUsername, out CappuChatViewModel chatViewModel)
         {
-            var conversation = Conversations.FirstOrDefault(con => con.Conversation.TargetUsername == targetUsername);
-            return conversation != null;
+            chatViewModel = Conversations.FirstOrDefault(con => con.Conversation.TargetUsername.Equals(targetUsername, StringComparison.CurrentCultureIgnoreCase));
+            return chatViewModel != null;
         }
 
         public void TryAddCappuChatViewModel(string username, bool setAsCurrentChatViewModel = false, params SimpleMessage[] messages)
         {
-            if (CheckForExistingConversation(username))
+            if (CheckForExistingConversation(username, out var chatViewModel))
             {
                 if (setAsCurrentChatViewModel)
-                    CurrentChatViewModel = Conversations.FirstOrDefault(cappuChatViewModel =>
-                        cappuChatViewModel.Conversation.TargetUsername == username);
+                    CurrentChatViewModel = chatViewModel;
                 return;
             }
 
@@ -91,7 +90,7 @@ namespace Chat.Client.Presenters
 
         private bool ChatViewModelOnAddNewMessage(object sender, SimpleConversation conversation)
         {
-            return conversation != CurrentChatViewModel.Conversation;
+            return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation;
         }
 
         public void Load(SimpleUser user)
