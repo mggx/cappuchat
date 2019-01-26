@@ -81,9 +81,6 @@ namespace Chat.Client.Controls
         {
             base.OnKeyDown(e);
 
-            var relayCommand = EnterCommand as RelayCommand<string>;
-            relayCommand?.RaiseCanExecuteChanged();
-
             if (e.Key != Key.Enter)
                 return;
 
@@ -95,6 +92,14 @@ namespace Chat.Client.Controls
 
             EnterCommand.Execute(Text);
             Text = string.Empty;
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+
+            var relayCommand = EnterCommand as RelayCommand<string>;
+            relayCommand?.RaiseCanExecuteChanged();
         }
     }
 }

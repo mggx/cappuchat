@@ -59,7 +59,8 @@
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" />
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
                                Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center"
+                               Width="130"/>
                 </StackPanel>
             </Button>
             <mah:WindowCommandsItem>
