@@ -51,6 +51,7 @@
     <Compile Include="Delegates\AddNewMessageHandler.cs" />
     <Compile Include="Delegates\LoginFailedHandler.cs" />
     <Compile Include="Delegates\LoginSucceededHandler.cs" />
+    <Compile Include="Delegates\NewMessagesChangedHandler.cs" />
     <Compile Include="Delegates\OpenChatHandler.cs" />
     <Compile Include="Delegates\PreviewServerCallHandler.cs" />
     <Compile Include="Delegates\VoteCreateHandler.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Events\LoginSucceededEventArgs.cs" />
     <Compile Include="CappuLoginViewModel.cs" />
     <Compile Include="CappuChatViewModel.cs" />
+    <Compile Include="Events\NewMessagesChangedEventArgs.cs" />
     <Compile Include="Helpers\ConversationHelper.cs" />
     <Compile Include="Models\UsersVotes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

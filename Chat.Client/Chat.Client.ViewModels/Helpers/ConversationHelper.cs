@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Chat.Client.ViewModels.Delegates;
+using Chat.Client.ViewModels.Events;
 using Chat.Shared.Models;
 
 namespace Chat.Client.ViewModels.Helpers
@@ -14,6 +15,7 @@ namespace Chat.Client.ViewModels.Helpers
         public ObservableCollection<SimpleMessage> Messages { get; set; }
 
         public event AddNewMessageHandler AddNewMessage;
+        public event NewMessagesChangedHandler NewMessagesChanged;
 
         public ConversationHelper(SimpleConversation conversation, ObservableCollection<SimpleMessage> messages)
         {
@@ -43,6 +45,8 @@ namespace Chat.Client.ViewModels.Helpers
             {
                 Conversation.NewMessages++;
             }
+
+            NewMessagesChanged?.Invoke(this, new NewMessagesChangedEventArgs());
         }
 
         private void SetLastMessage()
@@ -53,6 +57,7 @@ namespace Chat.Client.ViewModels.Helpers
         public void ResetNewMessages()
         {
             Conversation.NewMessages = 0;
+            NewMessagesChanged?.Invoke(this, new NewMessagesChangedEventArgs());
         }
 
         protected override void Dispose(bool disposing)

@@ -39,13 +39,6 @@
                    Grid.RowSpan="2"
                    Grid.Column="0">
 
-            <!--<TextBlock Text="{x:Static texts:Texts.OnlineUsers}"
-                       HorizontalAlignment="Center"
-                       FontSize="24"
-                       Foreground="{DynamicResource AccentColorBrush}"
-                       Margin="5"
-                       DockPanel.Dock="Top"/>-->
-
             <ListView x:Name="OnlineUsersListView"
                       ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}"
                       Background="Transparent"

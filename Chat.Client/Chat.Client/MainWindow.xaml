@@ -54,13 +54,14 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
-                    ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}">
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" />
+                    ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"
+                    HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="150">
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
                                Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
-                               VerticalAlignment="Center"
-                               Width="130"/>
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
             <mah:WindowCommandsItem>

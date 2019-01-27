@@ -7,15 +7,19 @@
                                       xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
                                       xmlns:views="clr-namespace:Chat.Client.Views"
                                       xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
+                                      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                                      xmlns:converters="clr-namespace:Chat.Client.Converters"
                                       mc:Ignorable="d" 
                                       d:DesignHeight="450" d:DesignWidth="800"
                                       d:DataContext="{d:DesignInstance presenters:CappuMainPresenter}"
                                       SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
-    
+
     <mah:MetroAnimatedSingleRowTabControl.Resources>
         <Style TargetType="mah:MetroTabItem" BasedOn="{StaticResource MetroTabItem}">
             <Setter Property="Background" Value="Transparent" />
         </Style>
+
+        <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" FalseCaseVisibility="Hidden"/>
     </mah:MetroAnimatedSingleRowTabControl.Resources>
 
     <mah:MetroTabItem Header="{x:Static texts:Texts.CappuCallOverview}">
@@ -26,7 +30,21 @@
         </mah:TransitioningContentControl>
     </mah:MetroTabItem>
     
-    <mah:MetroTabItem Header="{x:Static texts:Texts.Chats}">
+    <mah:MetroTabItem>
+        <TabItem.Header>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{x:Static texts:Texts.Chats}"
+                           Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:ContentControlEx}}, Path=(TextElement.Foreground)}"
+                           FontSize="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:ContentControlEx}}, Path=(TextElement.FontSize)}"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"/>
+
+                <mah:Badged Badge="{Binding CappuChatPresenter.NewMessages}" 
+                            Visibility="{Binding CappuChatPresenter.NewMessages, Converter={StaticResource IntegerToVisibilityConverter}}"
+                            Margin="12"
+                            FontSize="16"/>
+            </StackPanel>
+        </TabItem.Header>
         <views:CappuChatsView DataContext="{Binding CappuChatPresenter}"/>
     </mah:MetroTabItem>
 </mah:MetroAnimatedSingleRowTabControl>

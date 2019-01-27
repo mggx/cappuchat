@@ -1,10 +1,9 @@
 ﻿using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
-using System;
-using System.Threading.Tasks;
 using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Dialogs;
 using Chat.Shared.Models;
+using System;
 
 namespace Chat.Client.Presenters
 {

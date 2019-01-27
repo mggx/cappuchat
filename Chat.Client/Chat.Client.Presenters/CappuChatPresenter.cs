@@ -7,6 +7,7 @@ using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Controllers;
+using Chat.Client.ViewModels.Events;
 using Chat.Models;
 using Chat.Shared.Models;
 
@@ -24,6 +25,13 @@ namespace Chat.Client.Presenters
         {
             get { return _currentChatViewModel; }
             set { _currentChatViewModel = value; OnPropertyChanged(); _currentChatViewModel?.ConversationHelper.ResetNewMessages(); }
+        }
+
+        private int _newMessages;
+        public int NewMessages
+        {
+            get { return _newMessages; }
+            set { _newMessages = value; OnPropertyChanged(); }
         }
 
         public ObservableCollection<CappuChatViewModel> Conversations { get; set; } = new ObservableCollection<CappuChatViewModel>();
@@ -81,6 +89,7 @@ namespace Chat.Client.Presenters
             var chatViewModel = new CappuChatViewModel(_signalHelperFacade, conversation);
             chatViewModel.Load(messages);
             chatViewModel.ConversationHelper.AddNewMessage += ChatViewModelOnAddNewMessage;
+            chatViewModel.ConversationHelper.NewMessagesChanged += ChatViewModelOnNewMessagesChanged;
 
             Conversations.Add(chatViewModel);
 
@@ -91,6 +100,21 @@ namespace Chat.Client.Presenters
         private bool ChatViewModelOnAddNewMessage(object sender, SimpleConversation conversation)
         {
             return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation;
+        }
+
+        private void ChatViewModelOnNewMessagesChanged(object sender, NewMessagesChangedEventArgs e)
+        {
+            UpdateNewMessages();
+        }
+
+        private void UpdateNewMessages()
+        {
+            NewMessages = 0;
+
+            foreach (var chatViewModel in Conversations)
+            {
+                NewMessages = NewMessages + chatViewModel.Conversation.NewMessages;
+            }
         }
 
         public void Load(SimpleUser user)
@@ -118,6 +142,7 @@ namespace Chat.Client.Presenters
                 foreach (var viewModel in Conversations)
                 {
                     viewModel.ConversationHelper.AddNewMessage -= ChatViewModelOnAddNewMessage;
+                    viewModel.ConversationHelper.NewMessagesChanged -= ChatViewModelOnNewMessagesChanged;
                     viewModel.Dispose();
                 }
 
