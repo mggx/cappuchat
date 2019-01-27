@@ -48,8 +48,9 @@
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             UseLayoutRounding="True">
                         <mah:ClipBorder x:Name="PART_ClipBorder"
-                                             CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
-                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Background="Transparent">
                             <Button x:Name="PART_Button"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
@@ -66,7 +67,8 @@
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                                 <DockPanel x:Name="PART_Content"
                                            Focusable="False"
-                                           LastChildFill="True">
+                                           LastChildFill="True"
+                                           Background="Transparent">
                                     <ContentControl x:Name="PART_Arrow"
                                                     Width="9"
                                                     Height="9"
@@ -136,10 +138,6 @@
                             <Setter TargetName="PART_Arrow" Property="Margin" Value="0 0 0 3" />
                             <Setter TargetName="PART_ContentOrientation" Property="Orientation" Value="Vertical" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_Border" Property="Background" Value="Transparent"/>
-                            <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowMouseOverBrush, Mode=OneWay}" />
-                        </Trigger>
                         <Trigger SourceName="PART_Button" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_Arrow" Property="Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ArrowPressedBrush, Mode=OneWay}" />
                         </Trigger>
@@ -185,16 +183,15 @@
                                 </Grid.RowDefinitions>
 
                                 <mah:DropDownButton x:Name="PART_DropDownButton"
-                                                      Grid.Row="0"
-                                                      Grid.Column="2"
-                                                      HorizontalAlignment="Right"
-                                                      Visibility="Collapsed"
-                                                      Style="{StaticResource DropDownStyle}">
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    HorizontalAlignment="Right"
+                                                    Visibility="Collapsed"
+                                                    Style="{StaticResource DropDownStyle}">
                                     <mah:DropDownButton.ItemContainerStyle>
                                         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                             <Setter Property="Header" Value="{Binding Header}"/>
                                             <Setter Property="Command" Value="{Binding Command}"/>
-                                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.DataContext.Sender}"/>
                                         </Style>
                                     </mah:DropDownButton.ItemContainerStyle>
                                 </mah:DropDownButton>

@@ -7,6 +7,7 @@ using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Controllers;
+using Chat.Client.ViewModels.Delegates;
 using Chat.Client.ViewModels.Events;
 using Chat.Models;
 using Chat.Shared.Models;
@@ -33,6 +34,8 @@ namespace Chat.Client.Presenters
             get { return _newMessages; }
             set { _newMessages = value; OnPropertyChanged(); }
         }
+
+        public event AddNewMessageHandler AddNewMessage;
 
         public ObservableCollection<CappuChatViewModel> Conversations { get; set; } = new ObservableCollection<CappuChatViewModel>();
 
@@ -99,7 +102,7 @@ namespace Chat.Client.Presenters
 
         private bool ChatViewModelOnAddNewMessage(object sender, SimpleConversation conversation)
         {
-            return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation;
+            return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation || AddNewMessage?.Invoke(this, conversation) == true;
         }
 
         private void ChatViewModelOnNewMessagesChanged(object sender, NewMessagesChangedEventArgs e)

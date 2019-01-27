@@ -20,7 +20,16 @@ namespace Chat.Client.Presenters
         public int SelectedTabIndex
         {
             get { return _selectedTabIndex; }
-            set { _selectedTabIndex = value; OnPropertyChanged(); }
+            set
+            {
+                _selectedTabIndex = value;
+                OnPropertyChanged();
+
+                if (value == 1)
+                {
+                    CappuChatPresenter?.CurrentChatViewModel?.ConversationHelper.ResetNewMessages();
+                }
+            }
         }
 
         private ViewModelBase _currentPresenter;
@@ -106,6 +115,7 @@ namespace Chat.Client.Presenters
             InitializeCappuVotePresenter();
             InitializeCappuVotePresenterEvents();
             InitializeCappuChatPresenter();
+            InitializeCappuChatPresenterEvents();
 
             await CappuVotePresenter.Load(eventArgs.User);
             CappuChatPresenter.Load(eventArgs.User);
@@ -132,6 +142,16 @@ namespace Chat.Client.Presenters
         private void InitializeCappuChatPresenter()
         {
             CappuChatPresenter = new CappuChatPresenter(_signalHelperFacade, _viewProvider);
+        }
+
+        private void InitializeCappuChatPresenterEvents()
+        {
+            CappuChatPresenter.AddNewMessage += CappuChatPresenterOnNewMessage;
+        }
+
+        private bool CappuChatPresenterOnNewMessage(object sender, Models.SimpleConversation conversation)
+        {
+            return SelectedTabIndex == 0;
         }
 
         private void LoginPresenterOnLoggedOut(string reason)

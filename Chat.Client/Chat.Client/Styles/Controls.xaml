@@ -41,5 +41,15 @@
     <Style TargetType="{x:Type ListViewItem}" x:Key="CreepyListViewItem" BasedOn="{StaticResource MetroListViewItem}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <ItemContainerTemplate>
+                    <Border Background="Transparent">
+                        <ContentPresenter/>
+                    </Border>
+                </ItemContainerTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Chat.Client.UserControls
 {
@@ -20,6 +8,33 @@ namespace Chat.Client.UserControls
     /// </summary>
     public partial class UserContainer : UserControl
     {
+        public static readonly DependencyProperty NewMessagesProperty = DependencyProperty.Register(
+            "NewMessages", typeof(int), typeof(UserContainer), new PropertyMetadata(default(int)));
+
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+            "Header", typeof(string), typeof(UserContainer), new PropertyMetadata(default(string)));
+
+        public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
+            "Content", typeof(object), typeof(UserContainer), new PropertyMetadata(default(object)));
+
+        public int NewMessages
+        {
+            get { return (int) GetValue(NewMessagesProperty); }
+            set { SetValue(NewMessagesProperty, value); }
+        }
+
+        public string Header
+        {
+            get { return (string) GetValue(HeaderProperty); }
+            set { SetValue(HeaderProperty, value); }
+        }
+
+        public new object Content
+        {
+            get { return (object) GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
+        }
+
         public UserContainer()
         {
             InitializeComponent();

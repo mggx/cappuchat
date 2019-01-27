@@ -34,21 +34,18 @@
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <ItemContainerTemplate>
-                                <Border Background="Transparent">
-                                    <ContentPresenter/>
-                                </Border>
-                            </ItemContainerTemplate>
-                        </Setter.Value>
-                    </Setter>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type viewModels:CappuChatViewModel}">
-                    <userControls:UserContainer/>
+                    <userControls:UserContainer Header="{Binding Conversation.TargetUsername}"
+                                                NewMessages="{Binding Conversation.NewMessages}">
+                        <userControls:UserContainer.Content>
+                            <TextBlock Text="{Binding Conversation.LastMessage}"
+                                       TextTrimming="WordEllipsis"
+                                       FontSize="14"/>
+                        </userControls:UserContainer.Content>
+                    </userControls:UserContainer>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

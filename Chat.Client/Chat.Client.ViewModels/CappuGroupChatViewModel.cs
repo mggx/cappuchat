@@ -11,11 +11,11 @@ namespace Chat.Client.ViewModels
     {
         public event OpenChatHandler OpenChat;
 
-        public RelayCommand OpenPrivateChatCommand { get; set; }
+        public RelayCommand<string> OpenPrivateChatCommand { get; set; }
 
         public CappuGroupChatViewModel(ISignalHelperFacade signalHelperFacade) : base(signalHelperFacade)
         {
-            OpenPrivateChatCommand = new RelayCommand(OpenPrivateChat, CanOpenPrivateChat);
+            OpenPrivateChatCommand = new RelayCommand<string>(OpenPrivateChat, CanOpenPrivateChat);
         }
 
         protected override void RaiseCanExecuteChanged()
@@ -24,13 +24,19 @@ namespace Chat.Client.ViewModels
             OpenPrivateChatCommand?.RaiseCanExecuteChanged();
         }
 
-        private bool CanOpenPrivateChat()
+        private bool CanOpenPrivateChat(string username)
         {
-            return SelectedMessage != null;
+            return SelectedMessage != null || !string.IsNullOrWhiteSpace(username) && !User.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase);
         }
 
-        private void OpenPrivateChat()
+        private void OpenPrivateChat(string username)
         {
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                OpenChat?.Invoke(new SimpleUser(username));
+                return;
+            }
+
             OpenChat?.Invoke(SelectedMessage.Sender);
         }
 

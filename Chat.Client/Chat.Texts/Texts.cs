@@ -60,5 +60,9 @@ namespace Chat.Texts
         public static string ServerUrlWatermark => "Server Url...";
         public static string ServerPortWatermark => "Server Port...";
         public static string Save => "Save";
+
+        public static string Voted => "Voted";
+        public static string NotVoted => "Not voted yet";
+        public static string SomethingWentWrong => "Something went wrong...";
     }
 }

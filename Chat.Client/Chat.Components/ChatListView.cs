@@ -4,14 +4,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace ChatComponents
 {
     public class ChatListView : ListView
     {
         private ScrollViewer _scrollViewer;
-        private bool _loaded;
 
         public bool LazyScrollToBottom { get; set; }
 
@@ -51,20 +49,18 @@ namespace ChatComponents
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            _loaded = true;
-
             if (VisualChildrenCount > 0)
             {
                 Decorator border = VisualTreeHelper.GetChild(this, 0) as Decorator;
                 _scrollViewer = border?.Child as ScrollViewer;
             }
 
-            LazyScroll();
+            ScrollToBottom();
         }
 
         private void LazyScroll()
         {
-            if (!LazyScrollToBottom || !_loaded)
+            if (!LazyScrollToBottom)
                 return;
             ScrollToBottom();
             LazyScrollToBottom = false;

@@ -8,25 +8,24 @@
              xmlns:converters="clr-namespace:Chat.Client.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="500"
-             d:DataContext="{d:DesignInstance viewModels:CappuChatViewModel}"
              HorizontalAlignment="Stretch"
-             Width="215"
+             Margin="5"
              Padding="8"
+             Background="Transparent"
              BorderThickness="0, 0, 0, 0.1"
-             BorderBrush="LightGray">
+             BorderBrush="LightGray"
+             Name="Main">
     <UserControl.Resources>
         <converters:StringToPartialStringConverter x:Key="StringToPartialStringConverter"/>
         <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" FalseCaseVisibility="Hidden"/>
     </UserControl.Resources>
 
     <DockPanel>
-        <mah:Badged Badge="{Binding Conversation.NewMessages}"
+        <mah:Badged Badge="{Binding ElementName=Main, Path=NewMessages}"
                     Background="Transparent"
                     VerticalAlignment="Center"
-                    Margin="10"
                     DockPanel.Dock="Right"
-                    Visibility="{Binding Conversation.NewMessages, Converter={StaticResource IntegerToVisibilityConverter}}"/>
-
+                    Visibility="{Binding ElementName=Main, Path=NewMessages, Converter={StaticResource IntegerToVisibilityConverter}}"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*"/>
@@ -36,25 +35,21 @@
             <Border CornerRadius="50"
                     Width="40"
                     Height="40"
-                    Background="DarkRed"
-                    Margin="10">
-                <TextBlock Text="{Binding Conversation.TargetUsername, Converter={StaticResource StringToPartialStringConverter}, ConverterParameter=1}"
+                    Background="DarkRed">
+                <TextBlock Text="{Binding ElementName=Main, Path=Header, Converter={StaticResource StringToPartialStringConverter}, ConverterParameter=1}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
             </Border>
 
-            <StackPanel Grid.Column="1"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Margin="10">
-                <TextBlock Text="{Binding Conversation.TargetUsername}"
-                           TextTrimming="WordEllipsis"
-                           FontSize="20"/>
-                <TextBlock Text="{Binding Conversation.LastMessage}"
-                           TextTrimming="WordEllipsis"
-                           FontSize="14"
-                           Foreground="White"/>
-            </StackPanel>
+            <DockPanel Grid.Column="1"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding ElementName=Main, Path=Header}"
+                               TextTrimming="WordEllipsis"
+                               FontSize="20"
+                               DockPanel.Dock="Top"/>
+                    <ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ElementName=Main, Path=Content}" Width="125"/>
+            </DockPanel>
         </Grid>
     </DockPanel>
 </UserControl>

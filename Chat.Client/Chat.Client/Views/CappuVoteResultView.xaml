@@ -7,76 +7,79 @@
              xmlns:presenters="clr-namespace:Chat.Client.Presenters;assembly=Chat.Client.Presenters"
              xmlns:models="clr-namespace:Chat.Client.ViewModels.Models;assembly=Chat.Client.ViewModels"
              xmlns:views="clr-namespace:Chat.Client.Views"
-             xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              xmlns:bindingProxies="clr-namespace:Chat.Client.BindingProxies"
              xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:userControls="clr-namespace:Chat.Client.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance presenters:CappuVotePresenter}">
     <UserControl.Resources>
         <bindingProxies:CappuGroupChatViewModelProxy x:Key="CappuGroupChatViewModelProxy"
                                                 Data="{Binding CappuGroupChatViewModel}"/>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVotedStringConverter x:Key="BooleanToVotedStringConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" Collapsing="False"/>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel HorizontalAlignment="Center"
-                   VerticalAlignment="Stretch"
-                   LastChildFill="True"
-                   Margin="5"
-                   Grid.Row="0"
-                   Grid.RowSpan="2"
+        <ListView ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}" 
+                  Background="Transparent"
+                  HorizontalAlignment="Left"
+                  BorderThickness="0"
+                  Width="240"
+                  DockPanel.Dock="Top">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:UsersVotes}">
+                    <userControls:UserContainer x:Name="UserContainer"
+                                                Header="{Binding Username}">
+                        <userControls:UserContainer.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" 
+                                          Command="{Binding Data.OpenPrivateChatCommand, Source={StaticResource CappuGroupChatViewModelProxy}}"
+                                          CommandParameter="{Binding Username}"/>
+                        </userControls:UserContainer.InputBindings>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="14"
+                                       Text="{Binding Voted, Converter={StaticResource BooleanToVotedStringConverter}}"/>
+                            <iconPacks:PackIconModern Width="12" 
+                                                      Height="12" 
+                                                      Kind="Checkmark" 
+                                                      Visibility="{Binding Voted, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                                      Margin="5"/>
+                        </StackPanel>
+                    </userControls:UserContainer>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <DockPanel Grid.Row="1"
                    Grid.Column="0">
-
-            <ListView x:Name="OnlineUsersListView"
-                      ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}"
-                      Background="Transparent"
-                      BorderThickness="0"
-                      DockPanel.Dock="Top">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:UsersVotes}">
-                        <DockPanel MaxWidth="120">
-                            <TextBlock HorizontalAlignment="Center"
-                                       DockPanel.Dock="Left"
-                                       Text="{Binding Username, Mode=OneTime}"
-                                       TextAlignment="Center"
-                                       Width="100"
-                                       Foreground="White"/>
-                            <iconPacks:PackIconModern Width="16" Height="16" Kind="Checkmark" Visibility="{Binding Voted, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
             <Button HorizontalAlignment="Stretch"
                     BorderThickness="0"
                     FocusVisualStyle="{x:Null}"
                     Background="Transparent"
-                    Width="128"
-                    Height="128"
-                    DockPanel.Dock="Bottom"
-                    Command="{Binding CappuVoteResultViewModel.FinalCappuCallCommand}">
+                    Command="{Binding CappuVoteResultViewModel.FinalCappuCallCommand}"
+                    DockPanel.Dock="Bottom">
                 <iconPacks:PackIconModern Width="96" Height="96" Kind="Cup" />
             </Button>
 
             <views:CappuVoteView DataContext="{Binding CappuVoteViewModel}"
-                                 DockPanel.Dock="Bottom"
-                                 HorizontalAlignment="Stretch"/>
+                                 HorizontalAlignment="Stretch"
+                                 DockPanel.Dock="Top"/>
         </DockPanel>
 
         <views:ChatView Grid.Row="0"
