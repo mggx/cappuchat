@@ -68,6 +68,7 @@
     <Compile Include="Contracts\IRegisterSignalHelper.cs" />
     <Compile Include="Contracts\ISignalHelperFacade.cs" />
     <Compile Include="Contracts\IVoteSignalHelper.cs" />
+    <Compile Include="Helper\CipherHelper.cs" />
     <Compile Include="LoginSignalHelper.cs" />
     <Compile Include="RegisterSignalHelper.cs" />
     <Compile Include="SignalHelperFacade.cs" />
@@ -83,6 +84,10 @@
     <ProjectReference Include="..\..\Chat.Shared\Chat.Shared.Responses\Chat.Shared.Responses.csproj">
       <Project>{C0B3763F-B271-4016-AD21-E15D2675312B}</Project>
       <Name>Chat.Shared.Responses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat.Shared.Encryption\Chat.Shared.Encryption.csproj">
+      <Project>{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}</Project>
+      <Name>Chat.Shared.Encryption</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@ using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
+using Chat.Client.SignalHelpers.Helper;
 using Chat.Responses;
 using Chat.Shared.Models;
 using Microsoft.AspNet.SignalR.Client;
@@ -39,7 +40,7 @@ namespace Chat.Client.SignalHelpers
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(receivedMessage));
+                MessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(CipherHelper.DecryptMessage(receivedMessage)));
             });
         }
 
@@ -47,7 +48,7 @@ namespace Chat.Client.SignalHelpers
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(message));
+                PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(CipherHelper.DecryptMessage(message)));
             });
         }
 
@@ -67,7 +68,7 @@ namespace Chat.Client.SignalHelpers
 
         public async Task SendMessage(SimpleMessage message)
         {
-            var task = _chatHubProxy.Invoke("SendMessage", message);
+            var task = _chatHubProxy.Invoke("SendMessage", CipherHelper.EncryptMessage(message));
             if (task == null)
                 throw new NullServerResponseException("Retrieved null task from server.");
             await task;
@@ -75,7 +76,7 @@ namespace Chat.Client.SignalHelpers
 
         public async Task SendPrivateMessage(SimpleMessage message)
         {
-            var task = _chatHubProxy.Invoke<BaseResponse>("SendPrivateMessage", message);
+            var task = _chatHubProxy.Invoke<BaseResponse>("SendPrivateMessage", CipherHelper.EncryptMessage(message));
             if (task == null)
                 throw new NullServerResponseException("Retrieved null task from server.");
             await task;

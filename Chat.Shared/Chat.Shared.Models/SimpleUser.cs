@@ -2,6 +2,7 @@
 
 namespace Chat.Shared.Models
 {
+    [Serializable]
     public class SimpleUser
     {
         public string Username { get; set; }

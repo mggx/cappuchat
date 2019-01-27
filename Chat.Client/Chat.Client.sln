@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatComponents", "Chat.Comp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Models", "Chat.Models\Chat.Models.csproj", "{AEA6760B-9456-40E0-9FFD-EAD9288452C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Shared.Encryption", "Chat.Shared.Encryption\Chat.Shared.Encryption.csproj", "{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19} = {74D529DA-DE89-474E-97DB-3EF18AEDFC09}
 		{C0B3763F-B271-4016-AD21-E15D2675312B} = {74D529DA-DE89-474E-97DB-3EF18AEDFC09}
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0} = {74D529DA-DE89-474E-97DB-3EF18AEDFC09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B41607CE-8EBC-4D94-9848-DDAC57DCAF08}
