@@ -90,11 +90,12 @@ namespace Chat.Client.Presenters
         private void AddCappuChatViewModel(SimpleConversation conversation, bool setAsCurrentChatViewModel = false, params SimpleMessage[] messages)
         {
             var chatViewModel = new CappuChatViewModel(_signalHelperFacade, conversation);
-            chatViewModel.Load(messages);
             chatViewModel.ConversationHelper.AddNewMessage += ChatViewModelOnAddNewMessage;
             chatViewModel.ConversationHelper.NewMessagesChanged += ChatViewModelOnNewMessagesChanged;
 
             Conversations.Add(chatViewModel);
+
+            chatViewModel.Load(messages);
 
             if (setAsCurrentChatViewModel)
                 CurrentChatViewModel = chatViewModel;

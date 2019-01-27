@@ -74,7 +74,7 @@ namespace Chat.Client.ViewModels
 
         private bool CanVote(bool focus = false)
         {
-            return !_simpleVote?.UserAnswerCache.ContainsKey(_user.Username) == true;
+            return !_simpleVote?.UserAnswerCache.ContainsKey(_user.Username.ToLower()) == true;
         }
 
         private async void Vote(bool focus = false)
