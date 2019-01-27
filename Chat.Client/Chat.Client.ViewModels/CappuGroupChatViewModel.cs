@@ -9,12 +9,19 @@ namespace Chat.Client.ViewModels
 {
     public class CappuGroupChatViewModel : CappuChatViewModelBase
     {
+        private readonly IViewProvider _viewProvider;
+
         public event OpenChatHandler OpenChat;
 
         public RelayCommand<string> OpenPrivateChatCommand { get; set; }
 
-        public CappuGroupChatViewModel(ISignalHelperFacade signalHelperFacade) : base(signalHelperFacade)
+        public CappuGroupChatViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider) : base(signalHelperFacade)
         {
+            if (viewProvider == null)
+                throw new ArgumentNullException(nameof(viewProvider),
+                    "Cannot create CappuGroupChatViewModel. Given viewProvider is null");
+            _viewProvider = viewProvider;
+
             OpenPrivateChatCommand = new RelayCommand<string>(OpenPrivateChat, CanOpenPrivateChat);
         }
 
@@ -62,6 +69,7 @@ namespace Chat.Client.ViewModels
         protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
             Messages.Add(eventArgs.ReceivedMessage);
+            _viewProvider.FlashWindow();
         }
     }
 }

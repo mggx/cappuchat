@@ -77,7 +77,8 @@
                                          BorderBrush="White"
                                          HorizontalContentAlignment="Left"
                                          HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Bottom"/>
+                                         VerticalAlignment="Bottom"
+                                         MaxLength="300"/>
         </Border>
 
         <Button Grid.Column="1" 

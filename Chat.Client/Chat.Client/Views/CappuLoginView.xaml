@@ -34,14 +34,16 @@
                                          FocusedBorderBrush="{DynamicResource AccentBaseColorBrush}"
                                          Watermark="{x:Static texts:Texts.UsernameWatermark}"
                                          Text="{Binding CappuLoginViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         BorderBrush="White"/>
+                                         BorderBrush="White"
+                                         MaxLength="25"/>
 
             <PasswordBox mah:TextBoxHelper.Watermark="{x:Static texts:Texts.PasswordWatermark}"
                          mah:PasswordBoxHelper.CapsLockWarningToolTip="Caps on"
                          helper:PasswordHelper.Password="{Binding CappuLoginViewModel.Password, Mode=TwoWay}"
                          Width="200"
                          Margin="5" 
-                         HorizontalContentAlignment="Center"/>
+                         HorizontalContentAlignment="Center"
+                         MaxLength="25"/>
 
             <Button Content="{x:Static texts:Texts.Login}" 
                         Margin="5" 

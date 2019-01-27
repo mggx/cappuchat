@@ -51,7 +51,7 @@ namespace Chat.Client.Presenters
 
         private void InitializeCappuGroupChatViewModel()
         {
-            CappuGroupChatViewModel = new CappuGroupChatViewModel(_signalHelperFacade);
+            CappuGroupChatViewModel = new CappuGroupChatViewModel(_signalHelperFacade, _viewProvider);
         }
 
         private void InitializeVoteSignalHelperEvents()
