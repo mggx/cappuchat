@@ -22,7 +22,7 @@
 
     <Style TargetType="{x:Type mah:DropDownButton}" x:Key="DropDownStyle">
         <Setter Property="ArrowBrush" Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="ArrowMouseOverBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="ArrowPressedBrush" Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource BlackColorBrush}" />
@@ -202,7 +202,7 @@
                                            FontFamily="Segoe Ui"
                                            FontSize="12"
                                            Padding="10, 6, 6, 6"
-                                           Foreground="White"/>
+                                           Foreground="LightGray"/>
 
                                 <Border Padding="10, 0, 10, 10"
                                         Grid.Column="0"
@@ -223,7 +223,7 @@
                                            VerticalAlignment="Bottom"
                                            HorizontalAlignment="Center"
                                            FontSize="11"
-                                           Foreground="White"
+                                           Foreground="LightGray"
                                            Text="{TemplateBinding Time, Converter={StaticResource DateTimeToMessageStringConverter}}"/>
                             </Grid>
                         </Border>
