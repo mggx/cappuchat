@@ -160,6 +160,7 @@
     </Style>
 
     <Style TargetType="{x:Type local:ChatBubble}">
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ChatBubble}">
@@ -187,7 +188,8 @@
                                                     Grid.Column="2"
                                                     HorizontalAlignment="Right"
                                                     Visibility="Collapsed"
-                                                    Style="{StaticResource DropDownStyle}">
+                                                    Style="{StaticResource DropDownStyle}"
+                                                    IsTabStop="{TemplateBinding IsTabStop}">
                                     <mah:DropDownButton.ItemContainerStyle>
                                         <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
                                             <Setter Property="Header" Value="{Binding Header}"/>

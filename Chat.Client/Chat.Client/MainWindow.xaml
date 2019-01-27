@@ -47,7 +47,8 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button Click="ChangeAppStyleButtonClick">
+            <Button Click="ChangeAppStyleButtonClick"
+                    IsTabStop="False">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="PageEdit" />
                     <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Change App Style..." />
@@ -55,7 +56,8 @@
             </Button>
             <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
                     ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    IsTabStop="False">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="150">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
@@ -65,7 +67,8 @@
                 </StackPanel>
             </Button>
             <mah:WindowCommandsItem>
-                <Button Content="{x:Static texts:Texts.Logout}" 
+                <Button Content="{x:Static texts:Texts.Logout}"
+                        IsTabStop="False"
                         Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
             </mah:WindowCommandsItem>
         </mah:WindowCommands>

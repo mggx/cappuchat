@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:chatComponents="clr-namespace:ChatComponents">
     <Style TargetType="{x:Type chatComponents:ChatListViewItem}">
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type chatComponents:ChatListViewItem}">
