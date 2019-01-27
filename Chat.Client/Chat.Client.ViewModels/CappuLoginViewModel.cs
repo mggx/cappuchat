@@ -78,13 +78,15 @@ namespace Chat.Client.ViewModels
 
         private bool CanLogin()
         {
-            return PreviewServerCall?.Invoke() == true;
+            return PreviewServerCall?.Invoke() == true && !ProgressProvider.ProgressScope.InProgress && !LoggedIn;
         }
 
         private async void Login()
         {
             using (ProgressProvider.StartProgress())
             {
+                RaiseCanExecuteChanged();
+
                 SimpleUser user;
                 try
                 {
@@ -99,6 +101,8 @@ namespace Chat.Client.ViewModels
                 LoggedIn = true;
                 LoginSucceeded?.Invoke(new LoginSucceededEventArgs(user));
             }
+
+            RaiseCanExecuteChanged();
 
             Application.Current.Dispatcher.Invoke(RaiseCanExecuteChanged);
         }
@@ -118,7 +122,7 @@ namespace Chat.Client.ViewModels
 
         private bool CanOpenRegister()
         {
-            return PreviewServerCall?.Invoke() == true;
+            return PreviewServerCall?.Invoke() == true && !ProgressProvider.ProgressScope.InProgress && !LoggedIn;
         }
 
         private void OpenRegister()
