@@ -25,8 +25,8 @@ namespace Chat.Server.Hubs
 
             if (UsernameConnectionIdCache.ContainsKey(response.User.Username.ToLower()))
             {
-                if (UsernameConnectionIdCache[username] != Context.ConnectionId)
-                    Clients.Client(UsernameConnectionIdCache[username]).OnClientLoggedOut(Texts.Texts.OtherClientLoggedIn);
+                if (UsernameConnectionIdCache[response.User.Username.ToLower()] != Context.ConnectionId)
+                    Clients.Client(UsernameConnectionIdCache[response.User.Username.ToLower()]).OnClientLoggedOut(Texts.Texts.OtherClientLoggedIn);
             }
 
             Add(response.User.Username);

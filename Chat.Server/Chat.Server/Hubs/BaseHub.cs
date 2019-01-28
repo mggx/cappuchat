@@ -21,6 +21,7 @@ namespace Chat.Server.Hubs
             {
                 UsernameConnectionIdCache.Remove(lowerUsername);
                 UsernameConnectionIdCache.Add(lowerUsername, Context.ConnectionId);
+                OnlineUsers.Remove(GetSimpleUser(username));
                 OnlineUsers.Add(new SimpleUser(username));
                 return false;
             }
@@ -33,8 +34,7 @@ namespace Chat.Server.Hubs
         protected bool Remove(string username)
         {
             var lowerUsername = username.ToLower();
-            var simpleUser = OnlineUsers.FirstOrDefault(user =>
-                user.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+            var simpleUser = GetSimpleUser(username);
             OnlineUsers.Remove(simpleUser);
             return UsernameConnectionIdCache.Remove(lowerUsername);
         }
@@ -56,8 +56,13 @@ namespace Chat.Server.Hubs
 
         protected string GetCorrectUsername(string username)
         {
-            var simpleUser = OnlineUsers.FirstOrDefault(user => user.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
+            var simpleUser = GetSimpleUser(username);
             return simpleUser == null ? string.Empty : simpleUser.Username;
+        }
+
+        protected SimpleUser GetSimpleUser(string username)
+        {
+            return OnlineUsers.FirstOrDefault(user => user.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
         }
 
         protected T ExecuteControllerAction<T, T1>(Func<T> controllerAction, T1 response) where T1 : BaseResponse

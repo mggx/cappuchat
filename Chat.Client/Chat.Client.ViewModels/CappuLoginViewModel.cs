@@ -74,6 +74,8 @@ namespace Chat.Client.ViewModels
         private void LoginSignalHelperOnLoggedOutByServer(object sender, string e)
         {
             LoggedOut?.Invoke(e);
+            LoggedIn = false;
+            RaiseCanExecuteChanged();
         }
 
         private bool CanLogin()
