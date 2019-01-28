@@ -13,7 +13,7 @@ namespace Chat.Server.Hubs
 
         public SimpleLoginResponse Login(string username, string password)
         {
-            username = username.Trim();
+            username = username?.Trim();
 
             SimpleLoginResponse response = new SimpleLoginResponse();
 
