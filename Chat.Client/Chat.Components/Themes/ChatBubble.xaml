@@ -206,16 +206,23 @@
                                            Padding="10, 6, 6, 6"
                                            Foreground="LightGray"/>
 
+                                
+
                                 <Border Padding="10, 0, 10, 10"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         Grid.Row="1"
                                         Grid.RowSpan="2">
-                                    <TextBlock Text="{TemplateBinding Text}"
-                                               FontFamily="Segoe Ui"
-                                               TextWrapping="Wrap"
-                                               FontSize="14"
-                                               Foreground="White"/>
+
+                                    <TextBox Text="{TemplateBinding Text}"
+                                             FontFamily="Segoe Ui"
+                                             FontSize="14"
+                                             Foreground="FloralWhite"
+                                             IsReadOnly="True"
+                                             TextWrapping="Wrap"
+                                             Background="Transparent"
+                                             BorderThickness="0"
+                                             IsTabStop="False"/>
                                 </Border>
 
                                 <TextBlock Padding="5"

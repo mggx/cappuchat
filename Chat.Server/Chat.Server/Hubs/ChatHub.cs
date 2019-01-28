@@ -14,13 +14,13 @@ namespace Chat.Server.Hubs
 
         public void SendPrivateMessage(SimpleMessage message)
         {
-            if (!UsernameConnectionIdCache.ContainsKey(message.Receiver.Username))
+            if (!UsernameConnectionIdCache.ContainsKey(message.Receiver.Username.ToLower()))
             {
                 //if user exists in database, add to pending messages
                 return;
             }
 
-            string targetConnectionId = UsernameConnectionIdCache[message.Receiver.Username];
+            string targetConnectionId = UsernameConnectionIdCache[message.Receiver.Username.ToLower()];
             Clients.Client(targetConnectionId).OnPrivateMessageReceived(message);
         }
 

@@ -13,6 +13,8 @@ namespace Chat.Server.Hubs
 
         public SimpleLoginResponse Login(string username, string password)
         {
+            username = username.Trim();
+
             SimpleLoginResponse response = new SimpleLoginResponse();
 
             response.User = ExecuteControllerAction(() => UserController.Login(username, password), response);
@@ -21,13 +23,13 @@ namespace Chat.Server.Hubs
 
             response.ConnectionId = Context.ConnectionId;
 
-            if (UsernameConnectionIdCache.ContainsKey(username))
+            if (UsernameConnectionIdCache.ContainsKey(response.User.Username.ToLower()))
             {
                 if (UsernameConnectionIdCache[username] != Context.ConnectionId)
                     Clients.Client(UsernameConnectionIdCache[username]).OnClientLoggedOut(Texts.Texts.OtherClientLoggedIn);
             }
 
-            Add(username);
+            Add(response.User.Username);
 
             Clients.All.OnOnlineUsersChanged(GetOnlineUsers());
 
@@ -53,7 +55,7 @@ namespace Chat.Server.Hubs
                 var username = UsernameConnectionIdCache.FirstOrDefault(pair => pair.Value == userId).Key;
                 if (username != null)
                 {
-                    UsernameConnectionIdCache.Remove(username);
+                    Remove(username);
                     VoteHub.ActiveCappuVote?.UserAnswerCache.Remove(username);
                 }
             }

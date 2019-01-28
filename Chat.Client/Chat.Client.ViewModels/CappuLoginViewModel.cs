@@ -18,7 +18,7 @@ namespace Chat.Client.ViewModels
         private string _username;
         public string Username
         {
-            get { return _username?.Trim(); }
+            get { return _username; }
             set { _username = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
@@ -83,26 +83,28 @@ namespace Chat.Client.ViewModels
 
         private async void Login()
         {
-            using (ProgressProvider.StartProgress())
-            {
-                RaiseCanExecuteChanged();
+            RaiseCanExecuteChanged();
 
-                SimpleUser user;
-                try
+            SimpleUser user;
+            try
+            {
+                using (ProgressProvider.StartProgress())
                 {
                     user = await _signalHelperFacade.LoginSignalHelper.Login(Username, Password);
                 }
-                catch (LoginFailedException e)
-                {
-                    LoginFailed?.Invoke(new LoginFailedEventArgs(e.Message));
-                    return;
-                }
-
-                LoggedIn = true;
-                LoginSucceeded?.Invoke(new LoginSucceededEventArgs(user));
+            }
+            catch (LoginFailedException e)
+            {
+                LoginFailed?.Invoke(new LoginFailedEventArgs(e.Message));
+                return;
+            }
+            finally
+            {
+                RaiseCanExecuteChanged();
             }
 
-            RaiseCanExecuteChanged();
+            LoggedIn = true;
+            LoginSucceeded?.Invoke(new LoginSucceededEventArgs(user));
 
             Application.Current.Dispatcher.Invoke(RaiseCanExecuteChanged);
         }

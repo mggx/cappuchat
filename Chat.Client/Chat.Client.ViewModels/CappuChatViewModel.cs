@@ -1,16 +1,11 @@
-﻿using Chat.Client.Framework;
-using Chat.Client.Signalhelpers.Contracts;
+﻿using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
+using Chat.Client.ViewModels.Controllers;
+using Chat.Client.ViewModels.Helpers;
+using Chat.Models;
 using Chat.Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Data;
-using Chat.Client.ViewModels.Controllers;
-using Chat.Client.ViewModels.Delegates;
-using Chat.Client.ViewModels.Helpers;
-using Chat.Models;
 
 namespace Chat.Client.ViewModels
 {

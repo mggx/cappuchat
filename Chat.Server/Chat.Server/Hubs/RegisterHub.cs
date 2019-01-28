@@ -9,6 +9,8 @@ namespace Chat.Server.Hubs
 
         public SimpleRegisterResponse Register(string username, string password)
         {
+            username = username.Trim();
+
             SimpleRegisterResponse response = new SimpleRegisterResponse();
 
             if (string.IsNullOrWhiteSpace(username))
