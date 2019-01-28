@@ -53,7 +53,8 @@
                     <chatComponents:ChatBubble Text="{Binding Message, Mode=OneTime}"
                                                Time="{Binding MessageSentDateTime, Mode=OneTime}"
                                                Sender="{Binding Sender.Username, Mode=OneTime}"
-                                               Background="{DynamicResource AccentColorBrush}">
+                                               Background="{DynamicResource AccentColorBrush}"
+                                               Reactions="{Binding }">
                         <chatComponents:ChatBubble.HorizontalAlignment>
                             <MultiBinding Converter="{StaticResource UsersToHorizontalAlignmentConverter}">
                                 <Binding Path="Sender"/>

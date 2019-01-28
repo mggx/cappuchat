@@ -8,6 +8,7 @@ namespace Chat.Shared.Models
         public SimpleUser Sender { get; set; }
         public SimpleUser Receiver { get; set; }
         public string Message { get; set; }
+        //public int Reactios { get; set; }
 
         public DateTime MessageSentDateTime { get; set; }
 
@@ -18,6 +19,7 @@ namespace Chat.Shared.Models
         }
 
         public SimpleMessage(SimpleUser sender, string message)
+        //public SimpleMessage(SimpleUser sender, string message, int reactions)
         {
             if (sender == null)
                 throw new ArgumentNullException(nameof(sender), "Cannot create SimpleMessage. Given sender is null.");
@@ -27,9 +29,11 @@ namespace Chat.Shared.Models
 
             Sender = sender;
             Message = message;
+            //Reactios = reactions;
         }
 
         public SimpleMessage(SimpleUser sender, SimpleUser receiver, string message) : this(sender, message)
+        //public SimpleMessage(SimpleUser sender, SimpleUser receiver, string message, int reactions) : this(sender, message, reactions)
         {
             Receiver = receiver;
         }
