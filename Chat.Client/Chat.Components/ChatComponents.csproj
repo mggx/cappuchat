@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="ChatListView.cs" />
     <Compile Include="ChatListViewItem.cs" />
+    <Compile Include="Converters\ValueToBadgedBackgroundColorConverter.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -118,6 +119,10 @@
     <ProjectReference Include="..\Chat.Client.Framework\Chat.Client.Framework.csproj">
       <Project>{C5EF9D25-638F-408A-AE24-57217CBBA4EA}</Project>
       <Name>Chat.Client.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chat.Client.ViewModels\Chat.Client.ViewModels.csproj">
+      <Project>{066A7D44-1EF3-4E06-A21E-540B1FFC54DB}</Project>
+      <Name>Chat.Client.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

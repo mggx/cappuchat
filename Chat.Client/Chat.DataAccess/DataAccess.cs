@@ -55,7 +55,8 @@ namespace Chat.DataAccess
                                             "username TEXT NOT NULL, " +
                                             "targetusername TEXT NOT NULL, " +
                                             "Message TEXT NOT NULL," +
-                                            "MessageSentDateTime TEXT NOT NULL);";
+                                            "MessageSentDateTime TEXT NOT NULL," +
+                                            "MessageReactions INT NOT NULL);";
             messagesDbCommand.ExecuteNonQuery();
         }
     }

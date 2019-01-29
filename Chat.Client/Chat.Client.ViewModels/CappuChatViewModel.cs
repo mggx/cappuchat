@@ -62,7 +62,7 @@ namespace Chat.Client.ViewModels
 
         protected override void SendMessage(string message)
         {
-            var simpleMessage = new SimpleMessage(User, new SimpleUser(Conversation.TargetUsername), message);
+            var simpleMessage = new SimpleMessage(User, new SimpleUser(Conversation.TargetUsername), message, 0);
             simpleMessage.MessageSentDateTime = DateTime.Now;
 
             _cappuMessageController.StoreOwnMessage(simpleMessage);

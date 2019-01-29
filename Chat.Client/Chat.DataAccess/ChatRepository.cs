@@ -34,9 +34,10 @@ namespace Chat.DataAccess
                 string message = (string) reader["message"];
                 string username = (string) reader["username"];
                 string dateTimeString = (string) reader["messagesentdatetime"];
+                int reactions = (int)reader["messagereactions"];
                 DateTime dateTime = DateTime.Parse(dateTimeString);
 
-                SimpleMessage simpleMessage = new SimpleMessage(new SimpleUser(username), new SimpleUser("testempfaengername"), message)
+                SimpleMessage simpleMessage = new SimpleMessage(new SimpleUser(username), new SimpleUser("testempfaengername"), message, reactions)
                 {
                     MessageSentDateTime = dateTime
                 };
@@ -100,9 +101,10 @@ namespace Chat.DataAccess
                 message.MessageSentDateTime.ToString(CultureInfo.CurrentCulture)));
             dbCommand.Parameters.Add(new SQLiteParameter("@username", message.Sender.Username));
             dbCommand.Parameters.Add(new SQLiteParameter("@targetusername", message.Receiver.Username));
+            dbCommand.Parameters.Add(new SQLiteParameter("@reactions", message.Reactions));
 
             dbCommand.CommandText =
-                "INSERT INTO messages (conversationid, message, messagesentdatetime, username, targetusername) values (@conversationid, @message, @messagesentdatetime, @username, @targetusername)";
+                "INSERT INTO messages (conversationid, message, messagesentdatetime, username, targetusername, messagereactions) values (@conversationid, @message, @messagesentdatetime, @username, @targetusername, @reactions)";
             
             dbCommand.ExecuteNonQuery();
         }

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 
@@ -29,21 +28,24 @@ namespace ChatComponents
         public static readonly DependencyProperty ReactionsProperty = DependencyProperty.Register(
             "Reactions", typeof(int), typeof(ChatBubble), new PropertyMetadata(default(int)));
 
+        public static readonly DependencyProperty ReactedProperty = DependencyProperty.Register(
+            "Reacted", typeof(bool), typeof(ChatBubble), new PropertyMetadata(default(bool)));
+
         public DateTime Text
         {
-            get { return (DateTime) GetValue(TextProperty); }
+            get { return (DateTime)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-        
+
         public DateTime Time
         {
-            get { return (DateTime) GetValue(TimeProperty); }
+            get { return (DateTime)GetValue(TimeProperty); }
             set { SetValue(TimeProperty, value); }
         }
 
         public string Sender
         {
-            get { return (string) GetValue(SenderProperty); }
+            get { return (string)GetValue(SenderProperty); }
             set { SetValue(SenderProperty, value); }
         }
 
@@ -51,6 +53,12 @@ namespace ChatComponents
         {
             get { return (int)GetValue(ReactionsProperty); }
             set { SetValue(ReactionsProperty, value); }
+        }
+
+        public bool Reacted
+        {
+            get { return (bool)GetValue(ReactedProperty); }
+            set { SetValue(ReactedProperty, value); }
         }
 
         static ChatBubble()
@@ -90,10 +98,16 @@ namespace ChatComponents
 
         private void ReactionButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_reactionBadged.Badge == null)
-                _reactionBadged.Badge = new Badged();
-
-            _reactionBadged.Badge = 1;
+            if (Reacted == false)
+            {
+                Reactions += 1;
+                Reacted = true;
+            }
+            else
+            {
+                Reactions -= 1;
+                Reacted = false;
+            }
         }
 
         public static T FindAncestor<T>(DependencyObject child)

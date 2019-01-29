@@ -30,5 +30,10 @@ namespace Chat.Server.Hubs
             GetOnlineUsersResponse response = new GetOnlineUsersResponse { OnlineUserList = base.GetOnlineUsers() };
             return response;
         }
+        
+        public void ReactToMessage(SimpleMessage message)
+        {
+            var messageReacts = message.Reactions + 1;
+        }
     }
 }
