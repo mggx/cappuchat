@@ -1,6 +1,8 @@
-﻿using Chat.Client.Presenters;
+﻿using Chat.Client.Configuration;
+using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
+using Chat.Client.Windows;
 using MahApps.Metro;
 using System;
 using System.Threading.Tasks;
@@ -13,16 +15,23 @@ namespace Chat.Client
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
+        private IConfigController _configController;
+        private ServerConnectionWindow _serverConnectionWindow;
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
+            _configController = new ConfigController();
+            _configController.DoesConfigFileExists();
+            Models.Config config = _configController.ReadConfig();
+
+
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
 
-            _hubConnectionHelper = new SignalHubConnectionHelper("http://localhost:1232/signalr/hubs");
+            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + config.Host + ":" + config.Port + "/signalr/hubs");
 
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
             {

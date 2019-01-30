@@ -51,7 +51,18 @@
                     IsTabStop="False">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="PageEdit" />
-                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Change App Style..." />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="Change App Style..." />
+                </StackPanel>
+            </Button>
+            <Button Click="EditServerConnectionButtonClick"
+                    HorizontalAlignment="Center"
+                    IsTabStop="False">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="150">
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" HorizontalAlignment="Center" />
+                    <TextBlock Text="Edit Server Connection"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
             <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
@@ -63,9 +74,11 @@
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
                                Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
                                HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
+                               VerticalAlignment="Center"
+                               Margin="5 0 0 0"/>
                 </StackPanel>
             </Button>
+            
             <mah:WindowCommandsItem>
                 <Button Content="{x:Static texts:Texts.Logout}"
                         IsTabStop="False"

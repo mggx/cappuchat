@@ -47,6 +47,9 @@
                 <DataTemplate DataType="{x:Type models:UsersVotes}">
                     <userControls:UserContainer x:Name="UserContainer"
                                                 Header="{Binding Username}">
+                        <userControls:UserContainer.ToolTip>
+                            <TextBlock Text="{Binding Username}"/>
+                        </userControls:UserContainer.ToolTip>
                         <userControls:UserContainer.InputBindings>
                             <MouseBinding MouseAction="LeftDoubleClick" 
                                           Command="{Binding Data.OpenPrivateChatCommand, Source={StaticResource CappuGroupChatViewModelProxy}}"
