@@ -50,10 +50,25 @@
                          HorizontalContentAlignment="Center"
                          MaxLength="25"/>
 
-            <Button Content="Register"
+            <Border CornerRadius="50"
+                    Width="64"
+                    Height="64">
+                <Image Width="64" Height="64" Stretch="Fill" Source="{Binding ProfilePicturePath}"/>
+            </Border>
+            <Button Content="{x:Static texts:Texts.SelectProfilPicture }"
+                    Margin="5"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding SelectProfilePictureCommand}"/>
+
+            <Button Content="{x:Static texts:Texts.Register}"
                     Margin="5" 
                     HorizontalContentAlignment="Center"
                     Command="{Binding RegisterCommand}"/>
+
+            <Button Content="{x:Static texts:Texts.Cancel}"
+                    Margin="5"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding CancelCommand}"/>
 
             <mah:ProgressRing Width="25" Height="25" IsActive="{Binding ProgressProvider.ProgressScope.InProgress, FallbackValue=False, TargetNullValue=False}"/>
         </StackPanel>

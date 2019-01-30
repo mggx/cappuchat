@@ -47,17 +47,18 @@ namespace Chat.Server.DataAccess
             dbCommand.ExecuteNonQuery();
         }
 
-        public SimpleUser CreateSimpleUser(string username, string password)
+        public SimpleUser CreateSimpleUser(string username, string password, byte[] profilePictureData)
         {
             IDbCommand dbCommand = DataAccess.GetDbCommand();
 
             dbCommand.Parameters.Add(new SQLiteParameter("@username", username));
             dbCommand.Parameters.Add(new SQLiteParameter("@password", password));
+            dbCommand.Parameters.Add(new SQLiteParameter("@picturedata", profilePictureData));
 
             if (GetUserByUsername(username) != null)
                 throw new UserCreationFailedException(Texts.Texts.CreatingUserFailed(Texts.Texts.UserAlreadyExist));
 
-            dbCommand.CommandText = "INSERT INTO users (username, password, online) values (@username, @password, 0)";
+            dbCommand.CommandText = "INSERT INTO users (username, password, online, pircturedata) values (@username, @password, 0, @picturedata)";
 
             try
             {

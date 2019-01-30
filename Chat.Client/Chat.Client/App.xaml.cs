@@ -5,6 +5,7 @@ using Chat.Client.SignalHelpers;
 using Chat.Client.Windows;
 using MahApps.Metro;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -18,8 +19,13 @@ namespace Chat.Client
         private IConfigController _configController;
         private ServerConnectionWindow _serverConnectionWindow;
 
+        private const string PROFILEPICTURESTOREPATH = @"Images/UserPictures/";
+
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
+            if (!Directory.Exists(PROFILEPICTURESTOREPATH))
+                Directory.CreateDirectory(PROFILEPICTURESTOREPATH);
+
             _configController = new ConfigController();
             _configController.DoesConfigFileExists();
             Models.Config config = _configController.ReadConfig();
