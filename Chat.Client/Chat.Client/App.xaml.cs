@@ -30,6 +30,7 @@ namespace Chat.Client
             _configController.DoesConfigFileExists();
             Models.Config config = _configController.ReadConfig();
 
+            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
 
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
