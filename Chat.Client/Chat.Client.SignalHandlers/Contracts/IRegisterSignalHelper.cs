@@ -5,6 +5,6 @@ namespace Chat.Client.Signalhelpers.Contracts
 {
     public interface IRegisterSignalHelper
     {
-        Task<SimpleUser> Register(string username, string password, byte[] profilePictureData);
+        Task<SimpleUser> Register(string username, string password);
     }
 }

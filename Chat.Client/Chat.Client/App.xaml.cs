@@ -1,11 +1,8 @@
-﻿using Chat.Client.Configuration;
-using Chat.Client.Presenters;
+﻿using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
-using Chat.Client.Windows;
 using MahApps.Metro;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -16,29 +13,18 @@ namespace Chat.Client
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
-        private IConfigController _configController;
-        private ServerConnectionWindow _serverConnectionWindow;
-
-        private const string PROFILEPICTURESTOREPATH = @"Images/UserPictures/";
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            if (!Directory.Exists(PROFILEPICTURESTOREPATH))
-                Directory.CreateDirectory(PROFILEPICTURESTOREPATH);
-
-            _configController = new ConfigController();
-            _configController.DoesConfigFileExists();
-            Models.Config config = _configController.ReadConfig();
-
-            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
-
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
 
-            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + config.Host + ":" + config.Port + "/signalr/hubs");
+            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
+
+            _hubConnectionHelper = new SignalHubConnectionHelper("http://localhost:1232/signalr/hubs");
 
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
             {

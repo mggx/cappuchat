@@ -60,7 +60,7 @@ namespace Chat.Client.ViewModels
 
         protected override async void SendMessage(string message)
         {
-            var simpleMessage = new SimpleMessage(User, message, 0) { MessageSentDateTime = DateTime.Now };
+            var simpleMessage = new SimpleMessage(User, message) { MessageSentDateTime = DateTime.Now };
             await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage);
             simpleMessage.IsLocalMessage = true;
             Messages.Add(simpleMessage);

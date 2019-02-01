@@ -38,8 +38,7 @@ namespace Chat.Server.DataAccess
                                     "(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                                     "username TEXT NOT NULL, " +
                                     "password TEXT NOT NULL, " +
-                                    "online INTEGER NOT NULL)," +
-                                    "picturedata BLOB;";
+                                    "online INTEGER NOT NULL);";
             dbCommand.ExecuteNonQuery();
         }
 

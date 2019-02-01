@@ -19,7 +19,7 @@ namespace Chat.Client.SignalHelpers
             _hubProxy = hubProxy;
         }
 
-        public async Task<SimpleUser> Register(string username, string password, byte[] profilePictureData)
+        public async Task<SimpleUser> Register(string username, string password)
         {
             Task<SimpleRegisterResponse> task = _hubProxy.Invoke<SimpleRegisterResponse>("Register", username, password);
             if (task == null)

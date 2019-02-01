@@ -98,8 +98,6 @@
     <Compile Include="BindingProxies\CappuMainPresenterProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteResultViewModelProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
-    <Compile Include="Configuration\ConfigController.cs" />
-    <Compile Include="Configuration\IConfigController.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
     <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
@@ -158,9 +156,6 @@
     </Compile>
     <Compile Include="Windows\AccentThemeWindow.xaml.cs">
       <DependentUpon>AccentThemeWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ServerConnectionWindow.xaml.cs">
-      <DependentUpon>ServerConnectionWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml">
       <SubType>Designer</SubType>
@@ -250,10 +245,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ServerConnectionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -337,9 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="chaticon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\user.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />

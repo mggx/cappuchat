@@ -64,7 +64,5 @@ namespace Chat.Texts
         public static string Voted => "Voted";
         public static string NotVoted => "Not voted yet";
         public static string SomethingWentWrong => "Something went wrong...";
-
-        public static string SelectProfilPicture => "Select your profilepicture";
     }
 }
