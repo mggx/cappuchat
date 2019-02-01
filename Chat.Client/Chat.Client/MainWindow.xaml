@@ -47,13 +47,15 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-            <Button Click="ChangeAppStyleButtonClick"
+
+            <Button Click="EditConnectionSettingsClick"
                     IsTabStop="False">
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="20" Height="20" Kind="PageEdit" />
-                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Change App Style..." />
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static texts:Texts.AppSettingsWindowTitle}" />
                 </StackPanel>
             </Button>
+
             <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
                     ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"
                     HorizontalAlignment="Center"
