@@ -16,6 +16,8 @@ namespace Chat.Client
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
+            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
+
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
