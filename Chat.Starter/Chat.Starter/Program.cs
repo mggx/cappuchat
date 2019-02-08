@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
 
 namespace Chat.Starter
 {
@@ -12,10 +14,18 @@ namespace Chat.Starter
                 proc.Kill();
             }
 
-            var processInfo = new ProcessStartInfo(Environment.CurrentDirectory + "/Chat.Updater.exe", $"{Environment.CurrentDirectory}/Chat.Client.exe");
+            var updaterPath = $"{Environment.CurrentDirectory}\\Chat.Updater.exe";
+            var chatClientPath = $"{Environment.CurrentDirectory}\\Chat.Client.exe";
+
+            if (!File.Exists(updaterPath))
+                return;
+
+            var processInfo = new ProcessStartInfo(updaterPath);
+            processInfo.Arguments += chatClientPath;
             var process = Process.Start(processInfo);
             process?.WaitForExit();
-            Process.Start(new ProcessStartInfo($"{Environment.CurrentDirectory}/Chat.Client.exe"));
+
+            Process.Start(new ProcessStartInfo(chatClientPath));
         }
     }
 }

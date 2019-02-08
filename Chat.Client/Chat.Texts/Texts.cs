@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace Chat.Texts
+﻿namespace Chat.Texts
 {
     public class Texts
     {
@@ -64,5 +62,15 @@ namespace Chat.Texts
         public static string Voted => "Voted";
         public static string NotVoted => "Not voted yet";
         public static string SomethingWentWrong => "Something went wrong...";
+
+        public static string ServerConnectionSetting => "Serverconnection settings";
+        public static string ColorSettings => "Colorsettings";
+        public static string TestConnection => "Test connection";
+        public static string RestartRequired => "Restart is required";
+        public static string RestartRequiredConent => "Due to your changes you need to restart the client!";
+        public static string AppSettingsWindowTitle => "Settings";
+        public static string ApplicationSettings => "Applicationsettings";
+
+        public static string AutoCheckForUpdates => "Check for Updates on startup";
     }
 }
