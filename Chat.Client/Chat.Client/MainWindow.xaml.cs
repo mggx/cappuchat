@@ -8,27 +8,20 @@ namespace Chat.Client
     /// </summary>
     public partial class MainWindow
     {
-        private AccentThemeWindow _accentThemeWindow;
+        private SettingsWindow _settingsWindow;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void ChangeAppStyleButtonClick(object sender, RoutedEventArgs e)
+        private void EditConnectionSettingsClick(object sender, RoutedEventArgs e)
         {
-            if (_accentThemeWindow != null)
+            _settingsWindow = new SettingsWindow
             {
-                _accentThemeWindow.Activate();
-                return;
-            }
-
-            _accentThemeWindow = new AccentThemeWindow
-            {
-                Left = Left + ActualWidth / 2.0, Top = Top + ActualHeight / 2.0, Owner = this
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
-
-            _accentThemeWindow.Closed += (o, args) => _accentThemeWindow = null;
-            _accentThemeWindow.Show();
+            _settingsWindow.ShowDialog();
         }
     }
 }

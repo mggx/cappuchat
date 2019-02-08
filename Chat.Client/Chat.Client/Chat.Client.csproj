@@ -98,6 +98,8 @@
     <Compile Include="BindingProxies\CappuMainPresenterProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteResultViewModelProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
+    <Compile Include="Configuration\ConfigurationController.cs" />
+    <Compile Include="Configuration\IConfigurationController.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
     <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
@@ -154,8 +156,8 @@
     <Compile Include="Views\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AccentThemeWindow.xaml.cs">
-      <DependentUpon>AccentThemeWindow.xaml</DependentUpon>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml">
       <SubType>Designer</SubType>
@@ -241,7 +243,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AccentThemeWindow.xaml">
+    <Page Include="Windows\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
