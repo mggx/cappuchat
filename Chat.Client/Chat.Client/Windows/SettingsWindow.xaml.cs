@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Diagnostics;
+using ConfigurationFile = Chat.Models.Configuration;
 
 namespace Chat.Client.Windows
 {
@@ -19,15 +20,24 @@ namespace Chat.Client.Windows
     {
         private Tuple<AppTheme, Accent> _theme;
 
-        private IConfigController _configController;
+        private IConfigurationController _configurationController;
 
         private string _actualHost;
         private string _actualPort;
 
+        public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
+            "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
+
+        public List<KeyValuePair<string, Color>> Colors
+        {
+            get { return (List<KeyValuePair<string, Color>>)GetValue(ColorsProperty); }
+            set { SetValue(ColorsProperty, value); }
+        }
+
         public SettingsWindow()
         {
             InitializeComponent();
-            _configController = new ConfigController();
+            _configurationController = new ConfigurationController();
 
             this.DataContext = this;
 
@@ -43,23 +53,16 @@ namespace Chat.Client.Windows
             AccentSelector.SelectedItem = _theme.Item2;
             ColorsSelector.SelectedItem = _theme.Item1;
 
-            Models.Config config = _configController.ReadConfig();
+            ConfigurationFile configurationFile = _configurationController.ReadConfiguration();
 
-            TxtBoxHost.Text = config.Host;
-            TxtBoxPort.Text = config.Port;
+            TxtBoxHost.Text = configurationFile.Host;
+            TxtBoxPort.Text = configurationFile.Port;
 
-            _actualHost = config.Host;
-            _actualPort = config.Port;
+            _actualHost = configurationFile.Host;
+            _actualPort = configurationFile.Port;
         }
 
-        public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
-
-        public List<KeyValuePair<string, Color>> Colors
-        {
-            get { return (List<KeyValuePair<string, Color>>)GetValue(ColorsProperty); }
-            set { SetValue(ColorsProperty, value); }
-        }
+        
 
         private void AccentSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -89,7 +92,7 @@ namespace Chat.Client.Windows
 
         private void SaveSettingsClick(object sender, RoutedEventArgs e)
         {
-            _configController.WriteConfig(new Models.Config() { Host = TxtBoxHost.Text, Port = TxtBoxPort.Text });
+            _configurationController.WriteConfiguration(new ConfigurationFile() { Host = TxtBoxHost.Text, Port = TxtBoxPort.Text });
             if (CheckIfConfigHasChanged())
                 ShowRestartMessage();
             else

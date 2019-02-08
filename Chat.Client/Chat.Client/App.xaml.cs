@@ -5,6 +5,8 @@ using Chat.Client.SignalHelpers;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using MahApps.Metro;
+using ConfigurationFile = Chat.Models.Configuration;
 
 namespace Chat.Client
 {
@@ -14,17 +16,18 @@ namespace Chat.Client
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
 
-        private IConfigController _configController;
+        private IConfigurationController _configurationController;
 
-        private const string CONFIGFILE = "config.json";
+        private const string CONFIGURATIONFILE = "config.json";
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            _configController = new ConfigController();
+            _configurationController = new ConfigurationController();
 
-            _configController.CreateConfigFile();
+            _configurationController.CreateConfigurationFile();
 
-            Models.Config config = _configController.ReadConfig();
+            ConfigurationFile configurationFile = _configurationController.ReadConfiguration();
+            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
 
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
@@ -32,7 +35,7 @@ namespace Chat.Client
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
 
-            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + config.Host + ":" + config.Port + "/signalr/hubs");
+            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + configurationFile.Host + ":" + configurationFile.Port + "/signalr/hubs");
 
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
             {
