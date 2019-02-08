@@ -48,9 +48,9 @@ namespace Chat.Updater.ViewModels
             else
                 currentAssemblyVersion = Version.Parse("0.0");
 
-            var client = new FtpClient("167.86.69.108")
+            var client = new FtpClient("localhost")
             {
-                Credentials = new NetworkCredential("cappuftp", "cappuftp1234")
+                Credentials = new NetworkCredential("asd", "asd")
             };
 
             client.Connect();
