@@ -10,10 +10,16 @@ namespace Chat.Updater
     {
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            var updaterViewModel = new UpdaterViewModel(e.Args[0]);
-            var window = new MainWindow { DataContext = updaterViewModel };
+            var arg = string.Empty;
+            if (e.Args.Length == 1)
+                arg = e.Args[0];
 
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            var updaterViewModel = new UpdaterViewModel(arg);
+            var window = new MainWindow
+            {
+                DataContext = updaterViewModel, WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+
             window.Show();
         }
     }

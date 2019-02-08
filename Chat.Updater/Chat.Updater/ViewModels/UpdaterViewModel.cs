@@ -1,16 +1,15 @@
 ﻿using Chat.Updater.Annotations;
+using Chat.Updater.Extensions;
 using FluentFTP;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
-using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using Chat.Updater.Extensions;
 
 namespace Chat.Updater.ViewModels
 {
@@ -23,6 +22,13 @@ namespace Chat.Updater.ViewModels
             set { _isUpdating = value; OnPropertyChanged(); }
         }
 
+        private string _statusString;
+        public string StatusString
+        {
+            get { return _statusString; }
+            set { _statusString = value; OnPropertyChanged(); }
+        }
+
         public UpdaterViewModel(string assemblyPath)
         {
             Update(assemblyPath);
@@ -30,26 +36,35 @@ namespace Chat.Updater.ViewModels
 
         private async void Update(string assemblyPath)
         {
-            if (!File.Exists(assemblyPath))
-                throw new ArgumentException($"Could not find file {assemblyPath}");
+            StatusString = "Searching for update...";
 
-            IsUpdating = true;
+            Version currentAssemblyVersion;
+
+            if (File.Exists(assemblyPath))
+            {
+                var currentAssemblyName = AssemblyName.GetAssemblyName(assemblyPath);
+                currentAssemblyVersion = currentAssemblyName.Version;
+            }
+            else
+                currentAssemblyVersion = Version.Parse("0.0");
+
+            var client = new FtpClient("167.86.69.108")
+            {
+                Credentials = new NetworkCredential("cappuftp", "cappuftp1234")
+            };
+
+            client.Connect();
 
             try
             {
                 await Task.Run(() =>
                 {
-                    FtpClient client = new FtpClient("localhost");
-                    client.Credentials = new NetworkCredential("asd", "asd");
-                    client.Connect();
-
-                    FileInfo fileInfo = new FileInfo(assemblyPath);
-                    DateTime lastModified = fileInfo.LastWriteTime;
-
                     foreach (FtpListItem item in client.GetListing(""))
                     {
-                        if (item.Type != FtpFileSystemObjectType.File) continue;
-                        if (lastModified >= item.Modified) continue;
+                        if (!IsNewVersion(item, currentAssemblyVersion))
+                            continue;
+
+                        Application.Current.Dispatcher.Invoke(() => StatusString = "Update found. Downloading...");
 
                         using (var fileStream = File.Create($"{Environment.CurrentDirectory}/{item.Name}"))
                         {
@@ -58,11 +73,13 @@ namespace Chat.Updater.ViewModels
                             stream.Seek(0, SeekOrigin.Begin);
                             stream.CopyTo(fileStream);
 
-                            using (ZipArchive archive = new ZipArchive(fileStream))
-                            {
+                            Application.Current.Dispatcher.Invoke(() => StatusString = "Extracting update...");
+
+                            using (var archive = new ZipArchive(fileStream))
                                 archive.ExtractToDirectory(Environment.CurrentDirectory, true);
-                            }
                         }
+
+                        Application.Current.Dispatcher.Invoke(() => StatusString = "Deleting temporary files...");
 
                         File.Delete($"{Environment.CurrentDirectory}/{item.Name}");
                         break;
@@ -75,9 +92,23 @@ namespace Chat.Updater.ViewModels
             }
             finally
             {
-                IsUpdating = false;
+                Application.Current.Dispatcher.Invoke(() => StatusString = "Done.");
+                client.Dispose();
                 Application.Current.Shutdown(0);
             }
+        }
+
+        private bool IsNewVersion(FtpListItem item, Version currentVersion)
+        {
+            if (item.Type != FtpFileSystemObjectType.File || currentVersion >= GetVersionFromZipName(item.Name))
+                return false;
+            return true;
+        }
+
+        private Version GetVersionFromZipName(string zipName)
+        {
+            var versionString = zipName.Remove(zipName.LastIndexOf(".", StringComparison.Ordinal));
+            return Version.TryParse(versionString, out Version version) ? version : Version.Parse("1.0");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
