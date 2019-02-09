@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using Chat.Updater.ViewModels;
 
 namespace Chat.Updater
@@ -21,6 +22,8 @@ namespace Chat.Updater
             };
 
             window.Show();
+
+            Task.Run(() => { updaterViewModel.Update(); });
         }
     }
 }

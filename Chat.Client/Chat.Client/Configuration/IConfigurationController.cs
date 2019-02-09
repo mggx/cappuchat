@@ -1,11 +1,10 @@
-﻿using ConfigurationFile = Chat.Models.Configuration;
-
-namespace Chat.Client.Configuration
+﻿namespace Chat.Client.Configuration
 {
-    public interface IConfigurationController
+    public interface IConfigurationController<T>
     {
-        void WriteConfiguration(ConfigurationFile configurationFile);
-        void CreateConfigurationFile();
-        ConfigurationFile ReadConfiguration();
+        void CreateConfigurationFile(T classToWrite = default(T));
+        void WriteConfiguration(T classToWrite);
+        T ReadConfiguration();
+        T ReadConfiguration(T fallback);
     }
 }

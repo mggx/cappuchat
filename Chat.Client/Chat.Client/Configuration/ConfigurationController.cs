@@ -1,61 +1,80 @@
-﻿using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using ConfigurationFile = Chat.Models.Configuration;
+using System;
+using System.IO;
 
 namespace Chat.Client.Configuration
 {
-    public class ConfigurationController : IConfigurationController
+    public class ConfigurationController<T> : IConfigurationController<T>
     {
-        private const string CONFIGFILE = "config.json";
+        private const string ConfigurationDirectoryName = "Configurations";
 
-        public void CreateConfigurationFile()
+        private readonly string _filePath;
+
+        public ConfigurationController()
         {
-            if (!File.Exists(CONFIGFILE))
-            {
-                ConfigurationFile configurationFile = new ConfigurationFile
-                {
-                    Host = "localhost",
-                    Port = "1232"
-                };
-                //File.Create(CONFIGFILE);
-                string json = JsonConvert.SerializeObject(configurationFile);
-                File.WriteAllText(CONFIGFILE, json);
-            }
+            Type theType = typeof(T);
+
+            var constructor = theType.GetConstructor(Type.EmptyTypes);
+            if (constructor == null)
+                throw new ArgumentException(
+                    $"Could not create ConfigurationController. Given {typeof(T)} has no parameterless constructor.");
+
+            if (!Directory.Exists(ConfigurationDirectoryName))
+                Directory.CreateDirectory(ConfigurationDirectoryName);
+
+            _filePath = GetJsonFileName<T>();
         }
 
-        public ConfigurationFile ReadConfiguration()
+        public void CreateConfigurationFile(T classToWrite = default(T))
         {
-            ConfigurationFile configurationFile = new ConfigurationFile();
-            if (File.Exists(CONFIGFILE))
+            var fileName = _filePath;
+            if (File.Exists(fileName)) return;
+            var instance = Activator.CreateInstance<T>();
+            string json = JsonConvert.SerializeObject(instance);
+            File.WriteAllText(fileName, json);
+            if (classToWrite != null) WriteConfiguration(classToWrite);
+        }
+
+        public void WriteConfiguration(T classToWrite)
+        {
+            string fileName = _filePath;
+            if (!File.Exists(fileName)) CreateConfigurationFile();
+            string output = JsonConvert.SerializeObject(classToWrite, Formatting.Indented);
+            File.WriteAllText(fileName, output);
+        }
+
+        public T ReadConfiguration()
+        {
+            string fileName = _filePath;
+            T config;
+
+            if (!File.Exists(fileName))
+                return default(T);
+
+            using (StreamReader file = File.OpenText(fileName))
             {
-                using (StreamReader file = File.OpenText(CONFIGFILE))
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
-                    JObject o2 = (JObject)JToken.ReadFrom(reader);
-                    configurationFile = o2.ToObject<ConfigurationFile>();
+                    JObject o2 = (JObject) JToken.ReadFrom(reader);
+                    config = o2.ToObject<T>();
                 }
             }
-            return configurationFile;
+
+            return config;
         }
 
-        public void WriteConfiguration(ConfigurationFile configurationFile)
+        public T ReadConfiguration(T fallback)
         {
-            if (File.Exists(CONFIGFILE))
-            {
-                string json = File.ReadAllText(CONFIGFILE);
-                dynamic jsonObject = JsonConvert.DeserializeObject(json);
-                jsonObject["Host"] = configurationFile.Host;
-                jsonObject["Port"] = configurationFile.Port;
-                string output = JsonConvert.SerializeObject(jsonObject, Formatting.Indented);
-                File.WriteAllText(CONFIGFILE, output);
-            }
-            else
-            {
-                //File.Create(CONFIGFILE);
-                string json = JsonConvert.SerializeObject(configurationFile);
-                File.WriteAllText(CONFIGFILE, json);
-            }
+            var retrievedInstance = ReadConfiguration();
+            if (retrievedInstance != null) return retrievedInstance;
+            WriteConfiguration(fallback);
+            return fallback;
+        }
+
+        private string GetJsonFileName<T>()
+        {
+            return $"{ConfigurationDirectoryName}\\{typeof(T).Name}.json";
         }
     }
 }

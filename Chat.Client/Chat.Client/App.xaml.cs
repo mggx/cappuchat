@@ -2,11 +2,14 @@
 using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
+using Chat.Models;
+using MahApps.Metro;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using MahApps.Metro;
-using ConfigurationFile = Chat.Models.Configuration;
+using Chat.Client.Helper;
+using System.Windows.Media;
 
 namespace Chat.Client
 {
@@ -16,18 +19,27 @@ namespace Chat.Client
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
 
-        private IConfigurationController _configurationController;
-
-        private const string CONFIGURATIONFILE = "config.json";
-
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            _configurationController = new ConfigurationController();
+            var serverConfigurationController = new ConfigurationController<ServerConfiguration>();
+            ServerConfiguration serverConfigurationFile = serverConfigurationController.ReadConfiguration(new ServerConfiguration
+            {
+                Host = "localhost",
+                Port = "1232"
+            });
 
-            _configurationController.CreateConfigurationFile();
+            var colorConfigurationController = new ConfigurationController<ColorConfiguration>();
+            var colorConfiguration = colorConfigurationController.ReadConfiguration(new ColorConfiguration
+            {
+                Color = "Steel"
+            });
 
-            ConfigurationFile configurationFile = _configurationController.ReadConfiguration();
             ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/Chat.Client;component/Styles/OrgadataTheme.xaml"));
+
+            var foundAccent = ThemeManager.Accents.FirstOrDefault(accent =>
+                accent.Name.Equals(colorConfiguration.Color, StringComparison.CurrentCultureIgnoreCase));
+            var theme = ThemeManager.DetectAppStyle(Current);
+            ThemeManager.ChangeAppStyle(Current, foundAccent, theme.Item1);
 
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
@@ -35,7 +47,7 @@ namespace Chat.Client
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
 
-            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + configurationFile.Host + ":" + configurationFile.Port + "/signalr/hubs");
+            _hubConnectionHelper = new SignalHubConnectionHelper("http://" + serverConfigurationFile.Host + ":" + serverConfigurationFile.Port + "/signalr/hubs");
 
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
             {
