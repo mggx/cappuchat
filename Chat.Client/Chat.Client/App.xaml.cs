@@ -1,15 +1,13 @@
-﻿using Chat.Client.Configuration;
-using Chat.Client.Presenters;
+﻿using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
-using Chat.Models;
+using Chat.Configurations;
+using Chat.Configurations.Models;
 using MahApps.Metro;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Chat.Client.Helper;
-using System.Windows.Media;
 
 namespace Chat.Client
 {
@@ -25,7 +23,9 @@ namespace Chat.Client
             ServerConfiguration serverConfigurationFile = serverConfigurationController.ReadConfiguration(new ServerConfiguration
             {
                 Host = "localhost",
-                Port = "1232"
+                Port = "1232",
+                FtpUser = "cappuftp",
+                FtpPassword = "cappuftp1234"
             });
 
             var colorConfigurationController = new ConfigurationController<ColorConfiguration>();

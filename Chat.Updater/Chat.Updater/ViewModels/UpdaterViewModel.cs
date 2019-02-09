@@ -1,8 +1,8 @@
 ﻿using Chat.Updater.Annotations;
+using Chat.Updater.ArgumentTool;
 using Chat.Updater.Extensions;
 using FluentFTP;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
@@ -17,7 +17,7 @@ namespace Chat.Updater.ViewModels
 {
     public class UpdaterViewModel : INotifyPropertyChanged
     {
-        private readonly string _assemblyPath;
+        private readonly UpdaterArguments _updaterArguments;
 
         private bool _isUpdating = true;
         public bool IsUpdating
@@ -34,9 +34,9 @@ namespace Chat.Updater.ViewModels
             set { _statusString = value; OnPropertyChanged(); }
         }
 
-        public UpdaterViewModel(string assemblyPath)
+        public UpdaterViewModel(UpdaterArguments arguments)
         {
-            _assemblyPath = assemblyPath;
+            _updaterArguments = arguments;
         }
 
         public async void Update()
@@ -45,17 +45,17 @@ namespace Chat.Updater.ViewModels
 
             Version currentAssemblyVersion;
 
-            if (File.Exists(_assemblyPath))
+            if (File.Exists(_updaterArguments.GetAssemblyPath))
             {
-                var currentAssemblyName = AssemblyName.GetAssemblyName(_assemblyPath);
+                var currentAssemblyName = AssemblyName.GetAssemblyName(_updaterArguments.GetAssemblyPath);
                 currentAssemblyVersion = currentAssemblyName.Version;
             }
             else
                 currentAssemblyVersion = Version.Parse("0.0");
 
-            var client = new FtpClient("167.86.69.108")
+            var client = new FtpClient(_updaterArguments.GetHost)
             {
-                Credentials = new NetworkCredential("cappuftp", "cappuftp1234")
+                Credentials = new NetworkCredential(_updaterArguments.GetFtpUser, _updaterArguments.GetFtpPassword)
             };
 
             client.Connect();

@@ -1,15 +1,15 @@
-﻿using Chat.Client.Configuration;
-using Chat.Client.Helper;
+﻿using Chat.Configurations;
+using Chat.Models;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Diagnostics;
-using Chat.Models;
+using Chat.Configurations.Models;
 
 namespace Chat.Client.Windows
 {
@@ -59,6 +59,8 @@ namespace Chat.Client.Windows
 
             TxtBoxHost.Text = serverConfigurationFile.Host;
             TxtBoxPort.Text = serverConfigurationFile.Port;
+            FtpUserTextBox.Text = serverConfigurationFile.FtpUser;
+            FtpPasswordTextBox.Text = serverConfigurationFile.FtpPassword;
 
             _actualHost = serverConfigurationFile.Host;
             _actualPort = serverConfigurationFile.Port;
@@ -80,7 +82,14 @@ namespace Chat.Client.Windows
 
         private void SaveSettingsClick(object sender, RoutedEventArgs e)
         {
-            _serverConfigurationController.WriteConfiguration(new ServerConfiguration() { Host = TxtBoxHost.Text, Port = TxtBoxPort.Text });
+            _serverConfigurationController.WriteConfiguration(new ServerConfiguration
+            {
+                Host = TxtBoxHost.Text,
+                Port = TxtBoxPort.Text,
+                FtpUser = FtpUserTextBox.Text,
+                FtpPassword = FtpPasswordTextBox.Text
+            });
+
             if (CheckIfConfigHasChanged())
                 ShowRestartMessage();
             else

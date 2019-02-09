@@ -1,4 +1,4 @@
-﻿namespace Chat.Models
+﻿namespace Chat.Configurations.Models
 {
     public class ColorConfiguration
     {

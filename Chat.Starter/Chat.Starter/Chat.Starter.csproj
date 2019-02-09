@@ -57,5 +57,11 @@
   <ItemGroup>
     <Content Include="chaticon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chat.Configurations\Chat.Configurations.csproj">
+      <Project>{4937C672-9F54-4855-A7B8-1A91627214EE}</Project>
+      <Name>Chat.Configurations</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,8 +2,9 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using Formatting = Newtonsoft.Json.Formatting;
 
-namespace Chat.Client.Configuration
+namespace Chat.Configurations
 {
     public class ConfigurationController<T> : IConfigurationController<T>
     {

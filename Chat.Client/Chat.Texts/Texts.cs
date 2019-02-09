@@ -63,7 +63,7 @@
         public static string NotVoted => "Not voted yet";
         public static string SomethingWentWrong => "Something went wrong...";
 
-        public static string ServerConnectionSetting => "Serverconnection settings";
+        public static string ServerConnectionSetting => "Serverconnection & FTP Settings";
         public static string ColorSettings => "Colorsettings";
         public static string TestConnection => "Test connection";
         public static string RestartRequired => "Restart is required";

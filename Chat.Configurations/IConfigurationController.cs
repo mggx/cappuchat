@@ -1,4 +1,4 @@
-﻿namespace Chat.Client.Configuration
+﻿namespace Chat.Configurations
 {
     public interface IConfigurationController<T>
     {

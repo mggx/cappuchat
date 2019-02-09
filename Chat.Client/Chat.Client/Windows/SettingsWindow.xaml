@@ -12,7 +12,7 @@
     Title="{x:Static Texts:Texts.AppSettingsWindowTitle}"
     xmlns:Texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
     GlowBrush="{DynamicResource AccentColorBrush}"
-    ResizeMode="CanMinimize" Width="500" Height="350"
+    ResizeMode="CanMinimize" Width="500" Height="450"
     Background="{DynamicResource AccentColorBrush2}">
 
     <Grid>
@@ -51,11 +51,14 @@
         </GroupBox>
 
         <GroupBox Header="{x:Static Texts:Texts.ServerConnectionSetting}"
-                  Grid.Row="0"
-                  Margin="5">
-            <Grid Margin="5 5 5 5">
+                  Grid.Row="0">
+            <Grid Margin="5">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="*"/>
@@ -66,6 +69,12 @@
 
                 <Label Grid.Row="2" Content="Port :" VerticalContentAlignment="Center" Margin="0,0,414,0" />
                 <TextBox x:Name="TxtBoxPort" Grid.Row="2" Margin="55,0,0,0" VerticalContentAlignment="Center"/>
+
+                <Label Grid.Row="4" Content="User :" VerticalContentAlignment="Center" Margin="0,0,414,0" />
+                <TextBox x:Name="FtpUserTextBox" Grid.Row="4" Margin="55,0,0,0" VerticalContentAlignment="Center"/>
+
+                <Label Grid.Row="6" Content="Pw :" VerticalContentAlignment="Center" Margin="0,0,414,0" />
+                <TextBox x:Name="FtpPasswordTextBox" Grid.Row="6" Margin="55,0,0,0" VerticalContentAlignment="Center"/>
             </Grid>
         </GroupBox>
 
