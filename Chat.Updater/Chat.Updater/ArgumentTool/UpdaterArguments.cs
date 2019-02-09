@@ -19,6 +19,7 @@ namespace Chat.Updater.ArgumentTool
             var retrievedArgument = GetArgument(argumentName);
             if (string.IsNullOrWhiteSpace(retrievedArgument))
                 throw new ArgumentException("Could not resolve assemblyPath from arguments.");
+            retrievedArgument = retrievedArgument.Replace("\"", string.Empty);
             argument = retrievedArgument;
             return true;
         }

@@ -31,10 +31,10 @@ namespace Chat.Starter
             });
 
             var processInfo = new ProcessStartInfo(updaterPath);
-            processInfo.Arguments += $"-assemblyPath={chatClientPath} ";
-            processInfo.Arguments += $"-host={serverConfiguration.Host} ";
-            processInfo.Arguments += $"-ftpuser={serverConfiguration.FtpUser} ";
-            processInfo.Arguments += $"-ftppassword={serverConfiguration.FtpPassword} ";
+            processInfo.Arguments += $"-assemblyPath=\"{chatClientPath}\" ";
+            processInfo.Arguments += $"-host=\"{serverConfiguration.Host}\" ";
+            processInfo.Arguments += $"-ftpuser=\"{serverConfiguration.FtpUser}\" ";
+            processInfo.Arguments += $"-ftppassword=\"{serverConfiguration.FtpPassword}\" ";
 
             var process = Process.Start(processInfo);
             process?.WaitForExit();
