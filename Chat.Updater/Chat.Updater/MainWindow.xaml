@@ -13,10 +13,10 @@
         d:DataContext="{d:DesignInstance viewModels:UpdaterViewModel}">
     <Border Background="White" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
         <StackPanel>
-            <Label Foreground="DarkCyan" Content="Updater" FontSize="20" Margin="5" HorizontalAlignment="Center"
+            <Label Foreground="{DynamicResource AccentColorBrush}" Content="Updater" FontSize="20" Margin="5" HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
-            <mah:ProgressRing Foreground="DarkCyan" Width="48" Height="48" Margin="10" IsActive="{Binding IsUpdating}"/>
-            <Label Foreground="DarkCyan" Content="{Binding StatusString}" Margin="5" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <mah:ProgressRing Foreground="{DynamicResource AccentColorBrush}" Width="48" Height="48" Margin="10" IsActive="{Binding IsUpdating}"/>
+            <Label Foreground="{DynamicResource AccentColorBrush}" Content="{Binding StatusString}" Margin="5" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
     </Border>
 </Window>

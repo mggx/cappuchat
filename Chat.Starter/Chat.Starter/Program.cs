@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using Chat.Configurations;
+using Chat.Configurations.Models;
 
 namespace Chat.Starter
 {
@@ -20,8 +22,20 @@ namespace Chat.Starter
             if (!File.Exists(updaterPath))
                 return;
 
+            var serverConfigurationController = new ConfigurationController<ServerConfiguration>();
+            var serverConfiguration = serverConfigurationController.ReadConfiguration(new ServerConfiguration()
+            {
+                Host = "localhost",
+                FtpUser = "fallback",
+                FtpPassword = string.Empty
+            });
+
             var processInfo = new ProcessStartInfo(updaterPath);
-            processInfo.Arguments += chatClientPath;
+            processInfo.Arguments += $"-assemblyPath=\"{chatClientPath}\" ";
+            processInfo.Arguments += $"-host=\"{serverConfiguration.Host}\" ";
+            processInfo.Arguments += $"-ftpuser=\"{serverConfiguration.FtpUser}\" ";
+            processInfo.Arguments += $"-ftppassword=\"{serverConfiguration.FtpPassword}\" ";
+
             var process = Process.Start(processInfo);
             process?.WaitForExit();
 

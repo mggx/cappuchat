@@ -1,15 +1,15 @@
-﻿using Chat.Client.Configuration;
-using Chat.Client.Helper;
+﻿using Chat.Configurations;
+using Chat.Models;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Diagnostics;
-using ConfigurationFile = Chat.Models.Configuration;
+using Chat.Configurations.Models;
 
 namespace Chat.Client.Windows
 {
@@ -18,12 +18,13 @@ namespace Chat.Client.Windows
     /// </summary>
     public partial class SettingsWindow
     {
-        private Tuple<AppTheme, Accent> _theme;
+        private readonly IConfigurationController<ServerConfiguration> _serverConfigurationController;
+        private readonly IConfigurationController<ColorConfiguration> _colorConfigurationController;
 
-        private IConfigurationController _configurationController;
+        private readonly Tuple<AppTheme, Accent> _theme;
 
-        private string _actualHost;
-        private string _actualPort;
+        private readonly string _actualHost;
+        private readonly string _actualPort;
 
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
             "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
@@ -37,11 +38,13 @@ namespace Chat.Client.Windows
         public SettingsWindow()
         {
             InitializeComponent();
-            _configurationController = new ConfigurationController();
 
-            this.DataContext = this;
+            _serverConfigurationController = new ConfigurationController<ServerConfiguration>();
+            _colorConfigurationController = new ConfigurationController<ColorConfiguration>();
 
-            this.Colors = typeof(Colors)
+            DataContext = this;
+
+            Colors = typeof(Colors)
                 .GetProperties()
                 .Where(prop => typeof(Color).IsAssignableFrom(prop.PropertyType))
                 .Select(prop => new KeyValuePair<String, Color>(prop.Name, (Color)prop.GetValue(null)))
@@ -51,37 +54,24 @@ namespace Chat.Client.Windows
             ThemeManager.ChangeAppStyle(this, _theme.Item2, _theme.Item1);
 
             AccentSelector.SelectedItem = _theme.Item2;
-            ColorsSelector.SelectedItem = _theme.Item1;
 
-            ConfigurationFile configurationFile = _configurationController.ReadConfiguration();
+            ServerConfiguration serverConfigurationFile = _serverConfigurationController.ReadConfiguration();
 
-            TxtBoxHost.Text = configurationFile.Host;
-            TxtBoxPort.Text = configurationFile.Port;
+            TxtBoxHost.Text = serverConfigurationFile.Host;
+            TxtBoxPort.Text = serverConfigurationFile.Port;
+            FtpUserTextBox.Text = serverConfigurationFile.FtpUser;
+            FtpPasswordTextBox.Text = serverConfigurationFile.FtpPassword;
 
-            _actualHost = configurationFile.Host;
-            _actualPort = configurationFile.Port;
+            _actualHost = serverConfigurationFile.Host;
+            _actualPort = serverConfigurationFile.Port;
         }
-
-        
 
         private void AccentSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedAccent = AccentSelector.SelectedItem as Accent;
-            if (selectedAccent != null)
-            {
-                var theme = ThemeManager.DetectAppStyle(Application.Current);
-                ThemeManager.ChangeAppStyle(Application.Current, selectedAccent, theme.Item1);
-            }
-        }
-
-        private void ColorsSelectorOnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedColor = this.ColorsSelector.SelectedItem as KeyValuePair<string, Color>?;
-            if (selectedColor.HasValue)
-            {
-                var theme = ThemeManager.DetectAppStyle(Application.Current);
-                ThemeManagerHelper.CreateAppStyleBy(selectedColor.Value.Value, true);
-            }
+            if (!(AccentSelector.SelectedItem is Accent selectedAccent)) return;
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            ThemeManager.ChangeAppStyle(Application.Current, selectedAccent, theme.Item1);
+            _colorConfigurationController.WriteConfiguration(new ColorConfiguration { Color = selectedAccent.Name });
         }
 
         private void CancelSettingsClick(object sender, RoutedEventArgs e)
@@ -92,7 +82,14 @@ namespace Chat.Client.Windows
 
         private void SaveSettingsClick(object sender, RoutedEventArgs e)
         {
-            _configurationController.WriteConfiguration(new ConfigurationFile() { Host = TxtBoxHost.Text, Port = TxtBoxPort.Text });
+            _serverConfigurationController.WriteConfiguration(new ServerConfiguration
+            {
+                Host = TxtBoxHost.Text,
+                Port = TxtBoxPort.Text,
+                FtpUser = FtpUserTextBox.Text,
+                FtpPassword = FtpPasswordTextBox.Text
+            });
+
             if (CheckIfConfigHasChanged())
                 ShowRestartMessage();
             else
@@ -101,10 +98,7 @@ namespace Chat.Client.Windows
 
         private bool CheckIfConfigHasChanged()
         {
-            if (TxtBoxHost.Text != _actualHost || TxtBoxPort.Text != _actualPort)
-                return true;
-            else
-                return false;
+            return TxtBoxHost.Text != _actualHost || TxtBoxPort.Text != _actualPort;
         }
 
         private async void ShowRestartMessage()

@@ -69,6 +69,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ArgumentTool\Arguments.cs" />
+    <Compile Include="ArgumentTool\StringExtensions.cs" />
+    <Compile Include="ArgumentTool\UpdaterArguments.cs" />
     <Compile Include="Extensions\ZipArchiveExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\UpdaterViewModel.cs" />
@@ -84,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles\OrgadataTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -111,6 +118,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Chat.Configurations\Chat.Configurations.csproj">
+      <Project>{4937C672-9F54-4855-A7B8-1A91627214EE}</Project>
+      <Name>Chat.Configurations</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
