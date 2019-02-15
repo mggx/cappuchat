@@ -5,6 +5,11 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
     <converters:DateTimeToMessageStringConverter x:Key="DateTimeToMessageStringConverter"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    <converters:NullToVisibilityConverter x:Key="InversedNullToVisibilityConverter" Inverse="True"/>
+    <converters:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
+    <converters:StreamToBitmapImageConverter x:Key="StreamToBitmapImageConverter"/>
+    <converters:LineCountToOrientationConverter x:Key="LineCountToOrientationConverter"/>
 
     <Style x:Key="ButtonDropDownFocusVisual">
         <Setter Property="Control.Template">
@@ -168,24 +173,22 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="7"
-                                HorizontalAlignment="Stretch">
+                                CornerRadius="7">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="25"/>
                                 </Grid.RowDefinitions>
 
                                 <mah:DropDownButton x:Name="PART_DropDownButton"
                                                     Grid.Row="0"
-                                                    Grid.Column="2"
+                                                    Grid.Column="1"
                                                     HorizontalAlignment="Right"
                                                     Visibility="Collapsed"
                                                     Style="{StaticResource DropDownStyle}"
@@ -203,37 +206,56 @@
                                            Grid.Column="0"
                                            FontFamily="Segoe Ui"
                                            FontSize="12"
-                                           Padding="10, 6, 6, 6"
+                                           Padding="10, 5, 0, 0"
                                            Foreground="LightGray"/>
 
-                                
-
-                                <Border Padding="10, 0, 10, 10"
+                                <Border Padding="3"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         Grid.Row="1"
                                         Grid.RowSpan="2">
 
-                                    <TextBox Text="{TemplateBinding Text}"
-                                             FontFamily="Segoe Ui"
-                                             FontSize="14"
-                                             Foreground="FloralWhite"
-                                             IsReadOnly="True"
-                                             TextWrapping="Wrap"
-                                             Background="Transparent"
-                                             BorderThickness="0"
-                                             IsTabStop="False"/>
-                                </Border>
+                                    <DockPanel x:Name="PART_Content">
+                                        <Grid DockPanel.Dock="Top"
+                                              Visibility="{TemplateBinding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                                            <Border CornerRadius="5"
+                                                    Background="White">
+                                                <Image x:Name="BubbleImage"
+                                                       Source="{TemplateBinding ImageSource, Converter={StaticResource StreamToBitmapImageConverter}}"
+                                                       MaxWidth="300"
+                                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            </Border>
+                                        </Grid>
 
-                                <TextBlock Padding="5"
-                                           Grid.Row="2"
-                                           Grid.Column="2"
-                                           FontFamily="Segoe Ui"
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Center"
-                                           FontSize="11"
-                                           Foreground="LightGray"
-                                           Text="{TemplateBinding Time, Converter={StaticResource DateTimeToMessageStringConverter}}"/>
+                                        <Grid Background="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBox Grid.Column="0"
+                                                     Text="{TemplateBinding Text}"
+                                                     FontFamily="Segoe Ui"
+                                                     FontSize="14"
+                                                     Foreground="FloralWhite"
+                                                     IsReadOnly="True"
+                                                     TextWrapping="Wrap"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     IsTabStop="False"
+                                                     Margin="0"/>
+
+                                            <TextBlock Grid.Column="1"
+                                                       FontFamily="Segoe Ui"
+                                                       FontSize="11"
+                                                       Foreground="LightGray"
+                                                       Text="{TemplateBinding Time, Converter={StaticResource DateTimeToMessageStringConverter}}"
+                                                       VerticalAlignment="Bottom"
+                                                       HorizontalAlignment="Right"
+                                                       Margin="1"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </Border>
                             </Grid>
                         </Border>
                     </DockPanel>
@@ -248,6 +270,9 @@
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ImageSource, Converter={StaticResource NullToBooleanConverter}}" Value="True">
+                            <Setter Property="MaxWidth" Value="300"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

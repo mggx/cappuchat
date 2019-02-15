@@ -81,6 +81,10 @@
   <ItemGroup>
     <Compile Include="ChatListView.cs" />
     <Compile Include="ChatListViewItem.cs" />
+    <Compile Include="Converters\LineCountToOrientationConverter.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StreamToBitmapImageConverter.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

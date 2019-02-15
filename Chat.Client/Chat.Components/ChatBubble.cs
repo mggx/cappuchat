@@ -1,6 +1,7 @@
 ﻿using Chat.Client.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,6 +24,9 @@ namespace ChatComponents
         public static readonly DependencyProperty SenderProperty = DependencyProperty.Register(
             "Sender", typeof(string), typeof(ChatBubble), new PropertyMetadata(default(string)));
 
+        public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
+            "ImageSource", typeof(MemoryStream), typeof(ChatBubble), new PropertyMetadata(default(MemoryStream)));
+
         public DateTime Text
         {
             get { return (DateTime) GetValue(TextProperty); }
@@ -39,6 +43,12 @@ namespace ChatComponents
         {
             get { return (string) GetValue(SenderProperty); }
             set { SetValue(SenderProperty, value); }
+        }
+
+        public MemoryStream ImageSource
+        {
+            get { return (MemoryStream) GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
         }
 
         static ChatBubble()

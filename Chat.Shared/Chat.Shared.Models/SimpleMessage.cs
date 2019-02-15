@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Chat.Shared.Models
 {
@@ -8,6 +9,9 @@ namespace Chat.Shared.Models
         public SimpleUser Sender { get; set; }
         public SimpleUser Receiver { get; set; }
         public string Message { get; set; }
+
+        public string ImageName { get; set; }
+        public MemoryStream ImageStream { get; set; }
 
         public DateTime MessageSentDateTime { get; set; }
 
