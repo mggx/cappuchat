@@ -155,7 +155,7 @@ namespace Chat.Client.ViewModels
         private void VoteSignalHelperOnCappuVoteCreated(SimpleCappuVote createdVote)
         {
             UpdateActiveVote(createdVote);
-            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, NotificationType.CappuCall, GoCommand);
+            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, Texts.Texts.GoCall, NotificationType.Dark, GoCommand);
         }
 
         private void VoteSignalHelperOnCappuVoteChanged(SimpleCappuVote changedVote)

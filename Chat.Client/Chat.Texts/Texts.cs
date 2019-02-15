@@ -72,5 +72,8 @@
         public static string ApplicationSettings => "Applicationsettings";
 
         public static string AutoCheckForUpdates => "Check for Updates on startup";
+
+        public static string PushNotificationsOn => "Push notifications on";
+        public static string PushNotificationsOff => "Push notifications off";
     }
 }

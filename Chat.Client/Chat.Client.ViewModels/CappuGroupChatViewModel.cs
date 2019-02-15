@@ -4,6 +4,7 @@ using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels.Delegates;
 using Chat.Shared.Models;
 using System;
+using Chat.Client.ViewModels.Extensions;
 
 namespace Chat.Client.ViewModels
 {
@@ -69,6 +70,16 @@ namespace Chat.Client.ViewModels
         protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
             Messages.Add(eventArgs.ReceivedMessage);
+
+            string message = eventArgs.ReceivedMessage.Message;
+            string username = SignalHelperFacade.LoginSignalHelper.User.Username;
+
+            if (message.Contains($"@{username}", StringComparison.CurrentCultureIgnoreCase))
+            {
+                if (!_viewProvider.IsMainWindowFocused())
+                    _viewProvider.ShowToastNotification($"{eventArgs.ReceivedMessage.Sender.Username}: {message}", NotificationType.Dark);
+            }
+            
             _viewProvider.FlashWindow();
         }
     }

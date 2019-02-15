@@ -50,6 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Chat.Configurations\Chat.Configurations.csproj">
+      <Project>{4937C672-9F54-4855-A7B8-1A91627214EE}</Project>
+      <Name>Chat.Configurations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Chat.Shared\Chat.Shared.Models\Chat.Shared.Models.csproj">
       <Project>{0AC4A6A9-832F-482F-AEAE-3BBD630E0A19}</Project>
       <Name>Chat.Shared.Models</Name>

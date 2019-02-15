@@ -4,6 +4,9 @@ using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Dialogs;
 using Chat.Shared.Models;
 using System;
+using System.Windows.Input;
+using Chat.Configurations;
+using Chat.Configurations.Models;
 
 namespace Chat.Client.Presenters
 {
@@ -11,6 +14,16 @@ namespace Chat.Client.Presenters
     {
         private readonly ISignalHelperFacade _signalHelperFacade;
         private readonly IViewProvider _viewProvider;
+
+        private readonly ConfigurationController<NotificationConfiguration> _notificationConfigurationController =
+            new ConfigurationController<NotificationConfiguration>();
+
+        private bool _showNotifications;
+        public bool ShowNotifications
+        {
+            get => _showNotifications;
+            set { _showNotifications = value; OnPropertyChanged(); }
+        }
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
         public CappuChatPresenter CappuChatPresenter { get; private set; }
@@ -39,6 +52,8 @@ namespace Chat.Client.Presenters
             set { _currentPresenter = value; OnPropertyChanged(); }
         }
 
+        public ICommand ChangeShowNotificationsCommand { get; }
+
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
@@ -50,13 +65,22 @@ namespace Chat.Client.Presenters
             _signalHelperFacade = signalHelperFacade;
             _viewProvider = viewProvider;
 
+            ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
             Initialize();
+        }
+
+        private void ChangeShowNotifications()
+        {
+            ShowNotifications = !ShowNotifications;
+            _notificationConfigurationController.WriteConfiguration(new NotificationConfiguration { ShowPushNotifications = ShowNotifications });
         }
 
         private void Initialize()
         {
             InitializeLoginPresenter();
             InitializeLoginPresenterEvents();
+
+            ShowNotifications = _notificationConfigurationController.ReadConfiguration(new NotificationConfiguration()).ShowPushNotifications;
         }
 
         private void InitializeLoginPresenter()

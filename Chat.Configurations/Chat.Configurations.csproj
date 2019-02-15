@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationController.cs" />
     <Compile Include="Models\ColorConfiguration.cs" />
+    <Compile Include="Models\NotificationConfiguration.cs" />
     <Compile Include="Models\ServerConfiguration.cs" />
     <Compile Include="IConfigurationController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
