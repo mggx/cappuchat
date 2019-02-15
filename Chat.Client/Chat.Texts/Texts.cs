@@ -72,6 +72,6 @@
         public static string ApplicationSettings => "Applicationsettings";
 
         public static string AutoCheckForUpdates => "Check for Updates on startup";
-        public static string UserInGroupChat => "User im Chat: ";
+        public static string UserInGroupChat => "User in Chat: ";
     }
 }
