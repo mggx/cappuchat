@@ -33,13 +33,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <chatComponents:ChatListView x:Name="BroadcastListView"
                                      Grid.Row="0"
                                      Grid.Column="0"
-                                     Grid.ColumnSpan="3"
+                                     Grid.ColumnSpan="2"
                                      ItemsSource="{Binding Messages}"
                                      Background="Transparent"
                                      SelectedItem="{Binding SelectedMessage}"
@@ -91,19 +90,7 @@
                 Command="{Binding SendMessageCommand}"
                 CommandParameter="{Binding ElementName=InputTextBox, Path=Text}"
                 Click="SendMessageButtonOnClick">
-            <iconPacks:PackIconModern Width="32" Height="32" Kind="MessageSend" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Button>
-        
-        <Button Grid.Column="2" 
-                Grid.Row="1" 
-                Width="50"
-                Margin="0, 0, 10, 0"
-                Height="35" 
-                Background="Transparent" 
-                Command="{Binding SendSpongeMessageCommand}"
-                
-                Click="SendSpongeMessageButtonOnClick">
-            <iconPacks:PackIconOcticons Width="32" Height="32" Kind="TextSize" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <iconPacks:PackIconModern Width="32" Height="32" Kind="MessageSend"/>
         </Button>
     </Grid>
 </UserControl>
