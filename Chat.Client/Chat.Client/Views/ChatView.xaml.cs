@@ -83,5 +83,17 @@ namespace Chat.Client.Views
 
             chatViewModel?.SendMessageCommand?.RaiseCanExecuteChanged();
         }
+
+        private void SendSpongeMessageButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            var chatViewModel = DataContext as CappuChatViewModelBase;
+
+            chatViewModel?.SendSpongeMessageCommand?.Execute(InputTextBox.Text);
+
+            InputTextBox.Clear();
+            InputTextBox.Focus();
+
+            chatViewModel?.SendSpongeMessageCommand?.RaiseCanExecuteChanged();
+        }
     }
 }
