@@ -1,4 +1,4 @@
-﻿namespace Chat.Configurations.Models
+﻿namespace Chat.Models
 {
     public class NotificationConfiguration
     {

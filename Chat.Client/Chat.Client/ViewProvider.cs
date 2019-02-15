@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using Chat.Configurations;
 using Chat.Configurations.Models;
+using Chat.Models;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;

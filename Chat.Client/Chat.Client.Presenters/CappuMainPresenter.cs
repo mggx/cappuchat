@@ -7,6 +7,7 @@ using System;
 using System.Windows.Input;
 using Chat.Configurations;
 using Chat.Configurations.Models;
+using Chat.Models;
 
 namespace Chat.Client.Presenters
 {
