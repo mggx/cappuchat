@@ -10,18 +10,9 @@ namespace ChatComponents.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is MemoryStream memoryStream))
-                return null;
-
-            if (value == Stream.Null)
-                return null;
-
-            var imageSource = new BitmapImage();
-            imageSource.BeginInit();
-            imageSource.StreamSource = memoryStream;
-            imageSource.EndInit();
-
-            return imageSource;
+            if (value is MemoryStream memoryStream)
+                return memoryStream.ToBitmapImage();
+            return Stream.Null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

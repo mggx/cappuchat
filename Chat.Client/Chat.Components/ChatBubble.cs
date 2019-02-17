@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using MahApps.Metro.Controls;
 
 namespace ChatComponents
@@ -66,6 +67,13 @@ namespace ChatComponents
         {
             _chatListView = FindAncestor<ChatListView>(this);
             _dropDownButton = Template.FindName("PART_DropDownButton", this) as DropDownButton;
+
+            var bubbleImage = Template.FindName("BubbleImage", this) as Image;
+            if (bubbleImage != null && ImageSource != null)
+            {
+                MaxWidth = bubbleImage.ActualWidth;
+            }
+
             if (_dropDownButton == null) return;
             _dropDownButton.Click += DropDownButtonOnClick;
             _dropDownButton.ItemsSource = _chatListView.GetItemContextMenu(DataContext);

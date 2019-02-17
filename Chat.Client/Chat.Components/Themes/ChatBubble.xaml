@@ -181,9 +181,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="Auto" MaxHeight="20"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <mah:DropDownButton x:Name="PART_DropDownButton"
@@ -209,7 +209,7 @@
                                            Padding="10, 5, 0, 0"
                                            Foreground="LightGray"/>
 
-                                <Border Padding="3"
+                                <Border Padding="3" 
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         Grid.Row="1"
@@ -223,6 +223,7 @@
                                                 <Image x:Name="BubbleImage"
                                                        Source="{TemplateBinding ImageSource, Converter={StaticResource StreamToBitmapImageConverter}}"
                                                        MaxWidth="300"
+                                                       MaxHeight="300"
                                                        RenderOptions.BitmapScalingMode="HighQuality"/>
                                             </Border>
                                         </Grid>
@@ -270,9 +271,6 @@
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=ImageSource, Converter={StaticResource NullToBooleanConverter}}" Value="True">
-                            <Setter Property="MaxWidth" Value="300"/>
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
