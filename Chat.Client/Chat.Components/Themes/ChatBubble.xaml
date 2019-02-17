@@ -206,7 +206,7 @@
                                            Grid.Column="0"
                                            FontFamily="Segoe Ui"
                                            FontSize="12"
-                                           Padding="10, 5, 0, 0"
+                                           Padding="10, 5, 10, 0"
                                            Foreground="LightGray"/>
 
                                 <Border Padding="3" 
