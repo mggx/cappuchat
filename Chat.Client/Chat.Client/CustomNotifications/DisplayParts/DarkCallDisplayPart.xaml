@@ -1,17 +1,18 @@
-﻿<core:NotificationDisplayPart x:Class="Chat.Client.CustomNotifications.DisplayParts.CappuCallDisplayPart"
+﻿<core:NotificationDisplayPart x:Class="Chat.Client.CustomNotifications.DisplayParts.DarkCallDisplayPart"
                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:core="clr-namespace:ToastNotifications.Core;assembly=ToastNotifications"
                               xmlns:notifications="clr-namespace:Chat.Client.CustomNotifications.Notifications"
-                              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
                               xmlns:system="clr-namespace:System;assembly=mscorlib"
+                              xmlns:core="clr-namespace:ToastNotifications.Core;assembly=ToastNotifications"
+                              xmlns:converters="clr-namespace:Chat.Client.Converters"
                               mc:Ignorable="d"  Background="Gray"
                               d:DesignHeight="60" d:DesignWidth="250"
-                              d:DataContext="{d:DesignInstance notifications:CappuCallNotification, IsDesignTimeCreatable=False}">
+                              d:DataContext="{d:DesignInstance notifications:DarkCallNotification, IsDesignTimeCreatable=False}">
     <core:NotificationDisplayPart.Resources>
         <system:Boolean x:Key="True">True</system:Boolean>
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
     </core:NotificationDisplayPart.Resources>
     <Grid Background="#464646">
         <Grid.ColumnDefinitions>
@@ -29,16 +30,18 @@
                    Foreground="White" 
                    TextWrapping="Wrap"/>
 
-        <Button Grid.Column="2"
+        <Button x:Name="Button"
+                Grid.Column="2"
                 HorizontalAlignment="Right"
                 Margin="5"
-                Content="{x:Static texts:Texts.GoCall}"
+                Content="{Binding ButtonContent}"
                 FontSize="18"
                 Width="64"
                 Height="32"
                 Background="#333333"
-                Command="{Binding GoCommand}"
+                Command="{Binding Command}"
                 CommandParameter="{StaticResource True}"
-                Click="GoButtonOnClick"/>
+                Click="ButtonOnClick"
+                Visibility="{Binding Command, Converter={StaticResource NullToVisibilityConverter}}"/>
     </Grid>
 </core:NotificationDisplayPart>

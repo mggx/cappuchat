@@ -42,6 +42,7 @@
             <converters:BooleanToConnectionColorConverter x:Key="BooleanToConnectionColorConverter" />
             <converters:BooleanToConnectionToolTipConverter x:Key="BooleanToConnectionToolTipConverter" />
             <converters:BooleanToConnectionTextConverter x:Key="BooleanToConnectionTextConverter" />
+            <converters:BooleanToShowNotificationsStringConverter x:Key="BooleanToShowNotificationsStringConverter"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -60,7 +61,7 @@
                     ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"
                     HorizontalAlignment="Center"
                     IsTabStop="False">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="150">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="Auto">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="Connect" HorizontalAlignment="Center"/>
                     <TextBlock Text="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionTextConverter}}"
                                Foreground="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionColorConverter}}"
@@ -72,6 +73,12 @@
                 <Button Content="{x:Static texts:Texts.Logout}"
                         IsTabStop="False"
                         Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
+            </mah:WindowCommandsItem>
+
+            <mah:WindowCommandsItem>
+                <Button Content="{Binding ShowNotifications, Converter={StaticResource BooleanToShowNotificationsStringConverter}}"
+                        IsTabStop="False"
+                        Command="{Binding ChangeShowNotificationsCommand}"/>
             </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>

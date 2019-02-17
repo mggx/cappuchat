@@ -86,6 +86,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.18.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -104,6 +107,7 @@
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
     <Compile Include="Converters\BooleanToInversedBooleanConverter.cs" />
     <Compile Include="Converters\BooleanToOnlineUsernameColorConverter.cs" />
+    <Compile Include="Converters\BooleanToShowNotificationsStringConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVotedStringConverter.cs" />
     <Compile Include="Converters\IntegerToVisibilityConverter.cs" />
@@ -111,11 +115,11 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\StringToPartialStringConverter.cs" />
     <Compile Include="Converters\UsersToHorizontalAlignmentConverter.cs" />
-    <Compile Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml.cs">
-      <DependentUpon>CappuCallDisplayPart.xaml</DependentUpon>
+    <Compile Include="CustomNotifications\DisplayParts\DarkCallDisplayPart.xaml.cs">
+      <DependentUpon>DarkCallDisplayPart.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomNotifications\Extensions\CustomCallExtensions.cs" />
-    <Compile Include="CustomNotifications\Notifications\CappuCallNotification.cs" />
+    <Compile Include="CustomNotifications\Notifications\DarkCallNotification.cs" />
     <Compile Include="Extensions\MoveFocusExtension.cs" />
     <Compile Include="CustomNotifications\Notifications\CustomNotificationBase.cs" />
     <Compile Include="Helper\ThemeManagerHelper.cs" />
@@ -157,9 +161,9 @@
     <Compile Include="Windows\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="CustomNotifications\DisplayParts\CappuCallDisplayPart.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="CustomNotifications\DisplayParts\DarkCallDisplayPart.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\OrgadataTheme.xaml">
       <SubType>Designer</SubType>

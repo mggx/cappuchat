@@ -1,9 +1,15 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Chat.Client.Framework;
 using Chat.Client.Styles;
+using ChatComponents.Converters;
 
 namespace Chat.Client.Controls
 {
@@ -29,6 +35,18 @@ namespace Chat.Client.Controls
 
         public static readonly DependencyProperty WatermarkForegroundProperty = DependencyProperty.Register(
             "WatermarkForeground", typeof(SolidColorBrush), typeof(SpecialTextBox), new PropertyMetadata(default(SolidColorBrush)));
+
+        public static readonly DependencyProperty AllowedExtensionsListProperty = DependencyProperty.Register(
+            "AllowedExtensionsList", typeof(IList<string>), typeof(SpecialTextBox), new PropertyMetadata(default(IList<string>)));
+
+        public static readonly DependencyProperty DataDroppedCommandProperty = DependencyProperty.Register(
+            "DataDroppedCommand", typeof(ICommand), typeof(SpecialTextBox), new PropertyMetadata(default(ICommand)));
+
+        public IList<string> AllowedExtensionsList
+        {
+            get { return (IList<string>) GetValue(AllowedExtensionsListProperty); }
+            set { SetValue(AllowedExtensionsListProperty, value); }
+        }
 
         public SolidColorBrush WatermarkForeground
         {
@@ -72,6 +90,12 @@ namespace Chat.Client.Controls
             set { SetValue(FocusedBorderBrushProperty, value); }
         }
 
+        public ICommand DataDroppedCommand
+        {
+            get { return (ICommand) GetValue(DataDroppedCommandProperty); }
+            set { SetValue(DataDroppedCommandProperty, value); }
+        }
+
         static SpecialTextBox()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SpecialTextBox), new FrameworkPropertyMetadata(typeof(SpecialTextBox)));
@@ -92,6 +116,34 @@ namespace Chat.Client.Controls
 
             EnterCommand.Execute(Text);
             Text = string.Empty;
+        }
+
+        public SpecialTextBox()
+        {
+            AllowedExtensionsList = new List<string>();
+        }
+
+        protected override void OnPreviewDragOver(DragEventArgs e)
+        {
+            e.Handled = true;
+            if (!(e.Data.GetData(DataFormats.FileDrop, true) is string[] droppedFilePaths)) return;
+            var extensions = droppedFilePaths.Select(Path.GetExtension).ToList();
+            var isValidData = extensions.All(ext => AllowedExtensionsList.Contains(ext));
+            if (isValidData)
+            {
+                e.Effects = DragDropEffects.Copy;
+                return;
+            }
+            e.Effects = DragDropEffects.None;
+        }
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop, true)) return;
+            if (!(e.Data.GetData(DataFormats.FileDrop, true) is string[] droppedFilePaths)) return;
+
+            foreach (var path in droppedFilePaths)
+                DataDroppedCommand?.Execute(path);
         }
 
         protected override void OnKeyUp(KeyEventArgs e)

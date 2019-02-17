@@ -11,6 +11,7 @@
              xmlns:chatComponents="clr-namespace:ChatComponents;assembly=ChatComponents"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:userControls="clr-namespace:Chat.Client.UserControls"
+             xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance presenters:CappuVotePresenter}">
@@ -23,6 +24,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="7*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
@@ -32,11 +34,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <TextBlock Foreground="White" FontWeight="Bold" Margin="10,5,0,5">
+            <Run Text="{x:Static texts:Texts.UserInGroupChat}"/>
+            <Run Text="{Binding CappuVoteResultViewModel.UserVotes.Count, Mode=OneWay}"/>
+        </TextBlock>
+
         <ListView ItemsSource="{Binding CappuVoteResultViewModel.UserVotes}" 
                   Background="Transparent"
                   HorizontalAlignment="Left"
                   BorderThickness="0"
-                  Width="240"
+                  Width="240" Grid.Row="1"
                   DockPanel.Dock="Top">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
@@ -66,7 +73,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <DockPanel Grid.Row="1"
+        <DockPanel Grid.Row="2"
                    Grid.Column="0">
             <Button HorizontalAlignment="Stretch"
                     BorderThickness="0"
@@ -83,7 +90,7 @@
         </DockPanel>
 
         <views:ChatView Grid.Row="0"
-                        Grid.RowSpan="2"
+                        Grid.RowSpan="3"
                         Grid.Column="1"
                         DataContext="{Binding CappuGroupChatViewModel}">
             <views:ChatView.MessageMenuItems>

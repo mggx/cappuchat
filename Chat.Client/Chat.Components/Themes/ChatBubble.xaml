@@ -5,6 +5,8 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
 
     <converters:DateTimeToMessageStringConverter x:Key="DateTimeToMessageStringConverter"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    <converters:StreamToBitmapImageConverter x:Key="StreamToBitmapImageConverter"/>
 
     <Style x:Key="ButtonDropDownFocusVisual">
         <Setter Property="Control.Template">
@@ -168,24 +170,22 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="7"
-                                HorizontalAlignment="Stretch">
+                                CornerRadius="7">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="65"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" MaxHeight="20"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <mah:DropDownButton x:Name="PART_DropDownButton"
                                                     Grid.Row="0"
-                                                    Grid.Column="2"
+                                                    Grid.Column="1"
                                                     HorizontalAlignment="Right"
                                                     Visibility="Collapsed"
                                                     Style="{StaticResource DropDownStyle}"
@@ -203,37 +203,65 @@
                                            Grid.Column="0"
                                            FontFamily="Segoe Ui"
                                            FontSize="12"
-                                           Padding="10, 6, 6, 6"
+                                           Padding="10, 5, 10, 0"
                                            Foreground="LightGray"/>
 
-                                
-
-                                <Border Padding="10, 0, 10, 10"
+                                <Border Padding="3" 
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
                                         Grid.Row="1"
                                         Grid.RowSpan="2">
 
-                                    <TextBox Text="{TemplateBinding Text}"
-                                             FontFamily="Segoe Ui"
-                                             FontSize="14"
-                                             Foreground="FloralWhite"
-                                             IsReadOnly="True"
-                                             TextWrapping="Wrap"
-                                             Background="Transparent"
-                                             BorderThickness="0"
-                                             IsTabStop="False"/>
-                                </Border>
+                                    <DockPanel x:Name="PART_Content">
+                                        <Grid DockPanel.Dock="Top"
+                                              Visibility="{TemplateBinding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                                            <mah:ProgressRing IsActive="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ChatBubble}}, Path=ImageUploading}" Foreground="{DynamicResource AccentColorBrush}"/>
+                                            <Border CornerRadius="5"
+                                                    Background="White"
+                                                    HorizontalAlignment="Center">
+                                                <Image x:Name="BubbleImage"
+                                                       MaxWidth="300"
+                                                       MaxHeight="300"
+                                                       RenderOptions.BitmapScalingMode="HighQuality">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource StreamToBitmapImageConverter}">
+                                                            <Binding RelativeSource="{RelativeSource Self}"/>
+                                                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:ChatBubble}}" Path="ImageSource"/>
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
+                                            </Border>
+                                        </Grid>
 
-                                <TextBlock Padding="5"
-                                           Grid.Row="2"
-                                           Grid.Column="2"
-                                           FontFamily="Segoe Ui"
-                                           VerticalAlignment="Bottom"
-                                           HorizontalAlignment="Center"
-                                           FontSize="11"
-                                           Foreground="LightGray"
-                                           Text="{TemplateBinding Time, Converter={StaticResource DateTimeToMessageStringConverter}}"/>
+                                        <Grid Background="Transparent">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBox Grid.Column="0"
+                                                     Text="{TemplateBinding Text}"
+                                                     FontFamily="Segoe Ui"
+                                                     FontSize="14"
+                                                     Foreground="FloralWhite"
+                                                     IsReadOnly="True"
+                                                     TextWrapping="Wrap"
+                                                     Background="Transparent"
+                                                     BorderThickness="0"
+                                                     IsTabStop="False"
+                                                     Margin="0"/>
+
+                                            <TextBlock Grid.Column="1"
+                                                       FontFamily="Segoe Ui"
+                                                       FontSize="11"
+                                                       Foreground="LightGray"
+                                                       Text="{TemplateBinding Time, Converter={StaticResource DateTimeToMessageStringConverter}}"
+                                                       VerticalAlignment="Bottom"
+                                                       HorizontalAlignment="Right"
+                                                       Margin="1"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </Border>
                             </Grid>
                         </Border>
                     </DockPanel>
@@ -247,6 +275,13 @@
                         </Trigger>
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ImageUploading" Value="True">
+                            <Setter TargetName="BubbleImage" Property="Effect">
+                                <Setter.Value>
+                                    <BlurEffect Radius="3" KernelType="Gaussian" RenderingBias="Quality" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

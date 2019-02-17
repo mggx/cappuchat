@@ -10,8 +10,11 @@ namespace Chat.Client.Framework
         void Hide(IDialog dialog);
         void ShowMessage(string title, string message);
         void BringToFront(IDialog dialog);
-        void ShowToastNotification(string message, NotificationType notificationType, ICommand command = null);
+        void ShowToastNotification(string message, NotificationType notificationType);
+        void ShowToastNotification(string message, string buttonContent, NotificationType notificationType,
+            ICommand command = null);
         void FlashWindow(bool checkFocus = true);
         void BringToFront();
+        bool IsMainWindowFocused();
     }
 }

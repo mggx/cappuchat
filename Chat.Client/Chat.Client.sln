@@ -27,9 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatComponents", "Chat.Comp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Models", "Chat.Models\Chat.Models.csproj", "{AEA6760B-9456-40E0-9FFD-EAD9288452C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Shared.Encryption", "Chat.Shared.Encryption\Chat.Shared.Encryption.csproj", "{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Configurations", "..\Chat.Configurations\Chat.Configurations.csproj", "{4937C672-9F54-4855-A7B8-1A91627214EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Shared.Encryption", "..\Chat.Shared\Chat.Shared.Encryption\Chat.Shared.Encryption.csproj", "{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,14 +81,14 @@ Global
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA6760B-9456-40E0-9FFD-EAD9288452C2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4937C672-9F54-4855-A7B8-1A91627214EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4937C672-9F54-4855-A7B8-1A91627214EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4937C672-9F54-4855-A7B8-1A91627214EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4937C672-9F54-4855-A7B8-1A91627214EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{117A8FFB-5EFA-43D9-A296-5B7F20D124B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

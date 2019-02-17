@@ -6,9 +6,9 @@ namespace Chat.Client.CustomNotifications.Extensions
 {
     public static class CustomCallExtensions
     {
-        public static void ShowCappuCallMessage(this Notifier notifier, string message, ICommand command = null)
+        public static void ShowDarkMessage(this Notifier notifier, string message, string buttonContent, ICommand command = null)
         {
-            notifier.Notify<CappuCallNotification>(() => new CappuCallNotification(message, command));
+            notifier.Notify<DarkCallNotification>(() => new DarkCallNotification(message, buttonContent, command));
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Chat.Client.ViewModels.Helpers
     public class ConversationHelper : Disposable
     {
         public SimpleConversation Conversation { get; }
-        public ObservableCollection<SimpleMessage> Messages { get; set; }
+        public ObservableCollection<OwnSimpleMessage> Messages { get; set; }
 
         public event AddNewMessageHandler AddNewMessage;
         public event NewMessagesChangedHandler NewMessagesChanged;
 
-        public ConversationHelper(SimpleConversation conversation, ObservableCollection<SimpleMessage> messages)
+        public ConversationHelper(SimpleConversation conversation, ObservableCollection<OwnSimpleMessage> messages)
         {
             Conversation = conversation;
             Messages = messages;

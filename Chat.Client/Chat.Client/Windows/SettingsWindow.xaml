@@ -51,7 +51,7 @@
         </GroupBox>
 
         <GroupBox Header="{x:Static Texts:Texts.ServerConnectionSetting}"
-                  Grid.Row="0">
+                  Grid.Row="0" Margin="5,10,5,0">
             <Grid Margin="5">
 
                 <Grid.RowDefinitions>
@@ -86,7 +86,7 @@
                 That will be available soon.
             </StackPanel.ToolTip>
             
-            <CheckBox HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="156" Height="30" IsEnabled="False">
+            <CheckBox HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="156" Height="30" IsEnabled="False">
                 <TextBlock Text="{x:Static Texts:Texts.AutoCheckForUpdates}" TextWrapping="Wrap"/>
             </CheckBox>
         </StackPanel>

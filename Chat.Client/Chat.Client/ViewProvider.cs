@@ -11,6 +11,9 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Chat.Configurations;
+using Chat.Configurations.Models;
+using Chat.Models;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
@@ -147,8 +150,14 @@ namespace Chat.Client
             });
         }
 
-        public void ShowToastNotification(string message, NotificationType notificationType, ICommand command = null)
+        public void ShowToastNotification(string message, NotificationType notificationType)
         {
+            var configurationController = new ConfigurationController<NotificationConfiguration>();
+            var notificationConfiguration = configurationController.ReadConfiguration(new NotificationConfiguration());
+
+            if (!notificationConfiguration.ShowPushNotifications)
+                return;
+
             switch (notificationType)
             {
                 case NotificationType.Information:
@@ -163,10 +172,22 @@ namespace Chat.Client
                 case NotificationType.Error:
                     _notifier.ShowError(message);
                     break;
-                case NotificationType.CappuCall:
-                    _notifier.ShowCappuCallMessage(message, command);
+                case NotificationType.Dark:
+                    _notifier.ShowDarkMessage(message, string.Empty);
                     break;
             }
+        }
+
+        public void ShowToastNotification(string message, string buttonContent, NotificationType notificationType, ICommand command = null)
+        {
+            var configurationController = new ConfigurationController<NotificationConfiguration>();
+            var notificationConfiguration = configurationController.ReadConfiguration(new NotificationConfiguration());
+
+            if (!notificationConfiguration.ShowPushNotifications)
+                return;
+
+            if (notificationType == NotificationType.Dark)
+                _notifier.ShowDarkMessage(message, buttonContent, command);
         }
 
         public void BringToFront(IDialog dialog)
@@ -195,16 +216,16 @@ namespace Chat.Client
                 return;
 
             WindowInteropHelper wih = new WindowInteropHelper(window); 
-
-            if (window.WindowState == WindowState.Minimized)
-            {
+            if (!window.IsFocused)
                 FlashWindow(wih.Handle, true);
-            }
-            else if (checkFocus)
-            {
-                if (!window.IsFocused)
-                    FlashWindow(wih.Handle, true);
-            }
+        }
+
+        public bool IsMainWindowFocused()
+        {
+            var window = Application.Current.MainWindow;
+            if (window == null)
+                return false;
+            return window.IsFocused;
         }
     }
 }
