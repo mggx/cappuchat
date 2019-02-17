@@ -67,7 +67,8 @@
         public static string ColorSettings => "Colorsettings";
         public static string TestConnection => "Test connection";
         public static string RestartRequired => "Restart is required";
-        public static string RestartRequiredConent => "Due to your changes you need to restart the client!";
+        public static string RestartRequiredContent => "Due to your changes you need to restart the client!";
+        public static string RestartRequiredServerConnection => "The server connection was lost. Restarting...";
         public static string AppSettingsWindowTitle => "Settings";
         public static string ApplicationSettings => "Applicationsettings";
 

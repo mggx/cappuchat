@@ -5,6 +5,7 @@ using Chat.Configurations;
 using Chat.Configurations.Models;
 using MahApps.Metro;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,8 @@ namespace Chat.Client
 {
     public partial class App
     {
+        private const string SignalReconnectingError = "Data cannot be sent because the WebSocket connection is reconnecting.";
+
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
         private CappuMainPresenter _cappuMainPresenter;
@@ -85,6 +88,14 @@ namespace Chat.Client
             }
             else
                 message = e.Exception.Message;
+
+            if (e.Exception is InvalidOperationException && message.Contains(SignalReconnectingError))
+            {
+                _viewProvider.ShowMessage(Texts.Texts.RestartRequired, Texts.Texts.RestartRequiredServerConnection);
+                Process.Start(ResourceAssembly.Location);
+                Current.Shutdown();
+                Environment.Exit(0);
+            }
 
             _viewProvider.ShowMessage(Texts.Texts.Error, message);
         }
