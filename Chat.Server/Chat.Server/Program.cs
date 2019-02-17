@@ -41,6 +41,7 @@ namespace Chat.Server
 
             var hubConfiguration = new HubConfiguration();
             hubConfiguration.EnableDetailedErrors = true;
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = 3000000;
             app.MapSignalR(hubConfiguration);
         }
     }

@@ -199,6 +199,10 @@ namespace Chat.Client.Presenters
                 CappuLoginPresenter.CappuLoginViewModel.LoginSucceeded -= LoginPresenterOnLoginSucceeded;
                 CappuLoginPresenter.LoggedOut -= LoginPresenterOnLoggedOut;
                 CappuLoginPresenter.CappuLoginViewModel.RegisterOpen -= CappuLoginPresenterOnRegisterOpen;
+
+                CappuVotePresenter?.Dispose();
+                CappuChatPresenter?.Dispose();
+                CappuLoginPresenter?.Dispose();
             }
 
             base.Dispose(disposing);

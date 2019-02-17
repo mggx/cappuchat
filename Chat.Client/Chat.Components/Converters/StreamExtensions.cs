@@ -1,21 +1,29 @@
 ﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using WpfAnimatedGif;
 
 namespace ChatComponents.Converters
 {
     public static class StreamExtensions
     {
-        public static BitmapImage ToBitmapImage(this MemoryStream memoryStream)
+        public static BitmapImage ToBitmapImage(this MemoryStream memoryStream, FrameworkElement element = null)
         {
             if (memoryStream == Stream.Null)
-                return null;
+                return new BitmapImage();
 
-            var imageSource = new BitmapImage();
-            imageSource.BeginInit();
-            imageSource.StreamSource = memoryStream;
-            imageSource.EndInit();
+            memoryStream.Seek(0, SeekOrigin.Begin);
 
-            return imageSource;
+            var bitmap = BitmapFrame.Create(
+                memoryStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            if (element is Image image)
+                ImageBehavior.SetAnimatedSource(image, bitmap);
+
+            return new BitmapImage();
         }
     }
 }

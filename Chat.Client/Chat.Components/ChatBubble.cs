@@ -28,6 +28,21 @@ namespace ChatComponents
         public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
             "ImageSource", typeof(MemoryStream), typeof(ChatBubble), new PropertyMetadata(default(MemoryStream)));
 
+        public static readonly DependencyProperty ImageUploadingProperty = DependencyProperty.Register(
+            "ImageUploading", typeof(bool), typeof(ChatBubble), new PropertyMetadata(default(bool)));
+
+        public bool ImageUploading
+        {
+            get { return (bool) GetValue(ImageUploadingProperty); }
+            set { SetValue(ImageUploadingProperty, value); }
+        }
+
+        public MemoryStream ImageSource
+        {
+            get { return (MemoryStream) GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
+        }
+
         public DateTime Text
         {
             get { return (DateTime) GetValue(TextProperty); }
@@ -46,12 +61,6 @@ namespace ChatComponents
             set { SetValue(SenderProperty, value); }
         }
 
-        public MemoryStream ImageSource
-        {
-            get { return (MemoryStream) GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
         static ChatBubble()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ChatBubble), new FrameworkPropertyMetadata(typeof(ChatBubble)));
@@ -68,15 +77,19 @@ namespace ChatComponents
             _chatListView = FindAncestor<ChatListView>(this);
             _dropDownButton = Template.FindName("PART_DropDownButton", this) as DropDownButton;
 
-            var bubbleImage = Template.FindName("BubbleImage", this) as Image;
-            if (bubbleImage != null && ImageSource != null)
-            {
-                MaxWidth = bubbleImage.ActualWidth;
-            }
+            if (Template.FindName("BubbleImage", this) is Image bubbleImage && ImageSource != null)
+                bubbleImage.SizeChanged += BubbleImageOnSizeChanged;
 
             if (_dropDownButton == null) return;
             _dropDownButton.Click += DropDownButtonOnClick;
             _dropDownButton.ItemsSource = _chatListView.GetItemContextMenu(DataContext);
+        }
+
+        private void BubbleImageOnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (!(sender is Image image)) return;
+            MaxWidth = image.ActualWidth;
+            image.SizeChanged -= BubbleImageOnSizeChanged;
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)

@@ -11,7 +11,7 @@ namespace Chat.Shared.Models
         public string Message { get; set; }
 
         public string ImageName { get; set; }
-        public MemoryStream ImageStream { get; set; }
+        public string Base64ImageString { get; set; }
 
         public DateTime MessageSentDateTime { get; set; }
 

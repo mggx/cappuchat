@@ -6,6 +6,8 @@ using Chat.Models;
 using Chat.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 
 namespace Chat.Client.ViewModels
 {
@@ -43,7 +45,7 @@ namespace Chat.Client.ViewModels
         {
             IEnumerable<SimpleMessage> conversation = _cappuMessageController.GetConversation(new SimpleUser(Conversation.TargetUsername));
             foreach (var message in conversation)
-                Messages.Add(message);
+                Messages.Add(new OwnSimpleMessage(message));
             ConversationHelper = new ConversationHelper(Conversation, Messages);
         }
 
@@ -56,13 +58,13 @@ namespace Chat.Client.ViewModels
         {
             if (!eventArgs.ReceivedMessage.Sender.Username.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
                 return;
-            Messages.Add(eventArgs.ReceivedMessage);
+            Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
         }
 
         protected override void SendMessage(string message)
         {
-            var simpleMessage = new SimpleMessage(User, new SimpleUser(Conversation.TargetUsername), message);
+            var simpleMessage = new OwnSimpleMessage(User, new SimpleUser(Conversation.TargetUsername), message);
             simpleMessage.MessageSentDateTime = DateTime.Now;
 
             _cappuMessageController.StoreOwnMessage(simpleMessage);
@@ -73,7 +75,7 @@ namespace Chat.Client.ViewModels
 
         public void Load(SimpleMessage message)
         {
-            Messages.Add(message);
+            Messages.Add(new OwnSimpleMessage(message));
             _cappuMessageController.StoreMessage(message);
         }
 

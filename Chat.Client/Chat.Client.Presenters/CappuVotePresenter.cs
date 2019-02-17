@@ -80,6 +80,7 @@ namespace Chat.Client.Presenters
 
                 CappuVoteViewModel.Dispose();
                 CappuVoteResultViewModel?.Dispose();
+                CappuGroupChatViewModel.Dispose();
             }
 
             base.Dispose(disposing);

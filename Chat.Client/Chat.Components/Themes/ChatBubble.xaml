@@ -6,10 +6,7 @@
 
     <converters:DateTimeToMessageStringConverter x:Key="DateTimeToMessageStringConverter"/>
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
-    <converters:NullToVisibilityConverter x:Key="InversedNullToVisibilityConverter" Inverse="True"/>
-    <converters:NullToBooleanConverter x:Key="NullToBooleanConverter"/>
     <converters:StreamToBitmapImageConverter x:Key="StreamToBitmapImageConverter"/>
-    <converters:LineCountToOrientationConverter x:Key="LineCountToOrientationConverter"/>
 
     <Style x:Key="ButtonDropDownFocusVisual">
         <Setter Property="Control.Template">
@@ -218,13 +215,21 @@
                                     <DockPanel x:Name="PART_Content">
                                         <Grid DockPanel.Dock="Top"
                                               Visibility="{TemplateBinding ImageSource, Converter={StaticResource NullToVisibilityConverter}}">
+                                            <mah:ProgressRing IsActive="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:ChatBubble}}, Path=ImageUploading}" Foreground="{DynamicResource AccentColorBrush}"/>
                                             <Border CornerRadius="5"
-                                                    Background="White">
+                                                    Background="White"
+                                                    HorizontalAlignment="Center">
                                                 <Image x:Name="BubbleImage"
-                                                       Source="{TemplateBinding ImageSource, Converter={StaticResource StreamToBitmapImageConverter}}"
                                                        MaxWidth="300"
                                                        MaxHeight="300"
-                                                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                                                       RenderOptions.BitmapScalingMode="HighQuality">
+                                                    <Image.Source>
+                                                        <MultiBinding Converter="{StaticResource StreamToBitmapImageConverter}">
+                                                            <Binding RelativeSource="{RelativeSource Self}"/>
+                                                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type local:ChatBubble}}" Path="ImageSource"/>
+                                                        </MultiBinding>
+                                                    </Image.Source>
+                                                </Image>
                                             </Border>
                                         </Grid>
 
@@ -270,6 +275,13 @@
                         </Trigger>
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ImageUploading" Value="True">
+                            <Setter TargetName="BubbleImage" Property="Effect">
+                                <Setter.Value>
+                                    <BlurEffect Radius="3" KernelType="Gaussian" RenderingBias="Quality" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -104,6 +104,7 @@ namespace Chat.Client
         {
             _hubConnectionHelper.Stop();
             _cappuMainPresenter.CappuLoginPresenter.StartConnection -= LoginPresenterOnStartConnection;
+            _cappuMainPresenter.Dispose();
         }
 
         private Task<bool> LoginPresenterOnStartConnection()

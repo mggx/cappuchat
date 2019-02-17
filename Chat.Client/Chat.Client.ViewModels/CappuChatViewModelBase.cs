@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
+using Chat.Models;
 using Chat.Shared.Models;
 
 namespace Chat.Client.ViewModels
@@ -18,12 +20,20 @@ namespace Chat.Client.ViewModels
             set { _selectedMessage = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
+        private string _messageImagePath;
+        public string MessageImagePath
+        {
+            get { return _messageImagePath; }
+            set { _messageImagePath = value; OnPropertyChanged(); }
+        }
+
         public SimpleUser User { get; set; }
         
-        public ObservableCollection<SimpleMessage> Messages { get; set; } = new ObservableCollection<SimpleMessage>();
+        public ObservableCollection<OwnSimpleMessage> Messages { get; set; } = new ObservableCollection<OwnSimpleMessage>();
 
         public RelayCommand<string> SendMessageCommand { get; }
         public RelayCommand ClearMessagesCommand { get; set; }
+        public RelayCommand<string> DataDroppedCommand { get; }
 
         public CappuChatViewModelBase(ISignalHelperFacade signalHelperFacade, bool initialize = true)
         {
@@ -34,6 +44,7 @@ namespace Chat.Client.ViewModels
 
             SendMessageCommand = new RelayCommand<string>(SendMessage, CanSendMessage);
             ClearMessagesCommand = new RelayCommand(ClearMessages);
+            DataDroppedCommand = new RelayCommand<string>(DataDropped);
 
             if (initialize)
                 Initialize();
@@ -54,8 +65,23 @@ namespace Chat.Client.ViewModels
             Messages.Clear();
         }
 
+        protected virtual void DataDropped(string filePath)
+        {
+            MessageImagePath = filePath;
+        }
+
         protected virtual void RaiseCanExecuteChanged()
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Messages.Clear();
+            }
+
+            base.Dispose(disposing);
         }
 
         protected abstract void SendMessage(string message);

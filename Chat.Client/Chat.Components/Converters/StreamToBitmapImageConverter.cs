@@ -1,21 +1,31 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
 namespace ChatComponents.Converters
 {
-    public class StreamToBitmapImageConverter : IValueConverter
+    public class StreamToBitmapImageConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is MemoryStream memoryStream)
-                return memoryStream.ToBitmapImage();
+            if (values.Length != 2)
+                return null;
+
+            if (values[0] is Image image)
+            {
+                if (values[1] is MemoryStream memoryStream)
+                {
+                    return memoryStream.ToBitmapImage(image);
+                }
+            }
+
             return Stream.Null;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
