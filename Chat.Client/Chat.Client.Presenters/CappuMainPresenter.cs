@@ -7,7 +7,6 @@ using System;
 using System.Windows.Input;
 using Chat.Configurations;
 using Chat.Models;
-using System.Collections.Generic;
 
 namespace Chat.Client.Presenters
 {
@@ -26,25 +25,11 @@ namespace Chat.Client.Presenters
             set { _showNotifications = value; OnPropertyChanged(); }
         }
 
-        private bool _saveMode;
-        public bool SaveMode
+        private bool _safeMode;
+        public bool SafeMode
         {
-            get { return _saveMode; }
-            set { _saveMode = value; OnPropertyChanged(); }
-        }
-
-        private string _windowTitle;
-        public string WindowTitle
-        {
-            get { return _windowTitle; }
-            set { _windowTitle = value; OnPropertyChanged(); }
-        }
-
-        private Uri _currentIcon;
-        public Uri CurrentIcon
-        {
-            get { return _currentIcon; }
-            set { _currentIcon = value; OnPropertyChanged(); }
+            get { return _safeMode; }
+            set { _safeMode = value; OnPropertyChanged(); }
         }
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
@@ -77,8 +62,6 @@ namespace Chat.Client.Presenters
         public ICommand ChangeShowNotificationsCommand { get; }
         public ICommand ChangeSaveModeCommand { get; }
 
-        private Dictionary<string, Uri> _trayIcons;
-
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
@@ -90,13 +73,7 @@ namespace Chat.Client.Presenters
             _signalHelperFacade = signalHelperFacade;
             _viewProvider = viewProvider;
 
-            _trayIcons = new Dictionary<string, Uri>();
-
-            _trayIcons.Add("safeoff", new Uri("/chaticon.ico", UriKind.RelativeOrAbsolute));
-            _trayIcons.Add("safeon", new Uri("/saveoutlook.ico", UriKind.RelativeOrAbsolute));
-
-            SaveMode = true;
-            WindowTitle = "CappuChat";
+            SafeMode = true;
             ChangeSaveMode();
 
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
@@ -106,20 +83,15 @@ namespace Chat.Client.Presenters
 
         private void ChangeSaveMode()
         {
-            if (SaveMode)
+            if (SafeMode)
             {
-                //changes the savemode to off
-                SaveMode = false;
-                CurrentIcon = _trayIcons["safeoff"];
-                WindowTitle = "Cappuchat";
+                //changes the safemode to off
+                SafeMode = false;
             }
             else
             {
-                //changes the savemode to on
-                SaveMode = true;
-                CurrentIcon = _trayIcons["safeon"];
-                ShowNotifications = false;
-                WindowTitle = "Mail";
+                //changes the safemode to on
+                SafeMode = true;
             }
         }
 

@@ -4,15 +4,15 @@ using System.Windows.Data;
 
 namespace Chat.Client.Converters
 {
-    public class BooleanToSaveModeConverter : IValueConverter
+    public class BooleanToSafeModeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool givenValue = (bool)value;
             if (givenValue)
-                return "Save mode is on";
+                return "Safe mode is on";
             else
-                return "Save mode is off";
+                return "Safe mode is off";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
