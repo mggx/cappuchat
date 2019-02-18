@@ -6,10 +6,7 @@ using Chat.Shared.Models;
 using System;
 using System.Windows.Input;
 using Chat.Configurations;
-using Chat.Configurations.Models;
 using Chat.Models;
-using System.Windows;
-using System.Windows.Media.Imaging;
 using System.Collections.Generic;
 
 namespace Chat.Client.Presenters
@@ -56,7 +53,6 @@ namespace Chat.Client.Presenters
             get { return _windowTitle; }
             set { _windowTitle = value; OnPropertyChanged(); }
         }
-
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
         public CappuChatPresenter CappuChatPresenter { get; private set; }

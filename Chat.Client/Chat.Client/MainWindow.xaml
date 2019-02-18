@@ -95,7 +95,6 @@
 
     <Border Background="{DynamicResource AccentColorBrush4}">
         <Grid>
-
             <Border>
                 <Border.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
@@ -110,6 +109,7 @@
 
             <tb:TaskbarIcon ToolTipText="{Binding SaveMode, Converter={StaticResource BooleanToAppNameConverter}}"
                             IconSource="{Binding CurrentIcon}">
+                
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="{Binding SaveMode, Converter={StaticResource BooleanToSaveModeConverter}}"
@@ -117,7 +117,6 @@
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
             </tb:TaskbarIcon>
-
         </Grid>
     </Border>
 </mah:MetroWindow>
