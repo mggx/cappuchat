@@ -10,8 +10,8 @@
                  xmlns:converters="clr-namespace:Chat.Client.Converters"
                  xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:tb="http://www.hardcodet.net/taskbar"
                  mc:Ignorable="d"
-                 Title="Chat"
                  TitleForeground="White"
                  MaxWidth="1000"
                  MaxHeight="700"
@@ -21,8 +21,10 @@
                  Background="{DynamicResource AccentColorBrush}"
                  WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
                  NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
-                 ShowIconOnTitleBar="True">
-
+                 ShowIconOnTitleBar="False"
+                 Icon="{Binding CurrentIcon}"
+                 Title="{Binding SaveMode, Converter={StaticResource BooleanToAppNameConverter}}">
+    
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
     </Window.InputBindings>
@@ -43,6 +45,8 @@
             <converters:BooleanToConnectionToolTipConverter x:Key="BooleanToConnectionToolTipConverter" />
             <converters:BooleanToConnectionTextConverter x:Key="BooleanToConnectionTextConverter" />
             <converters:BooleanToShowNotificationsStringConverter x:Key="BooleanToShowNotificationsStringConverter"/>
+            <converters:BooleanToSaveModeConverter x:Key="BooleanToSaveModeConverter"/>
+            <converters:BooleanToAppNameConverter x:Key="BooleanToAppNameConverter"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -80,21 +84,41 @@
                         IsTabStop="False"
                         Command="{Binding ChangeShowNotificationsCommand}"/>
             </mah:WindowCommandsItem>
+
+            <mah:WindowCommandsItem>
+                <Button Content="{Binding SaveMode, Converter={StaticResource BooleanToSaveModeConverter}}"
+                        IsTabStop="False"
+                        Command="{Binding ChangeSaveModeCommand}"/>
+            </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
     <Border Background="{DynamicResource AccentColorBrush4}">
-        <Border>
-            <Border.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
+        <Grid>
+
+            <Border>
+                <Border.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
                             ViewportUnits="Absolute"
                             Viewport="0 0 500 500"
                             TileMode="Tile"/>
-            </Border.Background>
+                </Border.Background>
 
-            <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
+                <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
                                              Transition="Left" />
-        </Border>
+            </Border>
+
+            <tb:TaskbarIcon ToolTipText="{Binding SaveMode, Converter={StaticResource BooleanToAppNameConverter}}"
+                            IconSource="{Binding CurrentIcon}">
+                <tb:TaskbarIcon.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Binding SaveMode, Converter={StaticResource BooleanToSaveModeConverter}}"
+                                  Command="{Binding ChangeSaveModeCommand}"/>
+                    </ContextMenu>
+                </tb:TaskbarIcon.ContextMenu>
+            </tb:TaskbarIcon>
+
+        </Grid>
     </Border>
 </mah:MetroWindow>
 
