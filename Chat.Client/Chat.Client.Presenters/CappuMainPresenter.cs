@@ -33,25 +33,18 @@ namespace Chat.Client.Presenters
             set { _saveMode = value; OnPropertyChanged(); }
         }
 
-        private bool _saveModeInverse;
-        public bool SaveModeInverse
-        {
-            get { return _saveModeInverse; }
-            set { _saveModeInverse = value; OnPropertyChanged(); }
-        }
-
-        private string _chatIcon;
-        public string ChatIcon
-        {
-            get { return _chatIcon; }
-            set { _chatIcon = value; OnPropertyChanged(); }
-        }
-
         private string _windowTitle;
         public string WindowTitle
         {
             get { return _windowTitle; }
             set { _windowTitle = value; OnPropertyChanged(); }
+        }
+
+        private Uri _currentIcon;
+        public Uri CurrentIcon
+        {
+            get { return _currentIcon; }
+            set { _currentIcon = value; OnPropertyChanged(); }
         }
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
@@ -81,13 +74,6 @@ namespace Chat.Client.Presenters
             set { _currentPresenter = value; OnPropertyChanged(); }
         }
 
-        private Uri _currentIcon;
-        public Uri CurrentIcon
-        {
-            get { return _currentIcon; }
-            set { _currentIcon = value; OnPropertyChanged(); }
-        }
-
         public ICommand ChangeShowNotificationsCommand { get; }
         public ICommand ChangeSaveModeCommand { get; }
 
@@ -110,7 +96,6 @@ namespace Chat.Client.Presenters
             _trayIcons.Add("safeon", new Uri("/saveoutlook.ico", UriKind.RelativeOrAbsolute));
 
             SaveMode = true;
-            SaveModeInverse = false;
             WindowTitle = "CappuChat";
             ChangeSaveMode();
 
@@ -123,16 +108,18 @@ namespace Chat.Client.Presenters
         {
             if (SaveMode)
             {
+                //changes the savemode to off
                 SaveMode = false;
                 CurrentIcon = _trayIcons["safeoff"];
-                WindowTitle = "Mail";
+                WindowTitle = "Cappuchat";
             }
             else
             {
+                //changes the savemode to on
                 SaveMode = true;
                 CurrentIcon = _trayIcons["safeon"];
                 ShowNotifications = false;
-                WindowTitle = "CappuChat";
+                WindowTitle = "Mail";
             }
         }
 

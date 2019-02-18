@@ -23,7 +23,7 @@
                  NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
                  ShowIconOnTitleBar="False"
                  Icon="{Binding CurrentIcon}"
-                 Title="{Binding SaveMode, Converter={StaticResource BooleanToAppNameConverter}}">
+                 Title="{Binding WindowTitle}">
     
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
