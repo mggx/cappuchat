@@ -8,6 +8,9 @@ using System.Windows.Input;
 using Chat.Configurations;
 using Chat.Configurations.Models;
 using Chat.Models;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Collections.Generic;
 
 namespace Chat.Client.Presenters
 {
@@ -25,6 +28,35 @@ namespace Chat.Client.Presenters
             get => _showNotifications;
             set { _showNotifications = value; OnPropertyChanged(); }
         }
+
+        private bool _saveMode;
+        public bool SaveMode
+        {
+            get { return _saveMode; }
+            set { _saveMode = value; OnPropertyChanged(); }
+        }
+
+        private bool _saveModeInverse;
+        public bool SaveModeInverse
+        {
+            get { return _saveModeInverse; }
+            set { _saveModeInverse = value; OnPropertyChanged(); }
+        }
+
+        private string _chatIcon;
+        public string ChatIcon
+        {
+            get { return _chatIcon; }
+            set { _chatIcon = value; OnPropertyChanged(); }
+        }
+
+        private string _windowTitle;
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+            set { _windowTitle = value; OnPropertyChanged(); }
+        }
+
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
         public CappuChatPresenter CappuChatPresenter { get; private set; }
@@ -53,7 +85,17 @@ namespace Chat.Client.Presenters
             set { _currentPresenter = value; OnPropertyChanged(); }
         }
 
+        private Uri _currentIcon;
+        public Uri CurrentIcon
+        {
+            get { return _currentIcon; }
+            set { _currentIcon = value; OnPropertyChanged(); }
+        }
+
         public ICommand ChangeShowNotificationsCommand { get; }
+        public ICommand ChangeSaveModeCommand { get; }
+
+        private Dictionary<string, Uri> _trayIcons;
 
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
@@ -66,8 +108,36 @@ namespace Chat.Client.Presenters
             _signalHelperFacade = signalHelperFacade;
             _viewProvider = viewProvider;
 
+            _trayIcons = new Dictionary<string, Uri>();
+
+            _trayIcons.Add("safeoff", new Uri("/chaticon.ico", UriKind.RelativeOrAbsolute));
+            _trayIcons.Add("safeon", new Uri("/saveoutlook.ico", UriKind.RelativeOrAbsolute));
+
+            SaveMode = true;
+            SaveModeInverse = false;
+            WindowTitle = "CappuChat";
+            ChangeSaveMode();
+
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
+            ChangeSaveModeCommand = new RelayCommand(ChangeSaveMode);
             Initialize();
+        }
+
+        private void ChangeSaveMode()
+        {
+            if (SaveMode)
+            {
+                SaveMode = false;
+                CurrentIcon = _trayIcons["safeoff"];
+                WindowTitle = "Mail";
+            }
+            else
+            {
+                SaveMode = true;
+                CurrentIcon = _trayIcons["safeon"];
+                ShowNotifications = false;
+                WindowTitle = "CappuChat";
+            }
         }
 
         private void ChangeShowNotifications()
