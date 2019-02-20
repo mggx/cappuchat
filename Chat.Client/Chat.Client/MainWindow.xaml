@@ -10,8 +10,9 @@
                  xmlns:converters="clr-namespace:Chat.Client.Converters"
                  xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:tb="http://www.hardcodet.net/taskbar"
+                 xmlns:client="clr-namespace:Chat.Client"
                  mc:Ignorable="d"
-                 Title="Chat"
                  TitleForeground="White"
                  MaxWidth="1000"
                  MaxHeight="700"
@@ -21,8 +22,8 @@
                  Background="{DynamicResource AccentColorBrush}"
                  WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
                  NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
-                 ShowIconOnTitleBar="True">
-
+                 ShowIconOnTitleBar="False">
+    
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
     </Window.InputBindings>
@@ -43,8 +44,25 @@
             <converters:BooleanToConnectionToolTipConverter x:Key="BooleanToConnectionToolTipConverter" />
             <converters:BooleanToConnectionTextConverter x:Key="BooleanToConnectionTextConverter" />
             <converters:BooleanToShowNotificationsStringConverter x:Key="BooleanToShowNotificationsStringConverter"/>
+            <converters:BooleanToSafeModeConverter x:Key="BooleanToSaveModeConverter"/>
+            <converters:BooleanToAppNameConverter x:Key="BooleanToAppNameConverter"/>
         </ResourceDictionary>
     </Window.Resources>
+
+    <mah:MetroWindow.Style>
+        <Style TargetType="mah:MetroWindow">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SafeMode}" Value="True">
+                    <Setter Property="Title" Value="Mail"></Setter>
+                    <Setter Property="Icon" Value="/safeoutlook.ico"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding SafeMode}" Value="False">
+                    <Setter Property="Title" Value="CappuChat"></Setter>
+                    <Setter Property="Icon" Value="/chaticon.ico"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </mah:MetroWindow.Style>
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
@@ -80,21 +98,52 @@
                         IsTabStop="False"
                         Command="{Binding ChangeShowNotificationsCommand}"/>
             </mah:WindowCommandsItem>
+
+            <mah:WindowCommandsItem>
+                <Button Content="{Binding SafeMode, Converter={StaticResource BooleanToSaveModeConverter}}"
+                        IsTabStop="False"
+                        Command="{Binding ChangeSaveModeCommand}"/>
+            </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
 
     <Border Background="{DynamicResource AccentColorBrush4}">
-        <Border>
-            <Border.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
+        <Grid>
+            <Border>
+                <Border.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
                             ViewportUnits="Absolute"
                             Viewport="0 0 500 500"
                             TileMode="Tile"/>
-            </Border.Background>
+                </Border.Background>
 
-            <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
+                <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
                                              Transition="Left" />
-        </Border>
+            </Border>
+
+            <tb:TaskbarIcon ToolTipText="{Binding SafeMode, Converter={StaticResource BooleanToAppNameConverter}}"
+                            >
+                <tb:TaskbarIcon.Style>
+                    <Style TargetType="tb:TaskbarIcon">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SafeMode}" Value="True">
+                                <Setter Property="IconSource" Value="/safeoutlook.ico"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding SafeMode}" Value="False">
+                                <Setter Property="IconSource" Value="/chaticon.ico"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </tb:TaskbarIcon.Style>
+                
+                <tb:TaskbarIcon.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{Binding SafeMode, Converter={StaticResource BooleanToSaveModeConverter}}"
+                                  Command="{Binding ChangeSaveModeCommand}"/>
+                    </ContextMenu>
+                </tb:TaskbarIcon.ContextMenu>
+            </tb:TaskbarIcon>
+        </Grid>
     </Border>
 </mah:MetroWindow>
 

@@ -43,6 +43,9 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.8\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -102,11 +105,13 @@
     <Compile Include="BindingProxies\CappuVoteResultViewModelProxy.cs" />
     <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
     <Compile Include="Controls\SpecialTextBox.cs" />
+    <Compile Include="Converters\BooleanToAppNameConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
     <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
     <Compile Include="Converters\BooleanToInversedBooleanConverter.cs" />
     <Compile Include="Converters\BooleanToOnlineUsernameColorConverter.cs" />
+    <Compile Include="Converters\BooleanToSafeModeConverter.cs" />
     <Compile Include="Converters\BooleanToShowNotificationsStringConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVotedStringConverter.cs" />
@@ -337,7 +342,9 @@
   <ItemGroup>
     <Resource Include="chaticon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="safeoutlook.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net451\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
