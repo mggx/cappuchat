@@ -6,7 +6,6 @@ using Chat.Shared.Models;
 using System;
 using System.Windows.Input;
 using Chat.Configurations;
-using Chat.Configurations.Models;
 using Chat.Models;
 
 namespace Chat.Client.Presenters
@@ -24,6 +23,13 @@ namespace Chat.Client.Presenters
         {
             get => _showNotifications;
             set { _showNotifications = value; OnPropertyChanged(); }
+        }
+
+        private bool _safeMode;
+        public bool SafeMode
+        {
+            get { return _safeMode; }
+            set { _safeMode = value; OnPropertyChanged(); }
         }
 
         public CappuLoginPresenter CappuLoginPresenter { get; private set; }
@@ -54,6 +60,7 @@ namespace Chat.Client.Presenters
         }
 
         public ICommand ChangeShowNotificationsCommand { get; }
+        public ICommand ChangeSaveModeCommand { get; }
 
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
@@ -66,8 +73,26 @@ namespace Chat.Client.Presenters
             _signalHelperFacade = signalHelperFacade;
             _viewProvider = viewProvider;
 
+            SafeMode = true;
+            ChangeSaveMode();
+
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
+            ChangeSaveModeCommand = new RelayCommand(ChangeSaveMode);
             Initialize();
+        }
+
+        private void ChangeSaveMode()
+        {
+            if (SafeMode)
+            {
+                //changes the safemode to off
+                SafeMode = false;
+            }
+            else
+            {
+                //changes the safemode to on
+                SafeMode = true;
+            }
         }
 
         private void ChangeShowNotifications()
