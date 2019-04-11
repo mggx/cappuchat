@@ -1,4 +1,5 @@
-﻿using Chat.Client.Signalhelpers.Contracts;
+﻿using Chat.Client.Framework;
+using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels.Controllers;
 using Chat.Client.ViewModels.Helpers;
@@ -15,11 +16,18 @@ namespace Chat.Client.ViewModels
     {
         private CappuMessageController _cappuMessageController;
 
+        private readonly IViewProvider _viewProvider;
+
         public ConversationHelper ConversationHelper { get; set; } 
         public SimpleConversation Conversation { get; }
 
-        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation) : base(signalHelperFacade, false)
+        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation, IViewProvider viewProvider) : base(signalHelperFacade, false)
         {
+            if (viewProvider == null)
+                throw new ArgumentNullException(nameof(viewProvider),
+                    "Cannot create CappuGroupChatViewModel. Given viewProvider is null");
+            _viewProvider = viewProvider;
+
             if (conversation == null)
                 throw new ArgumentNullException(nameof(conversation),
                     "Cannot create CappuChatViewModel. Given conversation is null.");
@@ -58,6 +66,10 @@ namespace Chat.Client.ViewModels
         {
             if (!eventArgs.ReceivedMessage.Sender.Username.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
                 return;
+
+            if (!_viewProvider.IsMainWindowFocused())
+                _viewProvider.ShowToastNotification($"{Texts.Texts.PrivateMessageNotification} {eventArgs.ReceivedMessage.Sender.Username}: {eventArgs.ReceivedMessage.Message}", NotificationType.Dark);
+
             Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
         }
