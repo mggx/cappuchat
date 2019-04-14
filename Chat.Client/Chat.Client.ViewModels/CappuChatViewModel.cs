@@ -18,7 +18,7 @@ namespace Chat.Client.ViewModels
         public ConversationHelper ConversationHelper { get; set; } 
         public SimpleConversation Conversation { get; }
 
-        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation) : base(signalHelperFacade, false)
+        public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation) : base(signalHelperFacade)
         {
             if (conversation == null)
                 throw new ArgumentNullException(nameof(conversation),
