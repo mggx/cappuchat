@@ -6,6 +6,7 @@ using Chat.Shared.Models;
 using System;
 using System.Windows.Input;
 using Chat.Configurations;
+using Chat.Configurations.Models;
 using Chat.Models;
 
 namespace Chat.Client.Presenters
@@ -17,6 +18,9 @@ namespace Chat.Client.Presenters
 
         private readonly ConfigurationController<NotificationConfiguration> _notificationConfigurationController =
             new ConfigurationController<NotificationConfiguration>();
+
+        private readonly ConfigurationController<ClientConfiguration> _clientConfigurationController =
+            new ConfigurationController<ClientConfiguration>();
 
         private bool _showNotifications;
         public bool ShowNotifications
@@ -73,9 +77,6 @@ namespace Chat.Client.Presenters
             _signalHelperFacade = signalHelperFacade;
             _viewProvider = viewProvider;
 
-            SafeMode = true;
-            ChangeSaveMode();
-
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
             ChangeSaveModeCommand = new RelayCommand(ChangeSaveMode);
             Initialize();
@@ -83,16 +84,8 @@ namespace Chat.Client.Presenters
 
         private void ChangeSaveMode()
         {
-            if (SafeMode)
-            {
-                //changes the safemode to off
-                SafeMode = false;
-            }
-            else
-            {
-                //changes the safemode to on
-                SafeMode = true;
-            }
+            SafeMode = !_safeMode;
+            _clientConfigurationController.WriteConfiguration(new ClientConfiguration { SafeMode = _safeMode } );
         }
 
         private void ChangeShowNotifications()
@@ -105,8 +98,15 @@ namespace Chat.Client.Presenters
         {
             InitializeLoginPresenter();
             InitializeLoginPresenterEvents();
+            InitializeClientConfigurations();
 
             ShowNotifications = _notificationConfigurationController.ReadConfiguration(new NotificationConfiguration()).ShowPushNotifications;
+        }
+
+        private void InitializeClientConfigurations()
+        {
+            if (_clientConfigurationController.TryReadConfiguration(out var retrievedInstance))
+                SafeMode = retrievedInstance.SafeMode;
         }
 
         private void InitializeLoginPresenter()

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationController.cs" />
+    <Compile Include="Models\ClientConfiguration.cs" />
     <Compile Include="Models\ColorConfiguration.cs" />
     <Compile Include="Models\ServerConfiguration.cs" />
     <Compile Include="IConfigurationController.cs" />
