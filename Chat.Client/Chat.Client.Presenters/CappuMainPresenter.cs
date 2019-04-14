@@ -232,5 +232,19 @@ namespace Chat.Client.Presenters
 
             base.Dispose(disposing);
         }
+
+        public void ShowChangelog(string changelog)
+        {
+            var changelogViewModel = new ChangelogViewModel(changelog);
+            changelogViewModel.ChangelogClose += ChangelogViewModelOnChangelogClose;
+            CurrentPresenter = changelogViewModel;
+        }
+
+        private void ChangelogViewModelOnChangelogClose(object sender, EventArgs e)
+        {
+            if (sender is ChangelogViewModel changelogViewModel)
+                changelogViewModel.ChangelogClose -= ChangelogViewModelOnChangelogClose;
+            CurrentPresenter = CappuLoginPresenter;
+        }
     }
 }

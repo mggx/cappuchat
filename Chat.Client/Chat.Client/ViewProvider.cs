@@ -1,19 +1,19 @@
-﻿using Chat.Client.CustomNotifications.Extensions;
-using Chat.Client.Dialogs;
-using Chat.Client.Framework;
-using Chat.Client.Presenters;
-using Chat.Client.ViewModels.Dialogs;
-using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Chat.Client.CustomNotifications.Extensions;
+using Chat.Client.Dialogs;
+using Chat.Client.Framework;
+using Chat.Client.Presenters;
+using Chat.Client.ViewModels.Dialogs;
+using Chat.Client.Views;
 using Chat.Configurations;
-using Chat.Configurations.Models;
 using Chat.Models;
+using MahApps.Metro.Controls;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
@@ -150,12 +150,12 @@ namespace Chat.Client
             });
         }
 
-        public void ShowToastNotification(string message, NotificationType notificationType)
+        public void ShowToastNotification(string message, NotificationType notificationType, bool force = false)
         {
             var configurationController = new ConfigurationController<NotificationConfiguration>();
             var notificationConfiguration = configurationController.ReadConfiguration(new NotificationConfiguration());
 
-            if (!notificationConfiguration.ShowPushNotifications)
+            if (!notificationConfiguration.ShowPushNotifications && !force)
                 return;
 
             switch (notificationType)

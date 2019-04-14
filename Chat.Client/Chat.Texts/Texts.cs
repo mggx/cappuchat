@@ -78,6 +78,9 @@
         public static string PushNotificationsOff => "Push notifications off";
         public static string UserInGroupChat => "User online: ";
 
-        public static string PrivateMessageNotification => "Dms from ";
+        public static string PrivateMessageNotification(string username, string message) => $"(DM) {username}: {message}";
+
+        public static string WhatsNew => "Whats new?";
+        public static string GotIt => "Got it!";
     }
 }

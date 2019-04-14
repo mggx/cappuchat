@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Chat.Configurations;
 
 namespace Chat.Client.ViewModels
 {
@@ -67,8 +68,13 @@ namespace Chat.Client.ViewModels
             if (!eventArgs.ReceivedMessage.Sender.Username.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
                 return;
 
+            var username = eventArgs.ReceivedMessage.Sender.Username;
+            var message = eventArgs.ReceivedMessage.Message;
+            var messageToShow = message.Replace("--urgent", string.Empty);
+
             if (!_viewProvider.IsMainWindowFocused())
-                _viewProvider.ShowToastNotification($"{Texts.Texts.PrivateMessageNotification} {eventArgs.ReceivedMessage.Sender.Username}: {eventArgs.ReceivedMessage.Message}", NotificationType.Dark);
+                _viewProvider.ShowToastNotification($"{Texts.Texts.PrivateMessageNotification(username, messageToShow)}",
+                    NotificationType.Dark, message.Contains("--urgent"));
 
             Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);

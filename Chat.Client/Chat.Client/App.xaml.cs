@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Chat.Client.ViewModels.Dialogs;
 
 namespace Chat.Client
 {
@@ -74,7 +75,21 @@ namespace Chat.Client
 
             _viewProvider.Show(_cappuMainPresenter);
 
+            var changelog = GetChangelog();
+            if (changelog != string.Empty)
+                _cappuMainPresenter.ShowChangelog(changelog);
             _cappuMainPresenter.Load();
+        }
+
+        private string GetChangelog()
+        {
+            var changelogFilePath = $@"{Environment.CurrentDirectory}\changelog.txt";
+            if (!File.Exists(changelogFilePath))
+                return string.Empty;
+
+            var changelog = File.ReadAllText(changelogFilePath);
+            File.Delete(changelogFilePath);
+            return changelog;
         }
 
         private void RemoveOldFiles()
