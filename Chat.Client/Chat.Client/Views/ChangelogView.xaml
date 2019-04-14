@@ -6,11 +6,11 @@
              xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs;assembly=Chat.Client.ViewModels"
              xmlns:texts="clr-namespace:Chat.Texts;assembly=Chat.Texts"
              mc:Ignorable="d"
-             MaxHeight="300"
+             MaxHeight="425"
              MaxWidth="300"
              Background="Transparent"
              d:DataContext="{d:DesignInstance dialogs:ChangelogViewModel}">
-    <Border CornerRadius="15" Background="White">
+    <Border CornerRadius="15" Background="White" Height="Auto">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

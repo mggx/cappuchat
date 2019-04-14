@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -87,7 +88,7 @@ namespace Chat.Client
             if (!File.Exists(changelogFilePath))
                 return string.Empty;
 
-            var changelog = File.ReadAllText(changelogFilePath);
+            var changelog = File.ReadAllText(changelogFilePath, Encoding.Default);
             File.Delete(changelogFilePath);
             return changelog;
         }
