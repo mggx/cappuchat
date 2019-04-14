@@ -73,6 +73,12 @@ namespace Chat.Configurations
             return fallback;
         }
 
+        public bool TryReadConfiguration(out T retrievedInstance)
+        {
+            retrievedInstance = ReadConfiguration();
+            return retrievedInstance != null;
+        }
+
         private string GetJsonFileName<T>()
         {
             return $"{ConfigurationDirectoryName}\\{typeof(T).Name}.json";

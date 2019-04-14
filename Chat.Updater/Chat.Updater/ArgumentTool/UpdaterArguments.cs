@@ -20,7 +20,7 @@ namespace Chat.Updater.ArgumentTool
             if (string.IsNullOrWhiteSpace(retrievedArgument))
                 throw new ArgumentException("Could not resolve assemblyPath from arguments.");
             retrievedArgument = retrievedArgument.Replace("\"", string.Empty);
-            argument = retrievedArgument;
+            argument = retrievedArgument.TrimEnd();
             return true;
         }
 

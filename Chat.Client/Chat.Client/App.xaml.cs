@@ -6,7 +6,9 @@ using Chat.Configurations.Models;
 using MahApps.Metro;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -15,6 +17,7 @@ namespace Chat.Client
     public partial class App
     {
         private const string SignalReconnectingError = "Data cannot be sent because the WebSocket connection is reconnecting.";
+        private const string OldPrefix = "old_";
 
         private SignalHubConnectionHelper _hubConnectionHelper;
         private ViewProvider _viewProvider;
@@ -22,6 +25,11 @@ namespace Chat.Client
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
+            Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
+            Current.Exit += ApplicationCurrentOnExit;
+
+            RemoveOldFiles();
+
             var serverConfigurationController = new ConfigurationController<ServerConfiguration>();
             ServerConfiguration serverConfigurationFile = serverConfigurationController.ReadConfiguration(new ServerConfiguration
             {
@@ -47,9 +55,6 @@ namespace Chat.Client
             DataAccess.DataAccess.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
-            Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
-            Current.Exit += ApplicationCurrentOnExit;
-
             _hubConnectionHelper = new SignalHubConnectionHelper("http://" + serverConfigurationFile.Host + ":" + serverConfigurationFile.Port + "/signalr/hubs");
 
             ISignalHelperFacade signalHelperFacade = new SignalHelperFacade
@@ -70,6 +75,23 @@ namespace Chat.Client
             _viewProvider.Show(_cappuMainPresenter);
 
             _cappuMainPresenter.Load();
+        }
+
+        private void RemoveOldFiles()
+        {
+            foreach (var process in Process.GetProcessesByName("Chat.Updater"))
+            {
+                process.Kill();
+            }
+
+            Thread.Sleep(500);
+
+            foreach (var file in Directory.GetFiles(Environment.CurrentDirectory))
+            {
+                var fileName = Path.GetFileName(file);
+                if (fileName.StartsWith(OldPrefix))
+                    File.Delete(fileName);
+            }
         }
 
         private void ApplicationCurrentOnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
