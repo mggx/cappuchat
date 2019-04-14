@@ -35,7 +35,7 @@ namespace Chat.Client.ViewModels
         public RelayCommand ClearMessagesCommand { get; set; }
         public RelayCommand<string> DataDroppedCommand { get; }
 
-        public CappuChatViewModelBase(ISignalHelperFacade signalHelperFacade, bool initialize = true)
+        public CappuChatViewModelBase(ISignalHelperFacade signalHelperFacade)
         {
             if (signalHelperFacade == null)
                 throw new ArgumentNullException(nameof(signalHelperFacade),
@@ -45,9 +45,6 @@ namespace Chat.Client.ViewModels
             SendMessageCommand = new RelayCommand<string>(SendMessage, CanSendMessage);
             ClearMessagesCommand = new RelayCommand(ClearMessages);
             DataDroppedCommand = new RelayCommand<string>(DataDropped);
-
-            if (initialize)
-                Initialize();
         }
 
         protected virtual void Initialize()

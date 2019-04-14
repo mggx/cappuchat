@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:ChatComponents">
     <Style TargetType="{x:Type local:ChatListView}" BasedOn="{StaticResource {x:Type ListBox}}">
         <Setter Property="BorderBrush" Value="#D6D6D6"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
     </Style>
 </ResourceDictionary>

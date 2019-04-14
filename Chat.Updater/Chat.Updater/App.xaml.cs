@@ -4,6 +4,7 @@ using Chat.Updater.ArgumentTool;
 using Chat.Updater.ViewModels;
 using MahApps.Metro;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,7 +18,28 @@ namespace Chat.Updater
     {
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            var updaterArguments = new UpdaterArguments(e.Args);
+            foreach (var proc in Process.GetProcessesByName("Chat.Client"))
+            {
+                proc.Kill();
+            }
+
+            var serverConfigurationController = new ConfigurationController<ServerConfiguration>();
+            if (!serverConfigurationController.TryReadConfiguration(out var serverConfiguration))
+            {
+                MessageBox.Show("Could not retrieve Configuration to download files.");
+            }
+
+            var chatClientPath = $"{Environment.CurrentDirectory}\\Chat.Client.exe";
+
+            string[] arguments =
+            {
+                $"-assemblyPath=\"{chatClientPath}\" ",
+                $"-host=\"{serverConfiguration.Host}\" ",
+                $"-ftpuser=\"{serverConfiguration.FtpUser}\" ",
+                $"-ftppassword=\"{serverConfiguration.FtpPassword}\" "
+            };
+
+            var updaterArguments = new UpdaterArguments(arguments);
             var updaterViewModel = new UpdaterViewModel(updaterArguments);
 
             var window = new MainWindow
@@ -40,7 +62,10 @@ namespace Chat.Updater
 
             window.Show();
 
-            Task.Run(() => { updaterViewModel.Update(); });
+            Task.Run(async () =>
+            {
+                await updaterViewModel.Update(); 
+            });
         }
     }
 }

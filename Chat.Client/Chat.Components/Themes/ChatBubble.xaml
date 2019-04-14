@@ -270,11 +270,11 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible"/>
                         </Trigger>
-                        <Trigger SourceName="PART_DropDownButton" Property="IsExpanded" Value="True">
-                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible"/>
-                        </Trigger>
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_DropDownButton" Property="IsExpanded" Value="True">
+                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="ImageUploading" Value="True">
                             <Setter TargetName="BubbleImage" Property="Effect">

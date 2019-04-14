@@ -35,6 +35,8 @@ namespace Chat.Client.ViewModels
             _viewProvider = viewProvider;
 
             OpenPrivateChatCommand = new RelayCommand<string>(OpenPrivateChat, CanOpenPrivateChat);
+
+            Initialize();
         }
 
         protected override void RaiseCanExecuteChanged()
@@ -45,7 +47,9 @@ namespace Chat.Client.ViewModels
 
         private bool CanOpenPrivateChat(string username)
         {
-            return SelectedMessage != null || !string.IsNullOrWhiteSpace(username) && !User.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase);
+            if (string.IsNullOrWhiteSpace(username))
+                return SelectedMessage != null && !SelectedMessage.Sender.Username.Equals(username);
+            return !User.Username.Equals(username);
         }
 
         private void OpenPrivateChat(string username)
