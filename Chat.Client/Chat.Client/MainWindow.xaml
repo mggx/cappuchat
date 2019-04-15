@@ -12,6 +12,7 @@
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:tb="http://www.hardcodet.net/taskbar"
                  xmlns:client="clr-namespace:Chat.Client"
+                 xmlns:dialogs1="clr-namespace:Chat.Client.Dialogs"
                  mc:Ignorable="d"
                  TitleForeground="White"
                  MaxWidth="1000"
@@ -38,6 +39,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type presenters1:CappuMainPresenter}">
                 <views:CappuMainView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type dialogs:ChangelogViewModel}">
+                <views:ChangelogView/>
             </DataTemplate>
 
             <converters:BooleanToConnectionColorConverter x:Key="BooleanToConnectionColorConverter" />
@@ -118,7 +122,7 @@
                 </Border.Background>
 
                 <mah:TransitioningContentControl Content="{Binding CurrentPresenter}"
-                                             Transition="Left" />
+                                                 Transition="Left" />
             </Border>
 
             <tb:TaskbarIcon ToolTipText="{Binding SafeMode, Converter={StaticResource BooleanToAppNameConverter}}"

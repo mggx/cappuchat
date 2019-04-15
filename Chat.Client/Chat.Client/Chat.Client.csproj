@@ -125,6 +125,9 @@
     </Compile>
     <Compile Include="CustomNotifications\Extensions\CustomCallExtensions.cs" />
     <Compile Include="CustomNotifications\Notifications\DarkCallNotification.cs" />
+    <Compile Include="Views\ChangelogView.xaml.cs">
+      <DependentUpon>ChangelogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\MoveFocusExtension.cs" />
     <Compile Include="CustomNotifications\Notifications\CustomNotificationBase.cs" />
     <Compile Include="Helper\ThemeManagerHelper.cs" />
@@ -169,6 +172,10 @@
     <Page Include="CustomNotifications\DisplayParts\DarkCallDisplayPart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ChangelogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\OrgadataTheme.xaml">
       <SubType>Designer</SubType>
