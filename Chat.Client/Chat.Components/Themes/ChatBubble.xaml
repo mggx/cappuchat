@@ -178,7 +178,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" MaxHeight="20"/>
+                                    <RowDefinition Height="Auto" MaxHeight="21"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -187,7 +187,7 @@
                                                     Grid.Row="0"
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Right"
-                                                    Visibility="Collapsed"
+                                                    Visibility="Hidden"
                                                     Style="{StaticResource DropDownStyle}"
                                                     IsTabStop="{TemplateBinding IsTabStop}">
                                     <mah:DropDownButton.ItemContainerStyle>
@@ -271,7 +271,7 @@
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger SourceName="PART_DropDownButton" Property="HasItems" Value="False">
-                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                         <Trigger SourceName="PART_DropDownButton" Property="IsExpanded" Value="True">
                             <Setter TargetName="PART_DropDownButton" Property="Visibility" Value="Visible"/>
