@@ -1,11 +1,11 @@
 ﻿using Chat.Configurations;
-using Chat.Models;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -60,7 +60,8 @@ namespace Chat.Client.Windows
             TxtBoxHost.Text = serverConfigurationFile.Host;
             TxtBoxPort.Text = serverConfigurationFile.Port;
             FtpUserTextBox.Text = serverConfigurationFile.FtpUser;
-            FtpPasswordTextBox.Text = serverConfigurationFile.FtpPassword;
+            FtpPasswordTextBox.Password = serverConfigurationFile.FtpPassword;
+            ChatVersionTextBox.Text = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
             _actualHost = serverConfigurationFile.Host;
             _actualPort = serverConfigurationFile.Port;
@@ -87,7 +88,7 @@ namespace Chat.Client.Windows
                 Host = TxtBoxHost.Text,
                 Port = TxtBoxPort.Text,
                 FtpUser = FtpUserTextBox.Text,
-                FtpPassword = FtpPasswordTextBox.Text
+                FtpPassword = FtpPasswordTextBox.Password
             });
 
             if (CheckIfConfigHasChanged())

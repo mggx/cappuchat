@@ -63,16 +63,10 @@
         public static string NotVoted => "Not voted yet";
         public static string SomethingWentWrong => "Something went wrong...";
 
-        public static string ServerConnectionSetting => "Serverconnection & FTP Settings";
-        public static string ColorSettings => "Colorsettings";
         public static string TestConnection => "Test connection";
         public static string RestartRequired => "Restart is required";
         public static string RestartRequiredContent => "Due to your changes you need to restart the client!";
         public static string RestartRequiredServerConnection => "The server connection was lost. Restarting...";
-        public static string AppSettingsWindowTitle => "Settings";
-        public static string ApplicationSettings => "Applicationsettings";
-
-        public static string AutoCheckForUpdates => "Check for Updates on startup";
 
         public static string PushNotificationsOn => "Push notifications on";
         public static string PushNotificationsOff => "Push notifications off";
@@ -82,5 +76,16 @@
 
         public static string WhatsNew => "Whats new?";
         public static string GotIt => "Got it!";
+
+        #region Texts in Settingswindow
+        public static string AppSettingsWindowTitle => "Settings";
+        public static string Accents => "Accents :";
+        public static string Host => "Host :";
+        public static string Port => "Port :";
+        public static string Username = "Username :";
+        public static string Password => "Password :";
+        public static string ActualVersion => "Version : ";
+
+        #endregion
     }
 }
