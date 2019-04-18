@@ -8,8 +8,8 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 - Settingswindow UI changed
-- Window closes to Systemtray and not complete
 - Some Texts were changed
+- Window resize behaviour
 
 ## 1.0.0.6 (2019-04-14)
 ### Added
