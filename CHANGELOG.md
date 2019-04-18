@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased 1.0.0.7] 
+## 1.0.0.7 (Unrelease) 
 ### Added
 - Nametooltip
 - Fileshare
@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - Window closes to Systemtray and not complete
 - Some Texts were changed
 
-## [1.0.0.6] - 14.04.2019
+## 1.0.0.6 (2019-04-14)
 ### Added
 - Safemode.
 - Some new Texts
@@ -21,3 +21,6 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 - Chat.Starter.sln
+
+### Bugfix
+- Sending messages to your self
