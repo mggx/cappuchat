@@ -12,9 +12,6 @@ A simple and easy to use chat.
 * [System.Data.SQLite](https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki) - System.Data.SQLite is an ADO.NET provider for SQLite.
 * [ToastNotifications](https://github.com/rafallopatka/ToastNotifications)
 * [WpfAnimatedGif](https://github.com/XamlAnimatedGif/WpfAnimatedGif) - A simple library to display animated GIF images in WPF, usable in XAML or in code.
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Authors
 
