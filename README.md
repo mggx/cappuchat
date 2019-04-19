@@ -16,4 +16,4 @@ A simple and easy to use chat.
 ## Authors
 
 * **mggx** - *creator* - [mggx](https://github.com/mggx)
-* **praktii** - *developer* - [praktii gitlab](https://github.com/praktii)/[praktii github](https://github.com/praktii)
+* **praktii** - *developer* - [hrs gitlab](https://git.codeink.de/hrs)/[praktii github](https://github.com/praktii)
