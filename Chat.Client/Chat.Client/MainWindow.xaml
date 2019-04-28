@@ -71,15 +71,6 @@
 
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands>
-
-            <Button Click="EditConnectionSettingsClick"
-                    IsTabStop="False">
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static texts:Texts.AppSettingsWindowTitle}" />
-                </StackPanel>
-            </Button>
-
             <Button Command="{Binding CappuLoginPresenter.StartServerConnectionCommand}"
                     ToolTip="{Binding CappuLoginPresenter.ConnectedToServer, Converter={StaticResource BooleanToConnectionToolTipConverter}}"
                     HorizontalAlignment="Center"
@@ -92,11 +83,6 @@
                                VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <mah:WindowCommandsItem>
-                <Button Content="{x:Static texts:Texts.Logout}"
-                        IsTabStop="False"
-                        Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
-            </mah:WindowCommandsItem>
 
             <mah:WindowCommandsItem>
                 <Button Content="{Binding ShowNotifications, Converter={StaticResource BooleanToShowNotificationsStringConverter}}"
@@ -108,6 +94,20 @@
                 <Button Content="{Binding SafeMode, Converter={StaticResource BooleanToSaveModeConverter}}"
                         IsTabStop="False"
                         Command="{Binding ChangeSaveModeCommand}"/>
+            </mah:WindowCommandsItem>
+
+            <Button Click="EditConnectionSettingsClick"
+                    IsTabStop="False">
+                <StackPanel Orientation="Horizontal">
+                    <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static texts:Texts.AppSettingsWindowTitle}" />
+                </StackPanel>
+            </Button>
+
+            <mah:WindowCommandsItem>
+                <Button Content="{x:Static texts:Texts.Logout}"
+                        IsTabStop="False"
+                        Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
             </mah:WindowCommandsItem>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
