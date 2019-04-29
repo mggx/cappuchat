@@ -1,18 +1,16 @@
-﻿using Chat.Client.Presenters;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
 using Chat.Configurations;
 using Chat.Configurations.Models;
 using MahApps.Metro;
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using Chat.Client.ViewModels.Dialogs;
 
 namespace Chat.Client
 {
@@ -98,9 +96,8 @@ namespace Chat.Client
             foreach (var process in Process.GetProcessesByName("Chat.Updater"))
             {
                 process.Kill();
+                process.WaitForExit(1000);
             }
-
-            Thread.Sleep(500);
 
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory))
             {
