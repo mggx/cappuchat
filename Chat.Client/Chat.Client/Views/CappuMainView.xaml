@@ -15,14 +15,35 @@
                                       SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
 
     <mah:MetroAnimatedSingleRowTabControl.Resources>
-        <Style TargetType="mah:MetroTabItem" BasedOn="{StaticResource MetroTabItem}">
+        <Style x:Key="MetroTabItemStyle" TargetType="mah:MetroTabItem" BasedOn="{StaticResource MetroTabItem}">
             <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style x:Key="NewMessageMetroTabItemStyle" TargetType="mah:MetroTabItem" BasedOn="{StaticResource MetroTabItemStyle}">
+            <Style.Resources>
+                <converters:IntegerToBooleanConverter x:Key="IntegerToBooleanConverter"/>
+                <Storyboard x:Key="FlashAnimation">
+                    <DoubleAnimation Storyboard.TargetProperty="(TextBox.Opacity)" From="1" To="0" AutoReverse="True" Duration="0:0:0.5" RepeatBehavior="Forever" />
+                </Storyboard>
+            </Style.Resources>
+
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CappuChatPresenter.NewMessages, Converter={StaticResource IntegerToBooleanConverter}}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard x:Name="FlashStoryboard" Storyboard="{StaticResource FlashAnimation}" />
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <StopStoryboard BeginStoryboardName="FlashStoryboard" />
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" FalseCaseVisibility="Hidden"/>
     </mah:MetroAnimatedSingleRowTabControl.Resources>
 
-    <mah:MetroTabItem Header="{x:Static texts:Texts.CappuCallOverview}">
+    <mah:MetroTabItem Style="{StaticResource MetroTabItemStyle}"
+                      Header="{x:Static texts:Texts.CappuCallOverview}">
         <mah:TransitioningContentControl Transition="Up">
             <mah:TransitioningContentControl.Content>
                 <views:CappuVoteResultView DataContext="{Binding CappuVotePresenter}"/>
@@ -30,7 +51,7 @@
         </mah:TransitioningContentControl>
     </mah:MetroTabItem>
     
-    <mah:MetroTabItem>
+    <mah:MetroTabItem Style="{StaticResource NewMessageMetroTabItemStyle}">
         <TabItem.Header>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{x:Static texts:Texts.Chats}"

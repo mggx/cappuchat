@@ -115,6 +115,7 @@
     <Compile Include="Converters\BooleanToShowNotificationsStringConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\BooleanToVotedStringConverter.cs" />
+    <Compile Include="Converters\IntegerToBooleanConverter.cs" />
     <Compile Include="Converters\IntegerToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
