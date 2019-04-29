@@ -38,6 +38,8 @@ namespace Chat.Client.SignalHelpers
 
         private void ChatHubProxyOnMessageReceived(SimpleMessage receivedMessage)
         {
+            receivedMessage.IsLocalMessage = false;
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(CipherHelper.DecryptMessage(receivedMessage)));

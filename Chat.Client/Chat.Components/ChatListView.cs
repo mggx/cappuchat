@@ -108,14 +108,6 @@ namespace ChatComponents
 
             var newItemDataContext = e.NewItems[0];
 
-            var newItemType = newItemDataContext.GetType();
-            var newItemUserMessageProperty = newItemType.GetProperty(UserMessageBooleanPath);
-            var newItemUserMessageValue = newItemUserMessageProperty?.GetValue(newItemDataContext);
-            var isLocalMessage = newItemUserMessageValue != null && (bool) newItemUserMessageValue;
-
-            if (ItemContainerGenerator.ContainerFromItem(newItemDataContext) is ChatListViewItem item)
-                item.OwnMessage = isLocalMessage;
-
             if (!GetIsUserMessage(newItemDataContext))
             {
                 var indexOfSecondLastItem = Items.Count - 2;
@@ -132,9 +124,6 @@ namespace ChatComponents
                     return;
             }
 
-            if (ItemContainerGenerator.ContainerFromItem(newItemDataContext) is ChatListViewItem newItem)
-                newItem.OwnMessage = GetIsUserMessage(newItemDataContext);
-
             ScrollToBottom();
         }
 
@@ -145,9 +134,10 @@ namespace ChatComponents
 
         private bool GetIsUserMessage(object dataContext)
         {
-            if (ItemContainerGenerator.ContainerFromItem(dataContext) is ChatListViewItem item)
-                return item.OwnMessage;
-            return false;
+            var type = dataContext.GetType();
+            var property = type.GetProperty(UserMessageBooleanPath);
+            var value = property?.GetValue(dataContext);
+            return value != null && (bool) value;
         }
 
         protected bool IsItemContainerVisible(FrameworkElement itemContainer)

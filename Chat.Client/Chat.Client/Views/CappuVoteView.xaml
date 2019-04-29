@@ -22,14 +22,6 @@
                     Command="{Binding CreateCappuVoteCommand}"
                     Visibility="{Binding ElementName=CreateVoteButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-            <!--<TextBlock HorizontalAlignment="Center"
-                       FontSize="48"
-                       Foreground="{StaticResource AccentLightColor3}"
-                       Margin="5"
-                       Text="{x:Static texts:Texts.GoQuestion}"
-                       Visibility="{Binding ElementName=GoCallButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
-            </TextBlock>-->
-
             <Button x:Name="GoCallButton"
                     Width="120" 
                     Height="25" 

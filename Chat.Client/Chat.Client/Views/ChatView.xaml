@@ -38,9 +38,7 @@
         </Grid.ColumnDefinitions>
 
         <chatComponents:ChatListView x:Name="BroadcastListView"
-                                     Grid.Row="0"
-                                     Grid.Column="0"
-                                     Grid.ColumnSpan="2"
+                                     MaxWidth="800"
                                      ItemsSource="{Binding Messages}"
                                      Background="Transparent"
                                      SelectedItem="{Binding SelectedMessage}"

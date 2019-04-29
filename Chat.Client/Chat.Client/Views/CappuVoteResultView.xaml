@@ -31,6 +31,7 @@
         
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -43,7 +44,9 @@
                   Background="Transparent"
                   HorizontalAlignment="Left"
                   BorderThickness="0"
-                  Width="240" Grid.Row="1"
+                  Width="240" 
+                  Grid.Row="1" 
+                  Grid.Column="0"
                   DockPanel.Dock="Top">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource CreepyListViewItem}">
@@ -92,9 +95,18 @@
                                  DockPanel.Dock="Top"/>
         </DockPanel>
 
+
+        <Separator Grid.Row="0"
+                   Grid.RowSpan="3"
+                   Grid.Column="1"
+                   Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"
+                   BorderBrush="{DynamicResource AccentColorBrush}"
+                   BorderThickness="0.5"
+                   Margin="2, 0, 0, 5"/>
+
         <views:ChatView Grid.Row="0"
                         Grid.RowSpan="3"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         DataContext="{Binding CappuGroupChatViewModel}">
             <views:ChatView.MessageMenuItems>
                 <chatComponents:ChatBubbleMenuItem Header="Send private message"

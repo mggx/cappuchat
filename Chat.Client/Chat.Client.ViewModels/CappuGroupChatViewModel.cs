@@ -100,7 +100,6 @@ namespace Chat.Client.ViewModels
 
                 simpleMessage.IsLocalMessage = true;
                 Messages.Add(simpleMessage);
-                simpleMessage.IsLocalMessage = false;
 
                 simpleMessage.ImageUploading = true;
                 await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage);
