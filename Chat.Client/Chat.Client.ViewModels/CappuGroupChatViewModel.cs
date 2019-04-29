@@ -138,6 +138,7 @@ namespace Chat.Client.ViewModels
             if (disposing)
             {
                 _imageHelper.Dispose();
+                SignalHelperFacade.ChatSignalHelper.MessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
             }
 
             base.Dispose(disposing);
