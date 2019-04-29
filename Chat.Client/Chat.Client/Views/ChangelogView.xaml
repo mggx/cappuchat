@@ -14,8 +14,8 @@
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="350"/>
+                <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
@@ -25,13 +25,16 @@
                        Text="{x:Static texts:Texts.WhatsNew}"
                        HorizontalAlignment="Center"/>
 
-            <TextBlock Grid.Row="1"
-                       FontSize="12"
-                       Foreground="{DynamicResource AccentColorBrush2}"
-                       Text="{Binding Changelog}"
-                       TextWrapping="Wrap"
-                       TextTrimming="WordEllipsis"
-                       HorizontalAlignment="Center"/>
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <TextBlock FontSize="12"
+                           Foreground="{DynamicResource AccentColorBrush2}"
+                           Text="{Binding Changelog}"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"/>
+            </ScrollViewer>
+            
 
             <Button Grid.Row="2"
                     Content="{x:Static texts:Texts.GotIt}"
