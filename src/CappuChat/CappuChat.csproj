@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09D73D87-71D4-4CD0-880F-099870A985C6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CappuChat</RootNamespace>
+    <AssemblyName>CappuChat</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>chaticon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BindingProxies\BindingProxy.cs" />
+    <Compile Include="BindingProxies\CappuChatViewModelBaseProxy.cs" />
+    <Compile Include="BindingProxies\CappuGroupChatViewModelProxy.cs" />
+    <Compile Include="BindingProxies\CappuMainPresenterProxy.cs" />
+    <Compile Include="BindingProxies\CappuVoteResultViewModelProxy.cs" />
+    <Compile Include="BindingProxies\CappuVoteViewModelProxy.cs" />
+    <Compile Include="Controls\ChatBubble.cs" />
+    <Compile Include="Controls\ChatBubbleMenuItem.cs" />
+    <Compile Include="Controls\ChatListView.cs" />
+    <Compile Include="Controls\ChatListViewItem.cs" />
+    <Compile Include="Controls\SpecialTextBox.cs" />
+    <Compile Include="Converters\BooleanToAppNameConverter.cs" />
+    <Compile Include="Converters\BooleanToConnectionColorConverter.cs" />
+    <Compile Include="Converters\BooleanToConnectionTextConverter.cs" />
+    <Compile Include="Converters\BooleanToConnectionToolTipConverter.cs" />
+    <Compile Include="Converters\BooleanToHorizontalAlignmentConverter.cs" />
+    <Compile Include="Converters\BooleanToInversedBooleanConverter.cs" />
+    <Compile Include="Converters\BooleanToOnlineUsernameColorConverter.cs" />
+    <Compile Include="Converters\BooleanToSafeModeConverter.cs" />
+    <Compile Include="Converters\BooleanToShowNotificationsStringConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\BooleanToVotedStringConverter.cs" />
+    <Compile Include="Converters\DateTimeToMessageStringConverter.cs" />
+    <Compile Include="Converters\IntegerToBooleanConverter.cs" />
+    <Compile Include="Converters\IntegerToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\LineCountToOrientationConverter.cs" />
+    <Compile Include="Converters\NullToBooleanConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\StreamExtensions.cs" />
+    <Compile Include="Converters\StreamToBitmapImageConverter.cs" />
+    <Compile Include="Converters\StringToPartialStringConverter.cs" />
+    <Compile Include="Converters\UsersToHorizontalAlignmentConverter.cs" />
+    <Compile Include="CustomNotifications\DisplayParts\DarkCallDisplayPart.xaml.cs">
+      <DependentUpon>DarkCallDisplayPart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomNotifications\Extensions\CustomCallExtensions.cs" />
+    <Compile Include="CustomNotifications\Notifications\CustomNotificationBase.cs" />
+    <Compile Include="CustomNotifications\Notifications\DarkCallNotification.cs" />
+    <Compile Include="DataAccess\ChatRepository.cs" />
+    <Compile Include="DataAccess\DataAccess.cs" />
+    <Compile Include="Dialogs\OkCancelDialogWindow.xaml.cs">
+      <DependentUpon>OkCancelDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\MoveFocusExtension.cs" />
+    <Compile Include="Models\NotificationConfiguration.cs" />
+    <Compile Include="Models\OwnSimpleMessage.cs" />
+    <Compile Include="Models\SimpleConversation.cs" />
+    <Compile Include="Texts.cs" />
+    <Compile Include="Utilities\PasswordHelper.cs" />
+    <Compile Include="Utilities\ThemeManagerHelper.cs" />
+    <Compile Include="Utilities\WindowKeyDownHelper.cs" />
+    <Compile Include="ServiceClient\ChatSignalHelper.cs" />
+    <Compile Include="ServiceClient\MessageReceivedHandler.cs" />
+    <Compile Include="ServiceClient\OnlineUsersChangedHandler.cs" />
+    <Compile Include="ServiceClient\VoteChangedHandler.cs" />
+    <Compile Include="ServiceClient\VoteCreatedHandler.cs" />
+    <Compile Include="ServiceClient\MessageReceivedEventArgs.cs" />
+    <Compile Include="ServiceClient\OnlineUsersChangedEventArgs.cs" />
+    <Compile Include="ServiceClient\CreateVoteFailedException.cs" />
+    <Compile Include="ServiceClient\LoginFailedException.cs" />
+    <Compile Include="ServiceClient\NullServerResponseException.cs" />
+    <Compile Include="ServiceClient\RegisterFailedException.cs" />
+    <Compile Include="ServiceClient\RequestFailedException.cs" />
+    <Compile Include="ServiceClient\SendMessageFailedException.cs" />
+    <Compile Include="ServiceClient\VoteFailedException.cs" />
+    <Compile Include="ServiceClient\IChatSignalHelper.cs" />
+    <Compile Include="ServiceClient\ILoginSignalHelper.cs" />
+    <Compile Include="ServiceClient\IRegisterSignalHelper.cs" />
+    <Compile Include="ServiceClient\ISignalHelperFacade.cs" />
+    <Compile Include="ServiceClient\IVoteSignalHelper.cs" />
+    <Compile Include="Utilities\CipherHelper.cs" />
+    <Compile Include="ServiceClient\LoginSignalHelper.cs" />
+    <Compile Include="ServiceClient\RegisterSignalHelper.cs" />
+    <Compile Include="ServiceClient\SignalHelperFacade.cs" />
+    <Compile Include="ServiceClient\SignalHubConnectionHelper.cs" />
+    <Compile Include="ServiceClient\VoteSignalHelper.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\WindowHandling\IDialog.cs" />
+    <Compile Include="Infrastructure\WindowHandling\IModalDialog.cs" />
+    <Compile Include="Infrastructure\WindowHandling\IViewProvider.cs" />
+    <Compile Include="Infrastructure\WindowHandling\ModalResult.cs" />
+    <Compile Include="Infrastructure\WindowHandling\NotificationType.cs" />
+    <Compile Include="Infrastructure\MVVM\RelayCommand.cs" />
+    <Compile Include="Infrastructure\MVVM\ViewModelBase.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presenters\CappuChatPresenter.cs" />
+    <Compile Include="Presenters\CappuLoginPresenter.cs" />
+    <Compile Include="Presenters\CappuMainPresenter.cs" />
+    <Compile Include="Presenters\CappuVotePresenter.cs" />
+    <Compile Include="Presenters\StartServerConnectionHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Styles\ProgramColors.cs" />
+    <Compile Include="UserControls\UserContainer.xaml.cs">
+      <DependentUpon>UserContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CappuChatViewModel.cs" />
+    <Compile Include="ViewModels\CappuChatViewModelBase.cs" />
+    <Compile Include="ViewModels\CappuGroupChatViewModel.cs" />
+    <Compile Include="ViewModels\CappuLoginViewModel.cs" />
+    <Compile Include="ViewModels\CappuVoteResultViewModel.cs" />
+    <Compile Include="ViewModels\CappuVoteViewModel.cs" />
+    <Compile Include="ViewModels\Controllers\CappuMessageController.cs" />
+    <Compile Include="ViewModels\Delegates\AddNewMessageHandler.cs" />
+    <Compile Include="ViewModels\Delegates\LoginFailedHandler.cs" />
+    <Compile Include="ViewModels\Delegates\LoginSucceededHandler.cs" />
+    <Compile Include="ViewModels\Delegates\NewMessagesChangedHandler.cs" />
+    <Compile Include="ViewModels\Delegates\OpenChatHandler.cs" />
+    <Compile Include="ViewModels\Delegates\PreviewServerCallHandler.cs" />
+    <Compile Include="ViewModels\Delegates\VoteCreateHandler.cs" />
+    <Compile Include="ViewModels\Delegates\VotedHandler.cs" />
+    <Compile Include="ViewModels\Dialogs\CappuRegisterViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangelogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\OkCancelDialogViewModel.cs" />
+    <Compile Include="ViewModels\Events\LoginFailedEventArgs.cs" />
+    <Compile Include="ViewModels\Events\LoginSucceededEventArgs.cs" />
+    <Compile Include="ViewModels\Events\NewMessagesChangedEventArgs.cs" />
+    <Compile Include="ViewModels\Extensions\StringExtensions.cs" />
+    <Compile Include="ViewModels\Helpers\ConversationHelper.cs" />
+    <Compile Include="ViewModels\Helpers\ImageHelper.cs" />
+    <Compile Include="ViewModels\Models\UsersVotes.cs" />
+    <Compile Include="ViewModels\Providers\ProgressProvider.cs" />
+    <Compile Include="Infrastructure\WindowHandling\ViewProvider.cs" />
+    <Compile Include="Views\CappuChatsView.xaml.cs">
+      <DependentUpon>CappuChatsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuLoginView.xaml.cs">
+      <DependentUpon>CappuLoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuMainView.xaml.cs">
+      <DependentUpon>CappuMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuRegisterView.xaml.cs">
+      <DependentUpon>CappuRegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuServerSettingsView.xaml.cs">
+      <DependentUpon>CappuServerSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuVoteResultView.xaml.cs">
+      <DependentUpon>CappuVoteResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CappuVoteView.xaml.cs">
+      <DependentUpon>CappuVoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangelogView.xaml.cs">
+      <DependentUpon>ChangelogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChatView.xaml.cs">
+      <DependentUpon>ChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="CustomNotifications\DisplayParts\DarkCallDisplayPart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\OkCancelDialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\CustomTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\GreenColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\OrgadataTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ChatBubble.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ChatListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ChatListViewItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\SpecialTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\UserContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuChatsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuLoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuMainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuRegisterView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuServerSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuVoteResultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CappuVoteView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ChangelogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ChatView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\emoji-background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\realtransparentcoffeecup.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="chaticon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="safeoutlook.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf">
+      <Version>1.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks">
+      <Version>1.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.SignalR.Client">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.110</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Core">
+      <Version>1.0.110</Version>
+    </PackageReference>
+    <PackageReference Include="ToastNotifications.Messages">
+      <Version>2.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="WpfAnimatedGif">
+      <Version>1.4.18</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CappuChat.Core\CappuChat.Core.csproj">
+      <Project>{006BAAF0-D66F-4CEC-8F36-7B60FF331CC0}</Project>
+      <Name>CappuChat.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
