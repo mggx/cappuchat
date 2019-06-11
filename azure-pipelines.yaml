@@ -16,12 +16,12 @@ steps:
     displayName: "Restore NuGet Packages"
 
   - task: VSBuild@1
-    displayName: 'Build Prerelease'
+    displayName: 'Build Solution'
     inputs:
       solution: 'cappuchat.sln'
       configuration: Release
       maximumCpuCount: true
-      logFileVerbosity: minimal
+      msbuildArgs: /v:minimal
 
   - task: PublishPipelineArtifact@0
     displayName: 'Package CappuChat desktop client artifact'
