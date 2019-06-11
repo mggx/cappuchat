@@ -17,7 +17,7 @@ namespace CappuUpdater
     {
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
-            foreach (var proc in Process.GetProcessesByName("Chat.Client"))
+            foreach (var proc in Process.GetProcessesByName("CappuChat"))
             {
                 proc.Kill();
             }

@@ -59,11 +59,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SafeMode}" Value="True">
                     <Setter Property="Title" Value="Mail"></Setter>
-                    <Setter Property="Icon" Value="/safeoutlook.ico"></Setter>
+                    <Setter Property="Icon" Value="safeoutlook.ico"></Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SafeMode}" Value="False">
                     <Setter Property="Title" Value="CappuChat"></Setter>
-                    <Setter Property="Icon" Value="/chaticon.ico"></Setter>
+                    <Setter Property="Icon" Value="chaticon.ico"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -132,10 +132,10 @@
                     <Style TargetType="tb:TaskbarIcon">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SafeMode}" Value="True">
-                                <Setter Property="IconSource" Value="/safeoutlook.ico"></Setter>
+                                <Setter Property="IconSource" Value="safeoutlook.ico"></Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SafeMode}" Value="False">
-                                <Setter Property="IconSource" Value="/chaticon.ico"></Setter>
+                                <Setter Property="IconSource" Value="chaticon.ico"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

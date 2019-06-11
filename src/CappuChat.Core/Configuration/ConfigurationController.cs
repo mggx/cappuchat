@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -79,9 +79,9 @@ namespace CappuChat.Configuration
             return retrievedInstance != null;
         }
 
-        private string GetJsonFileName<T>()
+        private string GetJsonFileName<TConfigType>()
         {
-            return $"{ConfigurationDirectoryName}\\{typeof(T).Name}.json";
+            return $"{ConfigurationDirectoryName}\\{typeof(TConfigType).Name}.json";
         }
     }
 }

@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "EditorConfig.EditorConfig",
+        "docsmsft.docs-authoring-pack",
+        "ms-vscode.csharp",
+        "tintoy.msbuild-project-tools",
+        "ms-azure-devops.azure-pipelines",
+        "fernandoescolar.vscode-solution-explorer"
+    ]
+}

@@ -2,7 +2,6 @@
 
 A simple and easy to use chat.
 
-
 ## Built With
 
 * [ControlzEx](https://github.com/ControlzEx/ControlzEx) - Shared Controlz for WPF

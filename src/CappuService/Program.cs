@@ -1,10 +1,10 @@
-﻿using Chat.Server.Controller;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
 using System;
-using Chat.Server.Hubs;
 using Microsoft.AspNet.SignalR;
+using Microsoft.Owin;
+using Chat.Server;
 
 namespace Chat.Server
 {

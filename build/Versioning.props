@@ -1,0 +1,15 @@
+<Project>
+  <!-- Customization -->
+  <PropertyGroup>
+    <!--
+      Establish the following kinds of builds:
+        - dev
+        - prerelease
+        - release
+        - custom
+      These types shall be used to tweak the build further
+      based on the type of build we are initiating.
+    -->
+    <BuildType>dev</BuildType>
+  </PropertyGroup>
+</Project>

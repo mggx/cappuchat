@@ -1,0 +1,20 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)build/Versioning.props" />
+  <Import Project="$(MSBuildThisFileDirectory)build/azure-pipelines.overrides.props" />
+
+  <PropertyGroup Label="General">
+    <Authors>Maik Grigoleit, Prakti</Authors>
+    <Version>1.1</Version>
+    <Product>CappuChat</Product>
+  </PropertyGroup>
+
+  <PropertyGroup Label="ProjectSystem Configurations">
+    <!-- Prevent ReSharper etc. from recommending us stuff not available in net452 -->
+    <LangVersion>7.0</LangVersion>
+    <!-- Prevent visual studio from ever using packages.config again -->
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <!-- Make sure updates to this file will trigger incremental recalculation -->
+    <MSBuildAllProjects Condition=" '$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0' ">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+</Project>

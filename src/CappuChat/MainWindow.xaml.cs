@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 using Chat.Client.Windows;
+using MahApps.Metro.Controls;
 
 namespace Chat.Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : MetroWindow
     {
         private SettingsWindow _settingsWindow;
         public MainWindow()

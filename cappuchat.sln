@@ -1,15 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28917.182
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CappuChat", "src\CappuChat\CappuChat.csproj", "{09D73D87-71D4-4CD0-880F-099870A985C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappuChat", "src\CappuChat\CappuChat.csproj", "{09D73D87-71D4-4CD0-880F-099870A985C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CappuService", "src\CappuService\CappuService.csproj", "{3C77D703-8B29-44BE-B75E-1B50939A519B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappuService", "src\CappuService\CappuService.csproj", "{3C77D703-8B29-44BE-B75E-1B50939A519B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CappuChat.Core", "src\CappuChat.Core\CappuChat.Core.csproj", "{006BAAF0-D66F-4CEC-8F36-7B60FF331CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappuChat.Core", "src\CappuChat.Core\CappuChat.Core.csproj", "{006BAAF0-D66F-4CEC-8F36-7B60FF331CC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CappuUpdater", "src\CappuUpdater\CappuUpdater.csproj", "{7FAF1016-2D63-442B-975B-0C6FA21F46F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappuUpdater", "src\CappuUpdater\CappuUpdater.csproj", "{7FAF1016-2D63-442B-975B-0C6FA21F46F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95480B44-4DC5-4BA3-BE5F-C68DC2804E7F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
