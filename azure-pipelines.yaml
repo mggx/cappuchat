@@ -1,0 +1,35 @@
+trigger:
+  - master
+  - release/*
+  - refs/tags/*
+pr:
+  - master
+  - release/*
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+  - task: NuGetCommand@2
+    inputs:
+      command: restore
+      restoreSolution: 'cappuchat.sln'
+    displayName: "Restore NuGet Packages"
+
+  - task: VSBuild@1
+    displayName: 'Build Solution'
+    inputs:
+      solution: 'cappuchat.sln'
+      configuration: Release
+      maximumCpuCount: true
+      msbuildArgs: /v:minimal
+
+  - task: PublishPipelineArtifact@0
+    displayName: 'Package CappuChat desktop client artifact'
+    inputs:
+      artifactName: Client
+      targetPath: "./src/CappuChat/bin/release/net451/win"
+  - task: PublishPipelineArtifact@0
+    displayName: 'Package CappuChat service artifact'
+    inputs:
+      artifactName: CappuService
+      targetPath: "./src/CappuService/bin/release/net451/win"

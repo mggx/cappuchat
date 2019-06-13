@@ -1,0 +1,28 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFramework>net451</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
+    <ApplicationIcon>chaticon.ico</ApplicationIcon>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="1.6.0" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.110" />
+    <PackageReference Include="ToastNotifications.Messages" Version="2.5.0" />
+    <PackageReference Include="WpfAnimatedGif" Version="1.4.18" />
+    <ProjectReference Include="..\CappuChat.Core\CappuChat.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\**\*" />
+    <Resource Include="Resources\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="chaticon.ico" />
+    <Resource Include="safeoutlook.ico" />
+  </ItemGroup>
+</Project>

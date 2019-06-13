@@ -1,0 +1,27 @@
+<Project InitialTargets="InitializeVersioning">
+  <Target Name="AttachDevVersionSuffix" Condition="'$(BuildType)' == 'dev'">
+    <CreateProperty Value="$(Version)-dev-$([System.DateTime]::Now.ToString(yyyyMMdd-hhmmss))">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="AttachPrereleaseVersionSuffix" Condition="'$(BuildType)' == 'prerelease'">
+    <Exec Command="git rev-parse HEAD" EchoOff="true" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="CurrentHEAD" />
+    </Exec>
+    <CreateProperty Value="$(Version)-pre-$(CurrentHEAD)">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="AttachCustomBuildVersionSuffix" Condition="'$(BuildType)' == 'custom'">
+    <CreateProperty Value="$(Version)$(CustomBuildVersionSuffix)">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </CreateProperty>
+  </Target>
+
+  <PropertyGroup>
+    <InitializeDependsOn>AttachDevVersionSuffix;AttachPrereleaseVersionSuffix;AttachCustomBuildVersionSuffix</InitializeDependsOn>
+  </PropertyGroup>
+  <Target Name="InitializeVersioning" DependsOnTargets="$(InitializeDependsOn)" />
+</Project>

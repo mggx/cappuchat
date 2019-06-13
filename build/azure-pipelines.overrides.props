@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup Condition="$(Build_SourceBranch.StartsWith('refs/tags/')) == true">
+    <BuildType>release</BuildType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Build_Reason)' == 'PullRequest'">
+    <BuildType>custom</BuildType>
+    <CustomBuildVersionSuffix>-PR.$(System_PullRequest_PullRequestId)-$(Build_SourceVersion)</CustomBuildVersionSuffix>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Build_SourceBranch.StartsWith('refs/heads/master')) == true Or $(Build_SourceBranch.StartsWith('refs/heads/release/')) == true">
+    <BuildType>prerelease</BuildType>
+  </PropertyGroup>
+</Project>

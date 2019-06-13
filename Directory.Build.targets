@@ -1,0 +1,4 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)build/Versioning.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)build/CodeAnalysis.targets" />
+</Project>

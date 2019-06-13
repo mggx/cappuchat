@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Chat.Client.Views.ChangelogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs"
+             xmlns:texts="clr-namespace:Chat.Texts"
+             mc:Ignorable="d"
+             MaxHeight="425"
+             MaxWidth="300"
+             Background="Transparent"
+             d:DataContext="{d:DesignInstance dialogs:ChangelogViewModel}">
+    <Border CornerRadius="15" Background="White" Height="Auto">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="350"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       FontSize="20"
+                       Foreground="{DynamicResource AccentColorBrush}"
+                       FontWeight="Bold"
+                       Text="{x:Static texts:Texts.WhatsNew}"
+                       HorizontalAlignment="Center"/>
+
+            <ScrollViewer Grid.Row="1"
+                          HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <TextBlock FontSize="12"
+                           Foreground="{DynamicResource AccentColorBrush2}"
+                           Text="{Binding Changelog}"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"/>
+            </ScrollViewer>
+            
+
+            <Button Grid.Row="2"
+                    Content="{x:Static texts:Texts.GotIt}"
+                    Command="{Binding OkCommand}"
+                    VerticalAlignment="Bottom"
+                    Margin="5"/>
+        </Grid>
+    </Border>
+</UserControl>

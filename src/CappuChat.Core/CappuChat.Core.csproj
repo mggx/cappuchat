@@ -1,0 +1,9 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFramework>net451</TargetFramework>
+    <RootNamespace>CappuChat</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+</Project>
