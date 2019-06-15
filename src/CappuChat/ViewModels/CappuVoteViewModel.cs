@@ -53,7 +53,7 @@ namespace Chat.Client.ViewModels
         {
             if (await CheckForActiveVote())
             {
-                _viewProvider.ShowMessage(Texts.Texts.TitleVoteAlreadyCreated, Texts.Texts.VoteAlreadyCreated);
+                _viewProvider.ShowMessage(CappuChat.Properties.Strings.TitleVoteAlreadyCreated, CappuChat.Properties.Strings.VoteAlreadyCreated);
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace Chat.Client.ViewModels
             }
             catch (CreateVoteFailedException e)
             {
-                _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
+                _viewProvider.ShowMessage(CappuChat.Properties.Strings.Error, e.Message);
             }
         }
 
@@ -114,7 +114,7 @@ namespace Chat.Client.ViewModels
             }
             catch (RequestFailedException e)
             {
-                _viewProvider.ShowMessage(Texts.Texts.Error, e.Message);
+                _viewProvider.ShowMessage(CappuChat.Properties.Strings.Error, e.Message);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Chat.Client.ViewModels
         private void VoteSignalHelperOnCappuVoteCreated(SimpleCappuVote createdVote)
         {
             UpdateActiveVote(createdVote);
-            _viewProvider.ShowToastNotification(Texts.Texts.CappuCalled, Texts.Texts.GoCall, NotificationType.Dark, GoCommand);
+            _viewProvider.ShowToastNotification(CappuChat.Properties.Strings.CappuCalled, CappuChat.Properties.Strings.GoCall, NotificationType.Dark, GoCommand);
         }
 
         private void VoteSignalHelperOnCappuVoteChanged(SimpleCappuVote changedVote)

@@ -4,7 +4,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 xmlns:texts="clr-namespace:Chat.Texts"
+                 xmlns:props="clr-namespace:CappuChat.Properties"
                  xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs"
                  mc:Ignorable="d"
                  Title="{Binding Title}"
@@ -48,12 +48,12 @@
                             HorizontalAlignment="Right">
 
                     <StackPanel Orientation="Horizontal">
-                        <Button x:Name="OkButton" Content="{x:Static texts:Texts.Ok}" 
+                        <Button x:Name="OkButton" Content="{x:Static props:Strings.Ok}" 
                                 Command="{Binding OkCommand}" 
                                 Click="ButtonClick" 
                                 Margin="5"
                                 FocusVisualStyle="{x:Null}"/>
-                        <Button Content="{x:Static texts:Texts.Cancel}" 
+                        <Button Content="{x:Static props:Strings.Cancel}" 
                                 Command="{Binding CancelCommand}" 
                                 Click="ButtonClick" 
                                 Margin="5"/>

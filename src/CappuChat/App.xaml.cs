@@ -126,13 +126,13 @@ namespace CappuChat
 
             if (e.Exception is InvalidOperationException && message.Contains(SignalReconnectingError))
             {
-                _viewProvider.ShowMessage(Chat.Texts.Texts.RestartRequired, Chat.Texts.Texts.RestartRequiredServerConnection);
+                _viewProvider.ShowMessage(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredServerConnection);
                 Process.Start(ResourceAssembly.Location);
                 Current.Shutdown();
                 Environment.Exit(0);
             }
 
-            _viewProvider.ShowMessage(Chat.Texts.Texts.Error, message);
+            _viewProvider.ShowMessage(CappuChat.Properties.Strings.Error, message);
         }
 
         private void ApplicationCurrentOnExit(object sender, ExitEventArgs e)

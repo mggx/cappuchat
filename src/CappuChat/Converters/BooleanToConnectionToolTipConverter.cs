@@ -14,8 +14,8 @@ namespace CappuChat.Converters
 
             var boolean = (bool) value;
             if (boolean)
-                return Chat.Texts.Texts.ConnectedToServer;
-            return Chat.Texts.Texts.ClickToReconnect;
+                return CappuChat.Properties.Strings.ConnectedToServer;
+            return CappuChat.Properties.Strings.ClickToReconnect;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

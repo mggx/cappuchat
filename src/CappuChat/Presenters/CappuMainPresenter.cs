@@ -138,7 +138,7 @@ namespace Chat.Client.Presenters
 
         private void RegisterViewModelOnRegisterFailed(object sender, string e)
         {
-            _viewProvider.ShowMessage(Texts.Texts.RegisterFailed, e);
+            _viewProvider.ShowMessage(CappuChat.Properties.Strings.RegistrationFailed, e);
             HandleFinishedRegister(sender as IDialog);
         }
 

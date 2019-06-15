@@ -10,7 +10,7 @@
              xmlns:chatComponents="clr-namespace:ChatComponents"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:userControls="clr-namespace:Chat.Client.UserControls"
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              xmlns:converters="clr-namespace:CappuChat.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -36,7 +36,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Foreground="White" FontWeight="Bold" Margin="10,5,0,5">
-            <Run Text="{x:Static texts:Texts.UserInGroupChat}"/>
+            <Run Text="{x:Static props:Strings.UserInGroupChat}"/>
             <Run Text="{Binding CappuVoteResultViewModel.UserVotes.Count, Mode=OneWay}"/>
         </TextBlock>
 

@@ -1,0 +1,11 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
+
+  <!-- Workaround: Hide generated files in Visual Studio (https://github.com/dotnet/sdk/issues/3334) -->
+  <ItemGroup>
+    <Compile Update="$(MSBuildProjectDirectory)\Properties\**\*.Designer.cs">
+      <Visible>false</Visible>
+    </Compile>
+  </ItemGroup>
+
+</Project>

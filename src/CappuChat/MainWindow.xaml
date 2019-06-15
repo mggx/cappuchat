@@ -7,7 +7,7 @@
                  xmlns:presenters1="clr-namespace:Chat.Client.Presenters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs"
-                 xmlns:texts="clr-namespace:Chat.Texts;assembly=CappuChat"
+                 xmlns:props="clr-namespace:CappuChat.Properties"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:tb="http://www.hardcodet.net/taskbar"
                  xmlns:client="clr-namespace:Chat.Client"
@@ -100,12 +100,12 @@
                     IsTabStop="False">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static texts:Texts.AppSettingsWindowTitle}" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static props:Strings.AppSettingsWindowTitle}" />
                 </StackPanel>
             </Button>
 
             <mah:WindowCommandsItem>
-                <Button Content="{x:Static texts:Texts.Logout}"
+                <Button Content="{x:Static props:Strings.LogOut}"
                         IsTabStop="False"
                         Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
             </mah:WindowCommandsItem>

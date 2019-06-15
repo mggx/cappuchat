@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
+    xmlns:props="clr-namespace:CappuChat.Properties"
+    mc:Ignorable="d"
     RenderOptions.ClearTypeHint="Enabled"
     TextOptions.TextFormattingMode="Display"
-    Title="{x:Static Texts:Texts.AppSettingsWindowTitle}"
-    xmlns:Texts="clr-namespace:Chat.Texts"
+    Title="{x:Static props:Strings.AppSettingsWindowTitle}"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ResizeMode="CanMinimize" Width="500" Height="305"
     Background="{DynamicResource AccentColorBrush2}">
@@ -31,20 +31,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{x:Static Texts:Texts.Host}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
+            <TextBlock Grid.Row="0" Text="{x:Static props:Strings.Settings_Host}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
             <TextBox x:Name="TxtBoxHost" Grid.Row="0" Margin="95 5 5 5" VerticalContentAlignment="Center"/>
 
-            <TextBlock Grid.Row="1" Text="{x:Static Texts:Texts.Port}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
+            <TextBlock Grid.Row="1" Text="{x:Static props:Strings.Settings_Port}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
             <TextBox x:Name="TxtBoxPort" Grid.Row="1" Margin="95 5 5 5" VerticalContentAlignment="Center"/>
 
-            <TextBlock Grid.Row="2" Text="{x:Static Texts:Texts.Username}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
+            <TextBlock Grid.Row="2" Text="{x:Static props:Strings.Settings_FTP_Username}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
             <TextBox x:Name="FtpUserTextBox" Grid.Row="2" Margin="95 5 5 5" VerticalContentAlignment="Center"/>
 
-            <TextBlock Grid.Row="3" Text="{x:Static Texts:Texts.Password}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
+            <TextBlock Grid.Row="3" Text="{x:Static props:Strings.Settings_FTP_Password}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
             <!--<TextBox x:Name="FtpPasswordTextBox" Grid.Row="3" Margin="65 5 5 5" VerticalContentAlignment="Center"/>-->
             <PasswordBox x:Name="FtpPasswordTextBox" Grid.Row="3" Margin="95 5 5 5" VerticalContentAlignment="Center"/>
 
-            <TextBlock Grid.Row="4" Text="{x:Static Texts:Texts.Accents}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
+            <TextBlock Grid.Row="4" Text="{x:Static props:Strings.Settings_Theme}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 414 0" />
             <ComboBox Grid.Row="4" x:Name="AccentSelector" ItemsSource="{x:Static metro:ThemeManager.Accents}" SelectionChanged="AccentSelectionChanged" Margin="95 5 5 5">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -58,8 +58,8 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Button Content="{x:Static Texts:Texts.Cancel}" Click="CancelSettingsClick" Margin="0,10,10,10" HorizontalAlignment="Right" Width="154"/>
-            <Button Content="{x:Static Texts:Texts.Save}" Click="SaveSettingsClick" Margin="0,10,169,10" HorizontalAlignment="Right" Width="154"/>
+            <Button Content="{x:Static props:Strings.Cancel}" Click="CancelSettingsClick" Margin="0,10,10,10" HorizontalAlignment="Right" Width="154"/>
+            <Button Content="{x:Static props:Strings.Save}" Click="SaveSettingsClick" Margin="0,10,169,10" HorizontalAlignment="Right" Width="154"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

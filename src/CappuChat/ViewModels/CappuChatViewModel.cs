@@ -7,6 +7,7 @@ using Chat.Models;
 using System;
 using System.Collections.Generic;
 using CappuChat;
+using System.Globalization;
 
 namespace Chat.Client.ViewModels
 {
@@ -70,8 +71,11 @@ namespace Chat.Client.ViewModels
             var messageToShow = message.Replace("--urgent", string.Empty);
 
             if (!_viewProvider.IsMainWindowFocused())
-                _viewProvider.ShowToastNotification($"{Texts.Texts.PrivateMessageNotification(username, messageToShow)}",
-                    NotificationType.Dark, message.Contains("--urgent"));
+                _viewProvider.ShowToastNotification(
+                    string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.PrivateMessageNotification_UserName_Message, username, messageToShow),
+                    NotificationType.Dark,
+                    message.Contains("--urgent")
+                );
 
             Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);

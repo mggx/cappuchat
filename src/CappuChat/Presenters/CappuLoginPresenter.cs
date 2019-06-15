@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using Chat.Client.Framework;
 using Chat.Client.Presenters.Delegates;
@@ -90,14 +91,20 @@ namespace Chat.Client.Presenters
 
         private void CappuLoginViewModelOnLoginFailed(LoginFailedEventArgs eventArgs)
         {
-            _viewProvider.ShowMessage(Texts.Texts.LoginFailed, Texts.Texts.LoginFailedReason(eventArgs.Reason));
+            _viewProvider.ShowMessage(
+                CappuChat.Properties.Strings.LoginFailed,
+                string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.LoginFailed_Reason, eventArgs.Reason)
+            );
         }
 
         private void CappuLoginViewModelOnLoggedOut(string reason)
         {
             if (string.IsNullOrWhiteSpace(reason))
                 return;
-            _viewProvider.ShowMessage(Texts.Texts.LoggedOut, Texts.Texts.LoggedOutReason(reason));
+            _viewProvider.ShowMessage(
+                CappuChat.Properties.Strings.LoggedOut,
+                string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.LoggedOut_Reason, reason)
+            );
         }
 
         protected override void Dispose(bool disposing)

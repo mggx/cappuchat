@@ -103,7 +103,7 @@ namespace Chat.Client.Windows
 
         private async void ShowRestartMessage()
         {
-            await this.ShowMessageAsync(Texts.Texts.RestartRequired, Texts.Texts.RestartRequiredContent);
+            await this.ShowMessageAsync(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredContent);
             DialogResult = true;
             Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
