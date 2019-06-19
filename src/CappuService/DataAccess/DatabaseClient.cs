@@ -1,10 +1,10 @@
-﻿using System.Data;
+using System.Data;
 using System.Data.SQLite;
 using System.Data.SQLite.Linq;
 
 namespace Chat.Server.DataAccess
 {
-    public class DataAccess
+    public static class DatabaseClient
     {
         private static string _dataSource = "Data source=db.db3";
 

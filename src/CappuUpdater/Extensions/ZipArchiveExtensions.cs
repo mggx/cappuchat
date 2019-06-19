@@ -1,12 +1,16 @@
-﻿using System.IO;
+using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace CappuUpdater.Extensions
 {
     public static class ZipArchiveExtensions
     {
-        public static void ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
+        public static void ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite = false)
         {
+            if (archive == null)
+                throw new ArgumentNullException(nameof(archive));
+
             if (!overwrite)
             {
                 archive.ExtractToDirectory(destinationDirectoryName);
@@ -16,7 +20,7 @@ namespace CappuUpdater.Extensions
             foreach (ZipArchiveEntry file in archive.Entries)
             {
                 string completeFileName = Path.Combine(destinationDirectoryName, file.FullName);
-                if (file.Name == "")
+                if (file.Name?.Length == 0)
                 {// Assuming Empty for Directory
                     Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
                     continue;

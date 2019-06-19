@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CappuChat;
 using CappuChat.DTOs;
+using System.Globalization;
 
 namespace Chat.Server.Hubs
 {
@@ -15,31 +16,45 @@ namespace Chat.Server.Hubs
 
         protected bool Add(string username)
         {
-            var lowerUsername = username.ToLower();
-            string connectionId = string.Empty;
-            if (UsernameConnectionIdCache.TryGetValue(lowerUsername, out connectionId))
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("Cannot add user with an empty name.");
+            var normalizedUserName = NormalizeUsernameForCache(username);
+            if (TryGetUserIDFromCache(normalizedUserName, out _))
             {
-                UsernameConnectionIdCache.Remove(lowerUsername);
-                UsernameConnectionIdCache.Add(lowerUsername, Context.ConnectionId);
+                UsernameConnectionIdCache.Remove(normalizedUserName);
+                UsernameConnectionIdCache.Add(normalizedUserName, Context.ConnectionId);
                 OnlineUsers.Remove(GetSimpleUser(username));
                 OnlineUsers.Add(new SimpleUser(username));
                 return false;
             }
 
-            UsernameConnectionIdCache.Add(lowerUsername, Context.ConnectionId);
+            UsernameConnectionIdCache.Add(normalizedUserName, Context.ConnectionId);
             OnlineUsers.Add(new SimpleUser(username));
             return true;
         }
 
-        protected bool Remove(string username)
+        protected static bool TryGetUserIDFromCache(string username, out string id)
         {
-            var lowerUsername = username.ToLower();
-            var simpleUser = GetSimpleUser(username);
-            OnlineUsers.Remove(simpleUser);
-            return UsernameConnectionIdCache.Remove(lowerUsername);
+            return UsernameConnectionIdCache.TryGetValue(NormalizeUsernameForCache(username), out id);
         }
 
-        protected string GetUsernameByConnectionId(string connectionId)
+        private static string NormalizeUsernameForCache(string username)
+        {
+            return username.ToUpperInvariant();
+        }
+
+        protected static bool Remove(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("Cannot remove user with an empty name.");
+
+            var normalizeUsername = NormalizeUsernameForCache(username);
+            var simpleUser = GetSimpleUser(username);
+            OnlineUsers.Remove(simpleUser);
+            return UsernameConnectionIdCache.Remove(normalizeUsername);
+        }
+
+        protected static string GetUsernameByConnectionId(string connectionId)
         {
             foreach (var pair in UsernameConnectionIdCache)
             {
@@ -49,24 +64,28 @@ namespace Chat.Server.Hubs
             return string.Empty;
         }
 
-        protected IList<SimpleUser> GetOnlineUsers()
+        public static IList<SimpleUser> GetOnlineUsers()
         {
             return OnlineUsers;
         }
 
-        protected string GetCorrectUsername(string username)
+        protected static string GetCorrectUsername(string username)
         {
             var simpleUser = GetSimpleUser(username);
             return simpleUser == null ? string.Empty : simpleUser.Username;
         }
 
-        protected SimpleUser GetSimpleUser(string username)
+        protected static SimpleUser GetSimpleUser(string username)
         {
             return OnlineUsers.FirstOrDefault(user => user.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        protected T ExecuteControllerAction<T, T1>(Func<T> controllerAction, T1 response) where T1 : BaseResponse
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "It is very much intended to catch any and all exceptions.")]
+        protected static T ExecuteControllerAction<T, T1>(Func<T> controllerAction, T1 response) where T1 : BaseResponse
         {
+            if (controllerAction == null)
+                throw new ArgumentNullException(nameof(controllerAction));
+
             try
             {
                 return controllerAction.Invoke();

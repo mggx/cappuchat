@@ -5,6 +5,9 @@
 [Bb]in/
 [Oo]bj/
 
+# CSProj User-specific configs
+*.csproj.user
+
 # Generated Resource Files
 **/Properties/**/*.Designer.cs
 

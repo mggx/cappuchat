@@ -9,13 +9,9 @@ namespace CappuChat.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value), "Cannot convert boolean to Context tooltip. Given value is null.");
-
-            var boolean = (bool) value;
-            if (boolean)
-                return CappuChat.Properties.Strings.ConnectedToServer;
-            return CappuChat.Properties.Strings.ClickToReconnect;
+            if (value is bool boolValue)
+                return boolValue ? CappuChat.Properties.Strings.ConnectedToServer : CappuChat.Properties.Strings.ClickToReconnect;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

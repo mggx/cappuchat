@@ -19,13 +19,8 @@ namespace Chat.Client.Presenters
 
         public CappuVotePresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuVotePresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuVotePresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             Initialize();
         }
@@ -67,8 +62,8 @@ namespace Chat.Client.Presenters
         public async Task Load(SimpleUser user)
         {
             _user = user;
-            await CappuVoteViewModel.Load(user);
-            await CappuVoteResultViewModel.Load();
+            await CappuVoteViewModel.Load(user).ConfigureAwait(false);
+            await CappuVoteResultViewModel.Load().ConfigureAwait(false);
         }
 
         protected override void Dispose(bool disposing)

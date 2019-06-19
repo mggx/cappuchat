@@ -10,10 +10,10 @@ namespace Chat.Client.SignalHelpers.Contracts.Events
         public MessageReceivedEventArgs(SimpleMessage receivedMessage)
         {
             if (receivedMessage == null)
-                throw new ArgumentNullException(nameof(receivedMessage), "Cannot create MessageReceivedEventArgs. Given receivedMessage is null.");
+                throw new ArgumentNullException(nameof(receivedMessage));
 
             if (receivedMessage.Sender == null)
-                throw new ArgumentNullException(nameof(receivedMessage.Sender), "Cannot create MessageReceivedEventArgs. Given receivedMessage.Sender is null.");
+                throw new InvalidOperationException(CappuChat.Properties.Errors.MessageReceivedEventArgsWithoutSender);
 
             ReceivedMessage = receivedMessage;
         }

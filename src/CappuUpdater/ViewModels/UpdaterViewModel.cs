@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -13,6 +13,8 @@ using CappuUpdater.ArgumentTool;
 using CappuUpdater.Extensions;
 using FluentFTP;
 
+#pragma warning disable
+//This class is so fucked, there's no point in trying to suppress specifics
 namespace CappuUpdater.ViewModels
 {
     public class UpdaterViewModel : INotifyPropertyChanged
@@ -138,7 +140,7 @@ namespace CappuUpdater.ViewModels
             return true;
         }
 
-        private Version GetVersionFromZipName(string zipName)
+        private static Version GetVersionFromZipName(string zipName)
         {
             var versionString = zipName.Remove(zipName.LastIndexOf(".", StringComparison.Ordinal));
             return Version.TryParse(versionString, out Version version) ? version : Version.Parse("1.0");

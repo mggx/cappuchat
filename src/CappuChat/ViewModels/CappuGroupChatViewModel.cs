@@ -27,10 +27,7 @@ namespace Chat.Client.ViewModels
 
         public CappuGroupChatViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider) : base(signalHelperFacade)
         {
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider),
-                    "Cannot create CappuGroupChatViewModel. Given viewProvider is null");
-            _viewProvider = viewProvider;
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             OpenPrivateChatCommand = new RelayCommand<string>(OpenPrivateChat, CanOpenPrivateChat);
 
@@ -46,8 +43,8 @@ namespace Chat.Client.ViewModels
         private bool CanOpenPrivateChat(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
-                return SelectedMessage != null && !SelectedMessage.Sender.Username.Equals(username);
-            return !User.Username.Equals(username);
+                return SelectedMessage?.Sender.Username.Equals(username, StringComparison.OrdinalIgnoreCase) == false;
+            return !User.Username.Equals(username, StringComparison.OrdinalIgnoreCase);
         }
 
         private void OpenPrivateChat(string username)
@@ -100,7 +97,7 @@ namespace Chat.Client.ViewModels
                 Messages.Add(simpleMessage);
 
                 simpleMessage.ImageUploading = true;
-                await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage);
+                await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage).ConfigureAwait(false);
                 simpleMessage.ImageUploading = false;
             }
         }
@@ -118,7 +115,7 @@ namespace Chat.Client.ViewModels
 
             Messages.Add(ownSimpleMessage);
             Application.Current.Dispatcher.Invoke(() => { });
-             
+
             string message = eventArgs.ReceivedMessage.Message;
             string username = SignalHelperFacade.LoginSignalHelper.User.Username;
 
@@ -127,7 +124,7 @@ namespace Chat.Client.ViewModels
                 if (!_viewProvider.IsMainWindowFocused())
                     _viewProvider.ShowToastNotification($"{eventArgs.ReceivedMessage.Sender.Username}: {message}", NotificationType.Dark);
             }
-            
+
             _viewProvider.FlashWindow();
         }
 

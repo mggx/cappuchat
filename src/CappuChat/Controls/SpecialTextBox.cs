@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,12 +5,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Chat.Client.Framework;
-using Chat.Client.Styles;
 
 namespace Chat.Client.Controls
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "DependencyProperties are weird man...")]
     public class SpecialTextBox : TextBox
     {
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register(

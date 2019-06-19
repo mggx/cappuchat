@@ -3,7 +3,7 @@
     <TargetFramework>net451</TargetFramework>
     <OutputType>WinExe</OutputType>
     <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
-    <ApplicationIcon>chaticon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\chaticon.ico</ApplicationIcon>
     <RuntimeIdentifier>win</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
@@ -22,13 +22,20 @@
     <Resource Include="Resources\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="chaticon.ico" />
-    <Resource Include="safeoutlook.ico" />
+    <Compile Update="Properties\Errors.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Errors.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Update="Properties\Errors.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>

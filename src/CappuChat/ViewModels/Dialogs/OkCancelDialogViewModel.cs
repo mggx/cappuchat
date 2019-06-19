@@ -26,13 +26,8 @@ namespace Chat.Client.ViewModels.Dialogs
 
         public OkCancelDialogViewModel(string title, string message)
         {
-            if (string.IsNullOrWhiteSpace(message))
-                throw new ArgumentNullException(nameof(message), "Cannot create OkCancelDialogViewModel. Given message is invalid.");
-            Message = message;
-
-            if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentNullException(nameof(title), "Cannot create OkCancelDialogViewModel. Given title is invalid.");
-            Title = title;
+            Message = message ?? throw new ArgumentNullException(nameof(message));
+            Title = title ?? throw new ArgumentNullException(nameof(title));
 
             OkCommand = new RelayCommand(Ok);
             CancelCommand = new RelayCommand(Cancel);

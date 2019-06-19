@@ -16,9 +16,9 @@ namespace Chat.DataAccess
             return GetConversationByConversationId(conversationId);
         }
 
-        private IEnumerable<SimpleMessage> GetConversationByConversationId(Int64 id)
+        private static IEnumerable<SimpleMessage> GetConversationByConversationId(long id)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             dbCommand.CommandText =
                 $"SELECT * FROM messages WHERE conversationid = @conversationid ORDER BY datetime(messagesentdatetime)";
@@ -33,7 +33,7 @@ namespace Chat.DataAccess
                 string message = (string) reader["message"];
                 string username = (string) reader["username"];
                 string dateTimeString = (string) reader["messagesentdatetime"];
-                DateTime dateTime = DateTime.Parse(dateTimeString);
+                DateTime dateTime = DateTime.Parse(dateTimeString, CultureInfo.InvariantCulture);
 
                 SimpleMessage simpleMessage = new SimpleMessage(new SimpleUser(username), new SimpleUser("testempfaengername"), message)
                 {
@@ -48,7 +48,7 @@ namespace Chat.DataAccess
 
         private Int64 GetConversationIdByUsernames(string localusername, string targetUsername)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             dbCommand.Parameters.Add(new SQLiteParameter("@targetusername", targetUsername));
             dbCommand.Parameters.Add(new SQLiteParameter("@localusername", localusername));
@@ -72,9 +72,9 @@ namespace Chat.DataAccess
             return conversationId;
         }
 
-        private void CreateConversation(string localusername, string targetusername)
+        private static void CreateConversation(string localusername, string targetusername)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             dbCommand.CommandText =
                 "INSERT INTO conversations (localusername, targetusername) values (@localusername, @targetusername)";
@@ -87,7 +87,7 @@ namespace Chat.DataAccess
 
         public void InsertMessage(SimpleMessage message)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             string username = message.IsLocalMessage ? message.Sender.Username : message.Receiver.Username;
             string targetUsername = message.IsLocalMessage ? message.Receiver.Username : message.Sender.Username;
@@ -106,9 +106,9 @@ namespace Chat.DataAccess
             dbCommand.ExecuteNonQuery();
         }
 
-        public IEnumerable<SimpleConversation> GetConversations(SimpleUser user)
+        public static IEnumerable<SimpleConversation> GetConversations(SimpleUser user)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             string localusername = user.Username;
 

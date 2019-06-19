@@ -22,15 +22,8 @@ namespace Chat.Client.ViewModels
 
         public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation, IViewProvider viewProvider) : base(signalHelperFacade)
         {
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider),
-                    "Cannot create CappuGroupChatViewModel. Given viewProvider is null");
-            _viewProvider = viewProvider;
-
-            if (conversation == null)
-                throw new ArgumentNullException(nameof(conversation),
-                    "Cannot create CappuChatViewModel. Given conversation is null.");
-            Conversation = conversation;
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
+            Conversation = conversation ?? throw new ArgumentNullException(nameof(conversation));
 
             Initialize();
         }
@@ -100,6 +93,9 @@ namespace Chat.Client.ViewModels
 
         public void Load(IEnumerable<SimpleMessage> messages)
         {
+            if (messages == null)
+                throw new ArgumentNullException(nameof(messages));
+
             foreach (var message in messages)
             {
                 Load(message);

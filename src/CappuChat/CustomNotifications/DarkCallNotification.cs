@@ -1,4 +1,4 @@
-﻿using Chat.Client.CustomNotifications.DisplayParts;
+using Chat.Client.CustomNotifications.DisplayParts;
 using System;
 using System.Windows.Input;
 using ToastNotifications.Core;

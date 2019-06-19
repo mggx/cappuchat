@@ -13,9 +13,7 @@ namespace Chat.Client.Helper
 
         public WindowKeyDownHelper(FrameworkElement frameworkElement)
         {
-            if (frameworkElement == null)
-                throw new ArgumentNullException(nameof(frameworkElement), "Cannot create WindowKeyDownHelper. Given frameworkElement is null.");
-            _frameworkElement = frameworkElement;
+            _frameworkElement = frameworkElement ?? throw new ArgumentNullException(nameof(frameworkElement));
             _window = GetWindow();
         }
 

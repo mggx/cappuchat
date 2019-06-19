@@ -23,7 +23,7 @@ namespace Chat.Client.ViewModels
             set { _simpleVote = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<object> OnlineCappuUsers { get; set; } = new ObservableCollection<object>();
+        public ObservableCollection<object> OnlineCappuUsers { get; } = new ObservableCollection<object>();
 
         public RelayCommand CreateCappuVoteCommand { get; }
         public RelayCommand<bool> GoCommand { get; }
@@ -31,11 +31,11 @@ namespace Chat.Client.ViewModels
         public CappuVoteViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
             if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuVoteViewModel. Given signalHelperFacade is null.");
+                throw new ArgumentNullException(nameof(signalHelperFacade));
             _signalHelperFacade = signalHelperFacade;
 
             if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuVoteViewModel. Given viewProvider is null.");
+                throw new ArgumentNullException(nameof(viewProvider));
             _viewProvider = viewProvider;
 
             CreateCappuVoteCommand = new RelayCommand(CreateCappuVote, CanCreateVote);
@@ -51,7 +51,7 @@ namespace Chat.Client.ViewModels
 
         private async void CreateCappuVote()
         {
-            if (await CheckForActiveVote())
+            if (await CheckForActiveVote().ConfigureAwait(false))
             {
                 _viewProvider.ShowMessage(CappuChat.Properties.Strings.TitleVoteAlreadyCreated, CappuChat.Properties.Strings.VoteAlreadyCreated);
                 return;
@@ -59,7 +59,7 @@ namespace Chat.Client.ViewModels
 
             try
             {
-                await _signalHelperFacade.VoteSignalHelper.CreateVote();
+                await _signalHelperFacade.VoteSignalHelper.CreateVote().ConfigureAwait(false);
             }
             catch (CreateVoteFailedException e)
             {
@@ -76,7 +76,7 @@ namespace Chat.Client.ViewModels
         {
             try
             {
-                await _signalHelperFacade.VoteSignalHelper.Vote(true);
+                await _signalHelperFacade.VoteSignalHelper.Vote(true).ConfigureAwait(false);
 
                 if (focus)
                     _viewProvider.BringToFront();
@@ -108,9 +108,9 @@ namespace Chat.Client.ViewModels
 
             try
             {
-                var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers();
+                var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(false);
                 UpdateOnlineCappuUsers(onlineUsers);
-                await CheckForActiveVote();
+                await CheckForActiveVote().ConfigureAwait(false);
             }
             catch (RequestFailedException e)
             {
@@ -120,13 +120,13 @@ namespace Chat.Client.ViewModels
 
         private async Task<bool> CheckForActiveVote()
         {
-            SimpleCappuVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
+            SimpleCappuVote activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote().ConfigureAwait(false);
             if (activeVote != null)
-                UpdateActiveVote(activeVote, true);
+                UpdateActiveVote(activeVote);
             return activeVote != null;
         }
 
-        private void UpdateActiveVote(SimpleCappuVote vote, bool raiseVotedEvent = false)
+        private void UpdateActiveVote(SimpleCappuVote vote)
         {
             SimpleVote = vote;
             RaiseCanExecuteChanged();

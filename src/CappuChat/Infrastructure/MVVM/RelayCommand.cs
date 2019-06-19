@@ -10,17 +10,12 @@ namespace Chat.Client.Framework
 
         public RelayCommand(Action action)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public RelayCommand(Action action, Func<bool> canExecute)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
             _canExecute = canExecute;
         }
 
@@ -51,18 +46,13 @@ namespace Chat.Client.Framework
 
         public RelayCommand(Action<T> action)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public RelayCommand(Action<T> action, Func<T, bool> canExecute)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-
-            _action = action;
-            _canExecute = canExecute;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
+            _canExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute));
         }
 
         public bool CanExecute(object parameter)

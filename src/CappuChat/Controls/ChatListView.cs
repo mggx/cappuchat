@@ -7,6 +7,7 @@ using System.Windows.Media;
 
 namespace ChatComponents
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Dependency property setters are required at runtime... i think //TODO")]
     public class ChatListView : ListView
     {
         private ScrollViewer _scrollViewer;

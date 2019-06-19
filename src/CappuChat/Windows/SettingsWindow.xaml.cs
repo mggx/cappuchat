@@ -1,5 +1,6 @@
-﻿using CappuChat.Configuration;
+using CappuChat.Configuration;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Chat.Client.Windows
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
             "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Setter required at runtime")]
         public List<KeyValuePair<string, Color>> Colors
         {
             get { return (List<KeyValuePair<string, Color>>)GetValue(ColorsProperty); }
@@ -60,7 +62,6 @@ namespace Chat.Client.Windows
             TxtBoxPort.Text = serverConfigurationFile.Port;
             FtpUserTextBox.Text = serverConfigurationFile.FtpUser;
             FtpPasswordTextBox.Password = serverConfigurationFile.FtpPassword;
-            ChatVersionTextBox.Text = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
             _actualHost = serverConfigurationFile.Host;
             _actualPort = serverConfigurationFile.Port;
@@ -103,7 +104,7 @@ namespace Chat.Client.Windows
 
         private async void ShowRestartMessage()
         {
-            await this.ShowMessageAsync(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredContent);
+            await this.ShowMessageAsync(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredContent).ConfigureAwait(true);
             DialogResult = true;
             Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();

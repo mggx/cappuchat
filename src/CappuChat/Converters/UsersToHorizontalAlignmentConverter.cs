@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -18,7 +18,7 @@ namespace CappuChat.Converters
             if (!(values[1] is SimpleUser user))
                 return HorizontalAlignment.Center;
 
-            return sender.Username.Equals(user.Username) ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+            return sender.Username.Equals(user.Username, StringComparison.OrdinalIgnoreCase) ? HorizontalAlignment.Right : HorizontalAlignment.Left;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

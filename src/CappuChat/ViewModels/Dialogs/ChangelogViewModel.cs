@@ -21,8 +21,7 @@ namespace Chat.Client.ViewModels.Dialogs
         public ChangelogViewModel(string changelog)
         {
             if (string.IsNullOrWhiteSpace(changelog))
-                throw new ArgumentNullException(
-                    "Could not create ChangelogViewModel. Given changelog is invalid.");
+                throw new ArgumentNullException(CappuChat.Properties.Errors.EmptyChangelogIsANoNo);
             Changelog = changelog;
 
             OkCommand = new RelayCommand(Ok);

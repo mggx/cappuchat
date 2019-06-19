@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Chat.Client.Helper
 {
-    public class PasswordHelper
+    static class PasswordHelper
     {
         public static readonly DependencyProperty PasswordProperty =
         DependencyProperty.RegisterAttached("Password",

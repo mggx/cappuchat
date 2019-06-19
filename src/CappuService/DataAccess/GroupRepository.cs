@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Server.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -7,33 +7,33 @@ using System.Data.SQLite;
 
 namespace Chat.Server.DataAccess
 {
-    public class GroupRepository
+    public static class GroupRepository
     {
-        public SimpleGroup CreateGroup(string uniqueName, string groupName, int ownerId)
+        public static SimpleGroup CreateGroup(string uniqueName, string groupName, int ownerId)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
             dbCommand.Parameters.Add(new SQLiteParameter("@uniquename", uniqueName));
             dbCommand.Parameters.Add(new SQLiteParameter("@name", groupName));
             dbCommand.CommandText = $"INSERT INTO groups (uniquename, name, ownerId) values (@uniquename, @name, {ownerId})";
-            ExecuteNonQuery(dbCommand, Texts.Texts.CreatingGroupFailed);
+            ExecuteNonQuery(dbCommand, "Creating group failed.");
             return new SimpleGroup(uniqueName, groupName);
         }
 
-        public void AddUserToGroup(int groupId, int userId)
+        public static void AddUserToGroup(int groupId, int userId)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
             dbCommand.CommandText = $"INSERT INTO usergroups (groupid, userid) values ({groupId}, {userId})";
-            ExecuteNonQuery(dbCommand, Texts.Texts.AddingUserToGroupFailed);
+            ExecuteNonQuery(dbCommand, "Adding user to group failed.");
         }
 
-        public void DeleteUserFromGroup(int groupId, int userId)
+        public static void DeleteUserFromGroup(int groupId, int userId)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
             dbCommand.CommandText = $"DELETE FROM usergroups WHERE groupid = {groupId} AND userid = {userId}";
-            ExecuteNonQuery(dbCommand, Texts.Texts.DeletingUserFromGroupFailed);
+            ExecuteNonQuery(dbCommand, "Deleting user from group failed.");
         }
 
-        private void ExecuteNonQuery(IDbCommand dbCommand, Func<string, string> errorAction)
+        private static void ExecuteNonQuery(IDbCommand dbCommand, string onErrorMessage)
         {
             try
             {
@@ -41,15 +41,18 @@ namespace Chat.Server.DataAccess
             }
             catch (InvalidOperationException e)
             {
-                throw new GroupException(errorAction(e.Message));
+                throw new AggregateException(onErrorMessage,e);
             }
 
             throw new Exception();
         }
 
-        public IEnumerable<SimpleGroup> GetGroupsOfUser(string username)
+        public static IEnumerable<SimpleGroup> GetGroupsOfUser(string username)
         {
-            IDbCommand dbCommand = DataAccess.GetDbCommand();
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentNullException(nameof(username));
+
+            IDbCommand dbCommand = DatabaseClient.GetDbCommand();
 
             dbCommand.CommandText =
                 "SELECT groups.uniquename, groups.name FROM groups INNER JOIN usergroups ON groups.id = usergroups.groupid";

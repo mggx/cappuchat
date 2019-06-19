@@ -36,17 +36,12 @@ namespace Chat.Client.Presenters
 
         public event AddNewMessageHandler AddNewMessage;
 
-        public ObservableCollection<CappuChatViewModel> Conversations { get; set; } = new ObservableCollection<CappuChatViewModel>();
+        public ObservableCollection<CappuChatViewModel> Conversations { get; } = new ObservableCollection<CappuChatViewModel>();
 
         public CappuChatPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuChatPresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuChatPresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             Initialize();
         }
@@ -105,7 +100,7 @@ namespace Chat.Client.Presenters
             return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation || AddNewMessage?.Invoke(this, conversation) == true;
         }
 
-        private void ChatViewModelOnNewMessagesChanged(object sender, NewMessagesChangedEventArgs e)
+        private void ChatViewModelOnNewMessagesChanged(object sender, EventArgs e)
         {
             UpdateNewMessages();
         }

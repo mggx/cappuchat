@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Windows;
 using Chat.Client.Helper;
 using Chat.Client.ViewModels;
@@ -12,6 +12,7 @@ namespace Chat.Client.Views
     /// <summary>
     /// Interaction logic for ChatView.xaml
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "DependencyProperties...")]
     public partial class ChatView : UserControl
     {
         private WindowKeyDownHelper _windowKeyDownHelper;

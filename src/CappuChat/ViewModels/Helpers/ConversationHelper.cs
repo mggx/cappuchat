@@ -1,20 +1,21 @@
-﻿using Chat.Client.Framework;
+using Chat.Client.Framework;
 using Chat.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Chat.Client.ViewModels.Delegates;
 using Chat.Client.ViewModels.Events;
+using System;
 
 namespace Chat.Client.ViewModels.Helpers
 {
     public class ConversationHelper : Disposable
     {
         public SimpleConversation Conversation { get; }
-        public ObservableCollection<OwnSimpleMessage> Messages { get; set; }
+        public ObservableCollection<OwnSimpleMessage> Messages { get; }
 
         public event AddNewMessageHandler AddNewMessage;
-        public event NewMessagesChangedHandler NewMessagesChanged;
+        public event EventHandler<EventArgs> NewMessagesChanged;
 
         public ConversationHelper(SimpleConversation conversation, ObservableCollection<OwnSimpleMessage> messages)
         {
@@ -45,7 +46,7 @@ namespace Chat.Client.ViewModels.Helpers
                 Conversation.NewMessages++;
             }
 
-            NewMessagesChanged?.Invoke(this, new NewMessagesChangedEventArgs());
+            NewMessagesChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void SetLastMessage()
@@ -56,7 +57,7 @@ namespace Chat.Client.ViewModels.Helpers
         public void ResetNewMessages()
         {
             Conversation.NewMessages = 0;
-            NewMessagesChanged?.Invoke(this, new NewMessagesChangedEventArgs());
+            NewMessagesChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected override void Dispose(bool disposing)

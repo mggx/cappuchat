@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,7 +63,7 @@ namespace CappuUpdater
 
             Task.Run(async () =>
             {
-                await updaterViewModel.Update(); 
+                await updaterViewModel.Update().ConfigureAwait(false); 
             });
         }
     }

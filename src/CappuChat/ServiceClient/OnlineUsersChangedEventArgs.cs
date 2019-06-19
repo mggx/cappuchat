@@ -10,10 +10,7 @@ namespace Chat.Client.SignalHelpers.Contracts.Events
 
         public OnlineUsersChangedEventArgs(IEnumerable<SimpleUser> onlineUsers)
         {
-            if (onlineUsers == null)
-                throw new ArgumentNullException(nameof(onlineUsers), "Cannot create OnlineUsersChangedEventArgs. Given onlineUsers is null.");
-
-            OnlineUsers = onlineUsers;
+            OnlineUsers = onlineUsers ?? throw new ArgumentNullException(nameof(onlineUsers));
         }
     }
 }

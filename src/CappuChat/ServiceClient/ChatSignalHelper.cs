@@ -23,15 +23,8 @@ namespace Chat.Client.SignalHelpers
 
         public ChatSignalHelper(IHubProxy chatHubProxy)
         {
-            if (chatHubProxy == null)
-                throw new ArgumentNullException(nameof(chatHubProxy), "Cannot create ChatSignalHelper. Given chatHubProxy is null.");
-            _chatHubProxy = chatHubProxy;
+            _chatHubProxy = chatHubProxy ?? throw new ArgumentNullException(nameof(chatHubProxy));
 
-            RegisterHubProxyEvents();
-        }
-
-        public void RegisterHubProxyEvents()
-        {
             _chatHubProxy.On<SimpleMessage>("OnMessageReceived", ChatHubProxyOnMessageReceived);
             _chatHubProxy.On<SimpleMessage>("OnPrivateMessageReceived", ChatHubProxyOnPrivateMessageReceived);
         }
@@ -56,11 +49,7 @@ namespace Chat.Client.SignalHelpers
 
         public async Task<IEnumerable<SimpleUser>> GetOnlineUsers()
         {
-            var task = _chatHubProxy.Invoke<GetOnlineUsersResponse>("GetOnlineUsers");
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
-
-            GetOnlineUsersResponse serverResponse = await task;
+            var serverResponse = await _chatHubProxy.Invoke<GetOnlineUsersResponse>("GetOnlineUsers").ConfigureAwait(false);
 
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
@@ -70,18 +59,12 @@ namespace Chat.Client.SignalHelpers
 
         public async Task SendMessage(SimpleMessage message)
         {
-            var task = _chatHubProxy.Invoke("SendMessage", CipherHelper.EncryptMessage(message));
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
-            await task;
+            await _chatHubProxy.Invoke("SendMessage", CipherHelper.EncryptMessage(message)).ConfigureAwait(false);
         }
 
         public async Task SendPrivateMessage(SimpleMessage message)
         {
-            var task = _chatHubProxy.Invoke<BaseResponse>("SendPrivateMessage", CipherHelper.EncryptMessage(message));
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
-            await task;
+            await _chatHubProxy.Invoke<BaseResponse>("SendPrivateMessage", CipherHelper.EncryptMessage(message)).ConfigureAwait(false);
         }
     }
 }

@@ -35,13 +35,8 @@ namespace Chat.Client.Presenters
 
         public CappuLoginPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuLoginPresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuLoginPresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             StartServerConnectionCommand = new RelayCommand(StartServerConnection, CanStartServerConnection);
 
@@ -56,11 +51,11 @@ namespace Chat.Client.Presenters
         public async void StartServerConnection()
         {
             if (StartConnection == null)
-                throw new InvalidOperationException("No one registered on StartConnection");
+                throw new InvalidOperationException(CappuChat.Properties.Errors.NoOneRegisteredOnStartConnection);
 
             using (CappuLoginViewModel.ProgressProvider.StartProgress())
             {
-                ConnectedToServer = await StartConnection?.Invoke();
+                ConnectedToServer = await (StartConnection?.Invoke()).ConfigureAwait(false);
             }
 
             CappuLoginViewModel.RaiseCanExecuteChanged();

@@ -39,9 +39,7 @@ namespace Chat.Client.ViewModels.Dialogs
 
         public CappuRegisterViewModel(IRegisterSignalHelper registerSignalHelper)
         {
-            if (registerSignalHelper == null)
-                throw new ArgumentNullException(nameof(registerSignalHelper), "Cannot create CappuRegisterViewModel. Given registerSignalHelper is null.");
-            _registerSignalHelper = registerSignalHelper;
+            _registerSignalHelper = registerSignalHelper ?? throw new ArgumentNullException(nameof(registerSignalHelper));
 
             RegisterCommand = new RelayCommand(Register, CanRegister);
             CancelCommand = new RelayCommand(Cancel);
@@ -61,7 +59,7 @@ namespace Chat.Client.ViewModels.Dialogs
             {
                 try
                 {
-                    await _registerSignalHelper.Register(_username, _password);
+                    await _registerSignalHelper.Register(_username, _password).ConfigureAwait(false);
                 }
                 catch (RequestFailedException e)
                 {

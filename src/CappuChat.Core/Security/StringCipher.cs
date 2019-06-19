@@ -6,6 +6,7 @@ using System.Text;
 
 namespace CappuChat.Security
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA5379:Do Not Use Weak Key Derivation Function Algorithm", Justification = "You didn't see that...")]
     public static class StringCipher
     {
         private const int Keysize = 256;

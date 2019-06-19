@@ -21,9 +21,7 @@ namespace Chat.Client.SignalHelpers
 
         public VoteSignalHelper(IHubProxy voteHubProxy)
         {
-            if (voteHubProxy == null)
-                throw new ArgumentNullException(nameof(voteHubProxy), "Cannot create VoteSignalHelper. Given voteHubProxy is null.");
-            _voteHubProxy = voteHubProxy;
+            _voteHubProxy = voteHubProxy ?? throw new ArgumentNullException(nameof(voteHubProxy));
 
             RegisterHubProxyEvents();
         }
@@ -52,57 +50,40 @@ namespace Chat.Client.SignalHelpers
 
         public async Task CreateVote()
         {
-            var task = _voteHubProxy.Invoke<SimpleCreateVoteResponse>("CreateCappuVote");
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
+            var serverResponse = await _voteHubProxy.Invoke<SimpleCreateVoteResponse>("CreateCappuVote").ConfigureAwait(false);
 
-            SimpleCreateVoteResponse serverResponse = await task;
             if (!serverResponse.Success)
                 throw new CreateVoteFailedException(serverResponse.ErrorMessage);
         }
 
         public async Task Vote(bool answer)
         {
-            var task = _voteHubProxy.Invoke<SimpleVoteResponse>("Vote", answer);
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
-
-            SimpleVoteResponse serverResponse = await task;
+            var serverResponse = await _voteHubProxy.Invoke<SimpleVoteResponse>("Vote", answer).ConfigureAwait(false);
             if (!serverResponse.Success)
                 throw new VoteFailedException(serverResponse.ErrorMessage);
         }
 
         public async Task<SimpleCappuVote> GetActiveVote()
         {
-            var task = _voteHubProxy.Invoke<SimpleGetActiveVoteResponse>("GetActiveVote");
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
+            var serverResponse = await _voteHubProxy.Invoke<SimpleGetActiveVoteResponse>("GetActiveVote").ConfigureAwait(false);
 
-            SimpleGetActiveVoteResponse serverResponse = await task;
             if (!serverResponse.Success)
-                throw new RequestFailedException(serverResponse.ErrorMessage);
+                throw new InvalidOperationException(serverResponse.ErrorMessage);
 
             return serverResponse.ActiveCappuVote;
         }
 
         public async Task FinalCappuCall()
         {
-            var task = _voteHubProxy.Invoke<BaseResponse>("FinalCappuCall");
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
+            var serverResponse = await _voteHubProxy.Invoke<BaseResponse>("FinalCappuCall").ConfigureAwait(false);
 
-            BaseResponse serverResponse = await task;
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
         }
 
         public async Task<IEnumerable<SimpleMessage>> GetVoteScopeMessages()
         {
-            var task = _voteHubProxy.Invoke<SimpleGetVoteScopeMessagesResponse>("GetVoteScopeMessages");
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
-
-            SimpleGetVoteScopeMessagesResponse serverResponse = await task;
+            var serverResponse = await _voteHubProxy.Invoke<SimpleGetVoteScopeMessagesResponse>("GetVoteScopeMessages").ConfigureAwait(false);
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
             return serverResponse.VoteScopeMessages;

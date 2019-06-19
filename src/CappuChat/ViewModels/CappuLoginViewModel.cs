@@ -16,6 +16,7 @@ namespace Chat.Client.ViewModels
         private readonly ISignalHelperFacade _signalHelperFacade;
 
         private string _username;
+
         public string Username
         {
             get { return _username; }
@@ -23,6 +24,7 @@ namespace Chat.Client.ViewModels
         }
 
         private string _password;
+
         public string Password
         {
             get { return _password; }
@@ -30,6 +32,7 @@ namespace Chat.Client.ViewModels
         }
 
         private bool _loggedIn;
+
         public bool LoggedIn
         {
             get { return _loggedIn; }
@@ -50,9 +53,7 @@ namespace Chat.Client.ViewModels
 
         public CappuLoginViewModel(ISignalHelperFacade signalHelperFacade)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuLoginViewModel. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
 
             LoginCommand = new RelayCommand(Login, CanLogin);
             LogoutCommand = new RelayCommand(Logout, CanLogout);
@@ -92,7 +93,7 @@ namespace Chat.Client.ViewModels
             {
                 using (ProgressProvider.StartProgress())
                 {
-                    user = await _signalHelperFacade.LoginSignalHelper.Login(Username, Password);
+                    user = await _signalHelperFacade.LoginSignalHelper.Login(Username, Password).ConfigureAwait(false);
                 }
             }
             catch (LoginFailedException e)

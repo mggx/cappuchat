@@ -67,14 +67,8 @@ namespace Chat.Client.Presenters
 
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException("Cannot create CappuMainPresenter. Given controllerFacade is null.");
-
-            if (viewProvider == null)
-                throw new ArgumentNullException("Cannot create CappuMainPresenter. Given viewProvider is null.");
-
-            _signalHelperFacade = signalHelperFacade;
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
             ChangeSaveModeCommand = new RelayCommand(ChangeSaveMode);
@@ -149,9 +143,9 @@ namespace Chat.Client.Presenters
 
         private void HandleFinishedRegister(IDialog registerViewModel)
         {
-            CappuRegisterViewModel viewModel = registerViewModel as CappuRegisterViewModel;
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(registerViewModel), "Given registerViewModel is null or not a CappuRegisterViewModel");
+            if (registerViewModel == null)
+                throw new ArgumentNullException(nameof(registerViewModel));
+            var viewModel = registerViewModel as CappuRegisterViewModel;
 
             viewModel.RegisterCompleted -= RegisterViewModelOnRegisterCompleted;
             viewModel.RegisterFailed -= RegisterViewModelOnRegisterFailed;
@@ -166,7 +160,7 @@ namespace Chat.Client.Presenters
             InitializeCappuChatPresenter();
             InitializeCappuChatPresenterEvents();
 
-            await CappuVotePresenter.Load(eventArgs.User);
+            await CappuVotePresenter.Load(eventArgs.User).ConfigureAwait(false);
             CappuChatPresenter.Load(eventArgs.User);
 
             CurrentPresenter = this;
