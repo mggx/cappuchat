@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Service",
+            "type": "clr",
+            "request": "launch",
+            "preLaunchTask": "build-service",
+            "program": "${workspaceFolder}/src/CappuService/bin/Debug/net461/win/CappuService.exe",
+            "cwd": "${workspaceFolder}/src/CappuChat/bin/Debug/net452/win/",
+            "console": "internalConsole",
+            "args":[ 
+                "-debug"
+            ],
+            "stopAtEntry": true
+        },
+        {
+            "name": "Debug Client",
+            "type": "clr",
+            "request": "launch",
+            "preLaunchTask": "build-client",
+            "program": "${workspaceFolder}/src/CappuChat/bin/Debug/net452/win/CappuChat.exe",
+            "cwd": "${workspaceFolder}/src/CappuChat/bin/Debug/net452/win/",
+            "console": "internalConsole",
+            "stopAtEntry": true
+        },
+    ]
+}

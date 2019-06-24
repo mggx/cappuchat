@@ -1,0 +1,21 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
+    <ApplicationIcon>chaticon.ico</ApplicationIcon>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.IO.Compression" />
+
+    <PackageReference Include="FluentFTP" Version="25.0.0" />
+    <PackageReference Include="MahApps.Metro" Version="1.6.5" />
+
+    <ProjectReference Include="..\CappuChat.Core\CappuChat.Core.csproj" />
+  </ItemGroup>
+</Project>
