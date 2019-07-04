@@ -17,7 +17,7 @@
         <converters:NullToVisibilityConverter x:Key="InversedNullToVisibilityConverter"
                                               Inverse="True"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.45*"/>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using CappuChat;
+﻿using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Models;
+using System;
+using System.Collections.ObjectModel;
 
 namespace Chat.Client.ViewModels
 {
@@ -14,16 +14,14 @@ namespace Chat.Client.ViewModels
 
         private SimpleMessage _selectedMessage;
 
-        public SimpleMessage SelectedMessage
-        {
+        public SimpleMessage SelectedMessage {
             get { return _selectedMessage; }
             set { _selectedMessage = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
         private string _messageImagePath;
 
-        public string MessageImagePath
-        {
+        public string MessageImagePath {
             get { return _messageImagePath; }
             set { _messageImagePath = value; OnPropertyChanged(); }
         }

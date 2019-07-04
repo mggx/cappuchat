@@ -1,20 +1,18 @@
-﻿using System;
-using Chat.Client.Framework;
+﻿using Chat.Client.Framework;
+using System;
 
 namespace Chat.Client.ViewModels.Dialogs
 {
     public class OkCancelDialogViewModel : ViewModelBase, IModalDialog
     {
         private string _title;
-        public string Title
-        {
+        public string Title {
             get { return _title; }
             set { _title = value; OnPropertyChanged(); }
         }
 
         private string _message;
-        public string Message
-        {
+        public string Message {
             get { return _message; }
             set { _message = value; OnPropertyChanged(); }
         }

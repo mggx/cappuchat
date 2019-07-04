@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
 using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
+using System;
+using System.Threading.Tasks;
 
 namespace Chat.Client.Presenters
 {
@@ -11,7 +11,6 @@ namespace Chat.Client.Presenters
     {
         private readonly ISignalHelperFacade _signalHelperFacade;
         private readonly IViewProvider _viewProvider;
-        private SimpleUser _user;
 
         public CappuVoteViewModel CappuVoteViewModel { get; private set; }
         public CappuVoteResultViewModel CappuVoteResultViewModel { get; private set; }
@@ -35,7 +34,7 @@ namespace Chat.Client.Presenters
 
         private void InitializeCappuVoteResultViewModel()
         {
-            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade, _viewProvider);
+            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade);
         }
 
         private void InitializeCappuVoteViewModel()
@@ -61,7 +60,6 @@ namespace Chat.Client.Presenters
 
         public async Task Load(SimpleUser user)
         {
-            _user = user;
             await CappuVoteViewModel.Load(user).ConfigureAwait(false);
             await CappuVoteResultViewModel.Load().ConfigureAwait(false);
         }

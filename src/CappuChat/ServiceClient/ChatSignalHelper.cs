@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using CappuChat;
+﻿using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
@@ -10,6 +6,10 @@ using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Chat.Client.SignalHelpers.Helper;
 using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Chat.Client.SignalHelpers
 {

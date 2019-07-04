@@ -34,7 +34,7 @@
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"/>
             </ScrollViewer>
-            
+
 
             <Button Grid.Row="2"
                     Content="{x:Static props:Strings.Changelog_GotIt}"

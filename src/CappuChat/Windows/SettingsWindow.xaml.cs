@@ -1,12 +1,10 @@
 using CappuChat.Configuration;
 using MahApps.Metro;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -27,11 +25,10 @@ namespace Chat.Client.Windows
         private readonly string _actualPort;
 
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
+            "Colors", typeof(List<KeyValuePair<string, Color>>), typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Setter required at runtime")]
-        public List<KeyValuePair<string, Color>> Colors
-        {
+        public List<KeyValuePair<string, Color>> Colors {
             get { return (List<KeyValuePair<string, Color>>)GetValue(ColorsProperty); }
             set { SetValue(ColorsProperty, value); }
         }

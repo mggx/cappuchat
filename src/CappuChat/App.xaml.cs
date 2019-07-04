@@ -1,4 +1,10 @@
-﻿using System;
+﻿using CappuChat.Configuration;
+using Chat.Client;
+using Chat.Client.Presenters;
+using Chat.Client.Signalhelpers.Contracts;
+using Chat.Client.SignalHelpers;
+using MahApps.Metro;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -6,12 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using CappuChat.Configuration;
-using Chat.Client;
-using Chat.Client.Presenters;
-using Chat.Client.Signalhelpers.Contracts;
-using Chat.Client.SignalHelpers;
-using MahApps.Metro;
 
 namespace CappuChat
 {
@@ -46,7 +46,7 @@ namespace CappuChat
                 Color = "Steel"
             });
 
-            ThemeManager.AddAccent("Orgadata", new Uri("Styles/OrgadataTheme.xaml",UriKind.Relative));
+            ThemeManager.AddAccent("Orgadata", new Uri("Styles/OrgadataTheme.xaml", UriKind.Relative));
 
             var foundAccent = ThemeManager.Accents.FirstOrDefault(accent =>
                 accent.Name.Equals(colorConfiguration.Color, StringComparison.CurrentCultureIgnoreCase));
@@ -104,7 +104,7 @@ namespace CappuChat
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory))
             {
                 var fileName = Path.GetFileName(file);
-                if (fileName.StartsWith(OldPrefix,StringComparison.OrdinalIgnoreCase))
+                if (fileName.StartsWith(OldPrefix, StringComparison.OrdinalIgnoreCase))
                     File.Delete(fileName);
             }
         }

@@ -7,7 +7,7 @@ namespace Chat.Client.Helper
     public class WindowKeyDownHelper
     {
         private readonly FrameworkElement _frameworkElement;
-        private Window _window;
+        private readonly Window _window;
 
         public event EventHandler<KeyEventArgs> KeyDown;
 

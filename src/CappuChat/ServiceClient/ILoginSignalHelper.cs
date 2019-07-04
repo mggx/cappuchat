@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using CappuChat;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
-using CappuChat;
+using System;
+using System.Threading.Tasks;
 
 namespace Chat.Client.Signalhelpers.Contracts
 {

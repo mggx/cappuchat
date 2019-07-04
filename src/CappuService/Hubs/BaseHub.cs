@@ -1,11 +1,10 @@
+using CappuChat;
+using CappuChat.DTOs;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CappuChat;
-using CappuChat.DTOs;
-using System.Globalization;
 
 namespace Chat.Server.Hubs
 {

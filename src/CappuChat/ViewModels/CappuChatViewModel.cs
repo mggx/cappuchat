@@ -1,4 +1,5 @@
-﻿using Chat.Client.Framework;
+﻿using CappuChat;
+using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels.Controllers;
@@ -6,7 +7,6 @@ using Chat.Client.ViewModels.Helpers;
 using Chat.Models;
 using System;
 using System.Collections.Generic;
-using CappuChat;
 using System.Globalization;
 
 namespace Chat.Client.ViewModels
@@ -17,7 +17,7 @@ namespace Chat.Client.ViewModels
 
         private readonly IViewProvider _viewProvider;
 
-        public ConversationHelper ConversationHelper { get; set; } 
+        public ConversationHelper ConversationHelper { get; set; }
         public SimpleConversation Conversation { get; }
 
         public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation, IViewProvider viewProvider) : base(signalHelperFacade)

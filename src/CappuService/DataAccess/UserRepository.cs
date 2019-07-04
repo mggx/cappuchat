@@ -26,7 +26,7 @@ namespace Chat.Server.DataAccess
             {
                 string retrievedUsername = reader["username"] as string;
                 if (string.IsNullOrWhiteSpace(retrievedUsername))
-                   throw new UserNotFoundException("Username and password combination was not found.");
+                    throw new UserNotFoundException("Username and password combination was not found.");
                 user = new SimpleUser(retrievedUsername);
             }
 
@@ -57,7 +57,7 @@ namespace Chat.Server.DataAccess
 
             if (GetUserByUsername(username) != null)
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.CurrentCulture, CappuService.Properties.Strings.FailedToCreate_Reason,CappuService.Properties.Strings.UserAlreadyExists)
+                    string.Format(CultureInfo.CurrentCulture, CappuService.Properties.Strings.FailedToCreate_Reason, CappuService.Properties.Strings.UserAlreadyExists)
                 );
 
             dbCommand.CommandText = "INSERT INTO users (username, password, online) values (@username, @password, 0)";
@@ -68,7 +68,7 @@ namespace Chat.Server.DataAccess
             }
             catch (InvalidOperationException connectionException)
             {
-                throw new InvalidOperationException( 
+                throw new InvalidOperationException(
                     string.Format(CultureInfo.CurrentCulture, CappuService.Properties.Strings.FailedToCreate_Reason, connectionException.Message),
                     connectionException
                 );

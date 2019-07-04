@@ -1,11 +1,10 @@
 using Chat.Client.Framework;
+using Chat.Client.ViewModels.Delegates;
 using Chat.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using Chat.Client.ViewModels.Delegates;
-using Chat.Client.ViewModels.Events;
-using System;
 
 namespace Chat.Client.ViewModels.Helpers
 {

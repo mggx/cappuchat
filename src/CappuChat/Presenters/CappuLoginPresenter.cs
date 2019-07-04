@@ -1,11 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
-using Chat.Client.Framework;
+﻿using Chat.Client.Framework;
 using Chat.Client.Presenters.Delegates;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Events;
+using System;
+using System.Globalization;
 
 namespace Chat.Client.Presenters
 {
@@ -15,8 +14,7 @@ namespace Chat.Client.Presenters
         private readonly IViewProvider _viewProvider;
 
         private bool _connectedToServer;
-        public bool ConnectedToServer
-        {
+        public bool ConnectedToServer {
             get { return _connectedToServer; }
             set { _connectedToServer = value; OnPropertyChanged(); StartServerConnectionCommand.RaiseCanExecuteChanged(); }
         }
@@ -26,9 +24,8 @@ namespace Chat.Client.Presenters
         public RelayCommand StartServerConnectionCommand { get; }
 
         public event StartServerConnectionHandler StartConnection;
-        
-        public event Action<string> LoggedOut
-        {
+
+        public event Action<string> LoggedOut {
             add => CappuLoginViewModel.LoggedOut += value;
             remove => CappuLoginViewModel.LoggedOut -= value;
         }

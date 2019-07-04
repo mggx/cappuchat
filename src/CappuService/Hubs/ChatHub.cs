@@ -1,5 +1,4 @@
 using CappuChat;
-using CappuChat.DTOs;
 using System;
 
 namespace Chat.Server.Hubs

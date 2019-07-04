@@ -1,16 +1,15 @@
 using System.Data;
-using System.Data.SQLite;
 using System.Data.SQLite.Linq;
 
 namespace Chat.Server.DataAccess
 {
     public static class DatabaseClient
     {
-        private static string _dataSource = "Data source=db.db3";
+        private const string _dataSource = "Data source=db.db3";
 
         private static IDbConnection _dbConnection;
-        private static IDbConnection DbConnection
-        {
+
+        private static IDbConnection DbConnection {
             get { return _dbConnection ?? (_dbConnection = SQLiteProviderFactory.Instance.CreateConnection()); }
         }
 

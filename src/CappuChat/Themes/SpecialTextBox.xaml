@@ -18,15 +18,15 @@
                                 SnapsToDevicePixels="True"
                                 Padding="5">
 
-                                <Grid HorizontalAlignment="Stretch">
-                                    <TextBlock x:Name="PART_Watermark" 
+                            <Grid HorizontalAlignment="Stretch">
+                                <TextBlock x:Name="PART_Watermark" 
                                                Text="{TemplateBinding Watermark}" 
                                                Foreground="{TemplateBinding WatermarkForeground}" 
                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Visibility="Collapsed" />
 
-                                    <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                <ScrollViewer HorizontalScrollBarVisibility="Hidden"
                                                   VerticalScrollBarVisibility="Hidden"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -40,7 +40,7 @@
                                         Command="{TemplateBinding AdditionalButtonCommand}"
                                         Visibility="Collapsed"
                                         Focusable="False"/>
-                                </Grid>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsAdditionalButtonVisible" Value="True">

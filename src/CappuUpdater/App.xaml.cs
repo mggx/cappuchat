@@ -1,12 +1,12 @@
+using CappuChat.Configuration;
+using CappuUpdater.ArgumentTool;
+using CappuUpdater.ViewModels;
+using MahApps.Metro;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using CappuChat.Configuration;
-using CappuUpdater.ArgumentTool;
-using CappuUpdater.ViewModels;
-using MahApps.Metro;
 
 namespace CappuUpdater
 {
@@ -43,7 +43,8 @@ namespace CappuUpdater
 
             var window = new MainWindow
             {
-                DataContext = updaterViewModel, WindowStartupLocation = WindowStartupLocation.CenterScreen
+                DataContext = updaterViewModel,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
 
             var colorConfigurationController = new ConfigurationController<ColorConfiguration>();
@@ -63,7 +64,7 @@ namespace CappuUpdater
 
             Task.Run(async () =>
             {
-                await updaterViewModel.Update().ConfigureAwait(false); 
+                await updaterViewModel.Update().ConfigureAwait(false);
             });
         }
     }

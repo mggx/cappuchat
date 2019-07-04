@@ -5,18 +5,11 @@ namespace Chat.DataAccess
 {
     public static class DatabaseClient
     {
-        private static string _dataSource = "Data source=db.db3";
+        private const string _dataSource = "Data source=db.db3";
 
         private static IDbConnection _dbConnection;
-        private static IDbConnection DbConnection
-        {
-            get
-            {
-                if (_dbConnection == null)
-                    _dbConnection = SQLiteProviderFactory.Instance.CreateConnection();
-                return _dbConnection;
-            }
-        }
+
+        private static IDbConnection DbConnection => _dbConnection ?? (_dbConnection = SQLiteProviderFactory.Instance.CreateConnection());
 
         public static IDbCommand GetDbCommand()
         {

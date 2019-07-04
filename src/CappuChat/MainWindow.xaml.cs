@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using Chat.Client.Windows;
+﻿using Chat.Client.Windows;
 using MahApps.Metro.Controls;
+using System.Windows;
 
 namespace Chat.Client
 {

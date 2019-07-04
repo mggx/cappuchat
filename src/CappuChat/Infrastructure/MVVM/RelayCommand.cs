@@ -63,7 +63,7 @@ namespace Chat.Client.Framework
             if (parameter == null)
                 parameter = default(T);
 
-            return _canExecute.Invoke((T) parameter);
+            return _canExecute.Invoke((T)parameter);
         }
 
         public void Execute(object parameter)
@@ -71,7 +71,7 @@ namespace Chat.Client.Framework
             if (parameter == null)
                 parameter = default(T);
 
-            _action?.Invoke((T) parameter);
+            _action?.Invoke((T)parameter);
         }
 
         public void RaiseCanExecuteChanged()

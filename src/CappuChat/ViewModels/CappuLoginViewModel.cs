@@ -1,13 +1,13 @@
-﻿using Chat.Client.Framework;
+using CappuChat;
+using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
+using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Delegates;
-using System;
-using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Chat.Client.ViewModels.Events;
-using System.Windows;
 using Chat.Client.ViewModels.Providers;
-using CappuChat;
+using System;
+using System.Windows;
 
 namespace Chat.Client.ViewModels
 {
@@ -17,24 +17,21 @@ namespace Chat.Client.ViewModels
 
         private string _username;
 
-        public string Username
-        {
+        public string Username {
             get { return _username; }
             set { _username = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
         private string _password;
 
-        public string Password
-        {
+        public string Password {
             get { return _password; }
             set { _password = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
         private bool _loggedIn;
 
-        public bool LoggedIn
-        {
+        public bool LoggedIn {
             get { return _loggedIn; }
             set { _loggedIn = value; OnPropertyChanged(); }
         }

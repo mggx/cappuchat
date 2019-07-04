@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using CappuChat;
+﻿using CappuChat;
 using Chat.DataAccess;
 using Chat.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Chat.Client.ViewModels.Controllers
 {

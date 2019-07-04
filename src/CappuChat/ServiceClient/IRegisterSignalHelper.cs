@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using CappuChat;
+﻿using CappuChat;
+using System.Threading.Tasks;
 
 namespace Chat.Client.Signalhelpers.Contracts
 {

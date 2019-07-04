@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CappuChat;
+using System;
 using System.Collections.Generic;
-using CappuChat;
 
 namespace Chat.Client.SignalHelpers.Contracts.Events
 {

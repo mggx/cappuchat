@@ -6,7 +6,7 @@
             <Setter Property="BorderBrush" Value="{DynamicResource AccentBaseColorBrush}"/>
         </Style.Setters>
     </Style>
-    
+
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
         <Style.Setters>
             <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
@@ -37,7 +37,7 @@
             </Setter>
         </Style.Setters>
     </Style>
-    
+
     <Style TargetType="{x:Type ListViewItem}" x:Key="CreepyListViewItem" BasedOn="{StaticResource MetroListViewItem}">
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush2}"/>
         <Setter Property="Foreground" Value="White"/>

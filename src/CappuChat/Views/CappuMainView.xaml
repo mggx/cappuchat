@@ -50,7 +50,7 @@
             </mah:TransitioningContentControl.Content>
         </mah:TransitioningContentControl>
     </mah:MetroTabItem>
-    
+
     <mah:MetroTabItem Style="{StaticResource NewMessageMetroTabItemStyle}">
         <TabItem.Header>
             <StackPanel Orientation="Horizontal">

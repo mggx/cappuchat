@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.SignalR.Client;
+using System;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Client;
 
 namespace Chat.Client.SignalHelpers
 {

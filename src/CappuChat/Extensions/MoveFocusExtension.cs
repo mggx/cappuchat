@@ -37,7 +37,7 @@ namespace Chat.Client.Extensions
 
         public static bool GetMoveFocusOnEnter(DependencyObject element)
         {
-            return (bool) element?.GetValue(MoveFocusOnEnterProperty);
+            return (bool)element?.GetValue(MoveFocusOnEnterProperty);
         }
     }
 }

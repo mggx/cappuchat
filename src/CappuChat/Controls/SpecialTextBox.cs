@@ -1,3 +1,4 @@
+using Chat.Client.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -5,7 +6,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Chat.Client.Framework;
 
 namespace Chat.Client.Controls
 {
@@ -39,57 +39,48 @@ namespace Chat.Client.Controls
         public static readonly DependencyProperty DataDroppedCommandProperty = DependencyProperty.Register(
             "DataDroppedCommand", typeof(ICommand), typeof(SpecialTextBox), new PropertyMetadata(default(ICommand)));
 
-        public IList<string> AllowedExtensionsList
-        {
-            get { return (IList<string>) GetValue(AllowedExtensionsListProperty); }
+        public IList<string> AllowedExtensionsList {
+            get { return (IList<string>)GetValue(AllowedExtensionsListProperty); }
             set { SetValue(AllowedExtensionsListProperty, value); }
         }
 
-        public SolidColorBrush WatermarkForeground
-        {
-            get { return (SolidColorBrush) GetValue(WatermarkForegroundProperty); }
+        public SolidColorBrush WatermarkForeground {
+            get { return (SolidColorBrush)GetValue(WatermarkForegroundProperty); }
             set { SetValue(WatermarkForegroundProperty, value); }
         }
 
-        public ICommand EnterCommand
-        {
-            get { return (ICommand) GetValue(EnterCommandProperty); }
+        public ICommand EnterCommand {
+            get { return (ICommand)GetValue(EnterCommandProperty); }
             set { SetValue(EnterCommandProperty, value); }
         }
 
-        public ICommand AdditionalButtonCommand
-        {
-            get { return (ICommand) GetValue(AdditionalButtonCommandProperty); }
+        public ICommand AdditionalButtonCommand {
+            get { return (ICommand)GetValue(AdditionalButtonCommandProperty); }
             set { SetValue(AdditionalButtonCommandProperty, value); }
         }
 
-        public object AdditionalButtonContent
-        {
-            get { return (object) GetValue(AdditionalButtonContentProperty); }
+        public object AdditionalButtonContent {
+            get { return GetValue(AdditionalButtonContentProperty); }
             set { SetValue(AdditionalButtonContentProperty, value); }
         }
 
-        public bool IsAdditionalButtonVisible
-        {
-            get { return (bool) GetValue(IsAdditionalButtonVisibleProperty); }
+        public bool IsAdditionalButtonVisible {
+            get { return (bool)GetValue(IsAdditionalButtonVisibleProperty); }
             set { SetValue(IsAdditionalButtonVisibleProperty, value); }
         }
 
-        public string Watermark
-        {
-            get { return (string) GetValue(WatermarkProperty); }
+        public string Watermark {
+            get { return (string)GetValue(WatermarkProperty); }
             set { SetValue(WatermarkProperty, value); }
         }
 
-        public SolidColorBrush FocusedBorderBrush
-        {
-            get { return (SolidColorBrush) GetValue(FocusedBorderBrushProperty); }
+        public SolidColorBrush FocusedBorderBrush {
+            get { return (SolidColorBrush)GetValue(FocusedBorderBrushProperty); }
             set { SetValue(FocusedBorderBrushProperty, value); }
         }
 
-        public ICommand DataDroppedCommand
-        {
-            get { return (ICommand) GetValue(DataDroppedCommandProperty); }
+        public ICommand DataDroppedCommand {
+            get { return (ICommand)GetValue(DataDroppedCommandProperty); }
             set { SetValue(DataDroppedCommandProperty, value); }
         }
 

@@ -1,13 +1,12 @@
-﻿using System;
-using Chat.Client.Framework;
+﻿using Chat.Client.Framework;
+using System;
 
 namespace Chat.Client.ViewModels.Dialogs
 {
     public class ChangelogViewModel : ViewModelBase, IModalDialog
     {
         private string _changelog;
-        public string Changelog
-        {
+        public string Changelog {
             get { return _changelog; }
             set { _changelog = value; OnPropertyChanged(); }
         }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using CappuChat;
+﻿using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Controllers;
 using Chat.Client.ViewModels.Delegates;
-using Chat.Client.ViewModels.Events;
 using Chat.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Chat.Client.Presenters
 {
@@ -21,15 +20,13 @@ namespace Chat.Client.Presenters
         private SimpleUser User { get; set; }
 
         private CappuChatViewModel _currentChatViewModel;
-        public CappuChatViewModel CurrentChatViewModel
-        {
+        public CappuChatViewModel CurrentChatViewModel {
             get { return _currentChatViewModel; }
             set { _currentChatViewModel = value; OnPropertyChanged(); _currentChatViewModel?.ConversationHelper.ResetNewMessages(); }
         }
 
         private int _newMessages;
-        public int NewMessages
-        {
+        public int NewMessages {
             get { return _newMessages; }
             set { _newMessages = value; OnPropertyChanged(); }
         }

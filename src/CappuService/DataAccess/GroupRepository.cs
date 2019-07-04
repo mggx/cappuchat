@@ -1,5 +1,4 @@
 using CappuChat;
-using Chat.Server.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,7 +40,7 @@ namespace Chat.Server.DataAccess
             }
             catch (InvalidOperationException e)
             {
-                throw new AggregateException(onErrorMessage,e);
+                throw new AggregateException(onErrorMessage, e);
             }
 
             throw new Exception();

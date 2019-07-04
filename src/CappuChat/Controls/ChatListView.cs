@@ -21,25 +21,22 @@ namespace ChatComponents
 
         public static readonly DependencyProperty MessageMenuItemsProperty = DependencyProperty.Register(
             "MessageMenuItems", typeof(List<ChatBubbleMenuItem>), typeof(ChatListView), new PropertyMetadata(default(List<ChatBubbleMenuItem>)));
-       
+
         public static readonly DependencyProperty ItemClickCommandProperty = DependencyProperty.Register(
             "ItemClickCommand", typeof(ICommand), typeof(ChatListView), new PropertyMetadata(default(ICommand)));
 
-        public List<ChatBubbleMenuItem> UsermessageMenuItems
-        {
-            get { return (List<ChatBubbleMenuItem>) GetValue(UsermessageMenuItemsProperty); }
+        public List<ChatBubbleMenuItem> UsermessageMenuItems {
+            get { return (List<ChatBubbleMenuItem>)GetValue(UsermessageMenuItemsProperty); }
             set { SetValue(UsermessageMenuItemsProperty, value); }
         }
 
-        public List<ChatBubbleMenuItem> MessageMenuItems
-        {
-            get { return (List<ChatBubbleMenuItem>) GetValue(MessageMenuItemsProperty); }
+        public List<ChatBubbleMenuItem> MessageMenuItems {
+            get { return (List<ChatBubbleMenuItem>)GetValue(MessageMenuItemsProperty); }
             set { SetValue(MessageMenuItemsProperty, value); }
         }
 
-        public ICommand ItemClickCommand
-        {
-            get { return (ICommand) GetValue(ItemClickCommandProperty); }
+        public ICommand ItemClickCommand {
+            get { return (ICommand)GetValue(ItemClickCommandProperty); }
             set { SetValue(ItemClickCommandProperty, value); }
         }
 
@@ -138,7 +135,7 @@ namespace ChatComponents
             var type = dataContext.GetType();
             var property = type.GetProperty(UserMessageBooleanPath);
             var value = property?.GetValue(dataContext);
-            return value != null && (bool) value;
+            return value != null && (bool)value;
         }
 
         protected bool IsItemContainerVisible(FrameworkElement itemContainer)

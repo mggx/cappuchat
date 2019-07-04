@@ -25,7 +25,7 @@
                  WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
                  NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
                  ShowIconOnTitleBar="False">
-    
+
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
     </Window.InputBindings>
@@ -132,15 +132,15 @@
                     <Style TargetType="tb:TaskbarIcon">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SafeMode}" Value="True">
-                              <Setter Property="IconSource" Value="Resources/safeoutlook.ico"></Setter>
+                                <Setter Property="IconSource" Value="Resources/safeoutlook.ico"></Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SafeMode}" Value="False">
-                              <Setter Property="IconSource" Value="Resources/chaticon.ico"></Setter>
+                                <Setter Property="IconSource" Value="Resources/chaticon.ico"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </tb:TaskbarIcon.Style>
-                
+
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="{Binding SafeMode, Converter={StaticResource BooleanToSaveModeConverter}}"

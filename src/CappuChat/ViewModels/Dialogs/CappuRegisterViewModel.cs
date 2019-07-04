@@ -1,9 +1,9 @@
-﻿using Chat.Client.Framework;
+﻿using CappuChat;
+using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
-using System;
 using Chat.Client.ViewModels.Providers;
-using CappuChat;
+using System;
 
 namespace Chat.Client.ViewModels.Dialogs
 {
@@ -12,15 +12,13 @@ namespace Chat.Client.ViewModels.Dialogs
         private readonly IRegisterSignalHelper _registerSignalHelper;
 
         private string _username;
-        public string Username
-        {
+        public string Username {
             get => _username;
             set { _username = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
         private string _password;
-        public string Password
-        {
+        public string Password {
             get => _password;
             set { _password = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
@@ -30,7 +28,7 @@ namespace Chat.Client.ViewModels.Dialogs
         public event EventHandler<string> RegisterFailed;
         public event Action<IDialog> RegisterCompleted;
         public event Action<IDialog> RegisterCanceled;
-        
+
 
         public RelayCommand RegisterCommand { get; }
         public RelayCommand CancelCommand { get; }

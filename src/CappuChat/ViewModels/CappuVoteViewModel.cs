@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using CappuChat;
+﻿using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace Chat.Client.ViewModels
 {
@@ -17,8 +17,7 @@ namespace Chat.Client.ViewModels
         private SimpleUser _user;
 
         private SimpleCappuVote _simpleVote;
-        public SimpleCappuVote SimpleVote
-        {
+        public SimpleCappuVote SimpleVote {
             get { return _simpleVote; }
             set { _simpleVote = value; OnPropertyChanged(); }
         }

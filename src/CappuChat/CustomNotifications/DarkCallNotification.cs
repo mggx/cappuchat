@@ -1,5 +1,4 @@
 using Chat.Client.CustomNotifications.DisplayParts;
-using System;
 using System.Windows.Input;
 using ToastNotifications.Core;
 using ToastNotifications.Messages.Core;

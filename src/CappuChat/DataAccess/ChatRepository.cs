@@ -1,10 +1,10 @@
-﻿using System;
+using CappuChat;
+using Chat.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Globalization;
-using CappuChat;
-using Chat.Models;
 
 namespace Chat.DataAccess
 {
@@ -30,9 +30,9 @@ namespace Chat.DataAccess
             IList<SimpleMessage> conversation = new List<SimpleMessage>();
             while (reader.Read())
             {
-                string message = (string) reader["message"];
-                string username = (string) reader["username"];
-                string dateTimeString = (string) reader["messagesentdatetime"];
+                string message = (string)reader["message"];
+                string username = (string)reader["username"];
+                string dateTimeString = (string)reader["messagesentdatetime"];
                 DateTime dateTime = DateTime.Parse(dateTimeString, CultureInfo.InvariantCulture);
 
                 SimpleMessage simpleMessage = new SimpleMessage(new SimpleUser(username), new SimpleUser("testempfaengername"), message)
@@ -61,15 +61,13 @@ namespace Chat.DataAccess
 
             while (dataReader.Read())
             {
-                conversationId = (Int64) dataReader["id"];
+                conversationId = (Int64)dataReader["id"];
             }
 
             if (conversationId != 0) return conversationId;
 
             CreateConversation(localusername, targetUsername);
-            conversationId = GetConversationIdByUsernames(localusername, targetUsername);
-
-            return conversationId;
+            return GetConversationIdByUsernames(localusername, targetUsername);
         }
 
         private static void CreateConversation(string localusername, string targetusername)
@@ -102,7 +100,7 @@ namespace Chat.DataAccess
 
             dbCommand.CommandText =
                 "INSERT INTO messages (conversationid, message, messagesentdatetime, username, targetusername) values (@conversationid, @message, @messagesentdatetime, @username, @targetusername)";
-            
+
             dbCommand.ExecuteNonQuery();
         }
 

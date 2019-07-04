@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -17,18 +17,16 @@ namespace Chat.Client.ViewModels
 
         private SimpleCappuVote _activeVote;
         private IEnumerable<SimpleUser> _onlineUsers;
-        private IViewProvider _viewProvider;
 
         public SimpleUser User => _signalHelperFacade?.LoginSignalHelper.User;
 
         public ObservableCollection<UsersVotes> UserVotes { get; } = new ObservableCollection<UsersVotes>();
 
         public RelayCommand FinalCappuCallCommand { get; }
-        
-        public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
+
+        public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade)
         {
             _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
-            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             FinalCappuCallCommand = new RelayCommand(FinalCappuCall, CanFinalCappuCall);
 
