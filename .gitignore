@@ -8,8 +8,5 @@
 # CSProj User-specific configs
 *.csproj.user
 
-# Generated Resource Files
-**/Properties/**/*.Designer.cs
-
 # MSBuild Binary and Structured Log
 *.binlog
