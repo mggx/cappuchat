@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Chat.Client.Framework
@@ -33,7 +34,8 @@ namespace Chat.Client.Framework
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            if(CanExecuteChanged != null )
+                Application.Current.Dispatcher.Invoke(() => CanExecuteChanged(this, EventArgs.Empty));
         }
 
         public event EventHandler CanExecuteChanged;
@@ -76,7 +78,8 @@ namespace Chat.Client.Framework
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            if (CanExecuteChanged != null)
+                Application.Current.Dispatcher.Invoke(() => CanExecuteChanged(this, EventArgs.Empty));
         }
 
         public event EventHandler CanExecuteChanged;

@@ -1,4 +1,4 @@
-﻿using CappuChat.Configuration;
+using CappuChat.Configuration;
 using Chat.Client;
 using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
@@ -78,7 +78,6 @@ namespace CappuChat
             var changelog = GetChangelog();
             if (!string.IsNullOrEmpty(changelog))
                 _cappuMainPresenter.ShowChangelog(changelog);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
             _cappuMainPresenter.Load();
         }
 

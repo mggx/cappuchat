@@ -1,4 +1,4 @@
-﻿using Chat.Client.Framework;
+using Chat.Client.Framework;
 using Chat.Client.Presenters.Delegates;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
@@ -52,7 +52,7 @@ namespace Chat.Client.Presenters
 
             using (CappuLoginViewModel.ProgressProvider.StartProgress())
             {
-                ConnectedToServer = await (StartConnection?.Invoke()).ConfigureAwait(false);
+                ConnectedToServer = await (StartConnection?.Invoke()).ConfigureAwait(true);
             }
 
             CappuLoginViewModel.RaiseCanExecuteChanged();
