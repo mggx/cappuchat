@@ -53,7 +53,7 @@ namespace CappuUpdater
                 Color = "Steel"
             });
 
-            ThemeManager.AddAccent("Orgadata", new Uri("Styles/OrgadataTheme.xaml"));
+            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/CappuUpdater;component/Styles/OrgadataTheme.xaml"));
 
             var foundAccent = ThemeManager.Accents.FirstOrDefault(accent =>
                 accent.Name.Equals(colorConfiguration.Color, StringComparison.CurrentCultureIgnoreCase));
