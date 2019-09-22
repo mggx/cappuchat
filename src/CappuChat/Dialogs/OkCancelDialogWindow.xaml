@@ -1,4 +1,4 @@
-﻿<mah:MetroWindow x:Class="Chat.Client.Dialogs.OkCancelDialogWindow"
+<mah:MetroWindow x:Class="Chat.Client.Dialogs.OkCancelDialogWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -19,7 +19,7 @@
     <Border Background="{DynamicResource AccentColorBrush4}">
         <Border>
             <Border.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Chat.Client;component/Resources/emoji-background.png"
+                <ImageBrush ImageSource="/Resources/emoji-background.png"
                             ViewportUnits="Absolute"
                             Viewport="0 0 500 500"
                             TileMode="Tile"/>
