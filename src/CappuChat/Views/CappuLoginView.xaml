@@ -7,7 +7,7 @@
               xmlns:controls="clr-namespace:Chat.Client.Controls"
               xmlns:helper="clr-namespace:Chat.Client.Helper"
               xmlns:presenters="clr-namespace:Chat.Client.Presenters"
-              xmlns:texts="clr-namespace:Chat.Texts"
+              xmlns:props="clr-namespace:CappuChat.Properties"
               xmlns:extensions="clr-namespace:Chat.Client.Extensions"
               mc:Ignorable="d" 
               d:DataContext="{d:DesignInstance presenters:CappuLoginPresenter}"
@@ -23,7 +23,7 @@
             Padding="5">
         <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Center">
-            <TextBlock Text="{x:Static texts:Texts.Login}"
+            <TextBlock Text="{x:Static props:Strings.Login}"
                            HorizontalAlignment="Center"
                            FontSize="24"
                            Foreground="{DynamicResource AccentColorBrush}"/>
@@ -32,13 +32,13 @@
                                          Width="200" 
                                          Margin="5" 
                                          FocusedBorderBrush="{DynamicResource AccentBaseColorBrush}"
-                                         Watermark="{x:Static texts:Texts.UsernameWatermark}"
+                                         Watermark="{x:Static props:Strings.Username_Watermark}"
                                          Text="{Binding CappuLoginViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          BorderBrush="White"
                                          MaxLength="25"
                                          AllowDrop="False"/>
 
-            <PasswordBox mah:TextBoxHelper.Watermark="{x:Static texts:Texts.PasswordWatermark}"
+            <PasswordBox mah:TextBoxHelper.Watermark="{x:Static props:Strings.Password_Watermark}"
                          mah:PasswordBoxHelper.CapsLockWarningToolTip="Caps on"
                          helper:PasswordHelper.Password="{Binding CappuLoginViewModel.Password, Mode=TwoWay}"
                          Width="200"
@@ -46,10 +46,10 @@
                          HorizontalContentAlignment="Center"
                          MaxLength="25"/>
 
-            <Button Content="{x:Static texts:Texts.Login}" 
+            <Button Content="{x:Static props:Strings.Login}" 
                         Margin="5" 
                         Command="{Binding CappuLoginViewModel.LoginCommand}"/>
-            <Button Content="{x:Static texts:Texts.Register}" 
+            <Button Content="{x:Static props:Strings.Register}" 
                         Margin="5" 
                         Command="{Binding CappuLoginViewModel.OpenRegisterCommand}"/>
 

@@ -7,10 +7,8 @@ namespace Chat.Server.Hubs
     {
         private readonly Dictionary<T, HashSet<string>> _connections = new Dictionary<T, HashSet<string>>();
 
-        public int Count
-        {
-            get
-            {
+        public int Count {
+            get {
                 lock (_connections)
                 {
                     return _connections.Count;

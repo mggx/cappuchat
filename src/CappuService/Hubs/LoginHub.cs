@@ -1,6 +1,7 @@
-﻿using CappuChat.DTOs;
+using CappuChat.DTOs;
 using Chat.Server.Controller;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,8 +9,6 @@ namespace Chat.Server.Hubs
 {
     public class LoginHub : BaseHub
     {
-        private static readonly UserController UserController = new UserController();
-
         public SimpleLoginResponse Login(string username, string password)
         {
             username = username?.Trim();
@@ -22,10 +21,11 @@ namespace Chat.Server.Hubs
 
             response.ConnectionId = Context.ConnectionId;
 
-            if (UsernameConnectionIdCache.ContainsKey(response.User.Username.ToLower()))
+            var allLowerCaseUserName = response.User.Username.ToLower(CultureInfo.CurrentCulture);
+            if (TryGetUserIDFromCache(allLowerCaseUserName, out var correctConnectionID))
             {
-                if (UsernameConnectionIdCache[response.User.Username.ToLower()] != Context.ConnectionId)
-                    Clients.Client(UsernameConnectionIdCache[response.User.Username.ToLower()]).OnClientLoggedOut(Texts.Texts.OtherClientLoggedIn);
+                if (correctConnectionID != Context.ConnectionId)
+                    Clients.Client(correctConnectionID).OnClientLoggedOut("Another client with that username is already logged in.");
             }
 
             Add(response.User.Username);

@@ -11,7 +11,7 @@ namespace CappuChat.Converters
         {
             if (!(value is bool))
                 return HorizontalAlignment.Center;
-            bool boolean = (bool) value;
+            bool boolean = (bool)value;
             if (boolean)
                 return HorizontalAlignment.Right;
             return HorizontalAlignment.Left;

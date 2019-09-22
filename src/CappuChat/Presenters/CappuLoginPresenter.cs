@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
 using Chat.Client.Framework;
 using Chat.Client.Presenters.Delegates;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Events;
+using System;
+using System.Globalization;
 
 namespace Chat.Client.Presenters
 {
@@ -14,8 +14,7 @@ namespace Chat.Client.Presenters
         private readonly IViewProvider _viewProvider;
 
         private bool _connectedToServer;
-        public bool ConnectedToServer
-        {
+        public bool ConnectedToServer {
             get { return _connectedToServer; }
             set { _connectedToServer = value; OnPropertyChanged(); StartServerConnectionCommand.RaiseCanExecuteChanged(); }
         }
@@ -25,22 +24,16 @@ namespace Chat.Client.Presenters
         public RelayCommand StartServerConnectionCommand { get; }
 
         public event StartServerConnectionHandler StartConnection;
-        
-        public event Action<string> LoggedOut
-        {
+
+        public event Action<string> LoggedOut {
             add => CappuLoginViewModel.LoggedOut += value;
             remove => CappuLoginViewModel.LoggedOut -= value;
         }
 
         public CappuLoginPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuLoginPresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuLoginPresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             StartServerConnectionCommand = new RelayCommand(StartServerConnection, CanStartServerConnection);
 
@@ -55,11 +48,11 @@ namespace Chat.Client.Presenters
         public async void StartServerConnection()
         {
             if (StartConnection == null)
-                throw new InvalidOperationException("No one registered on StartConnection");
+                throw new InvalidOperationException(CappuChat.Properties.Errors.NoOneRegisteredOnStartConnection);
 
             using (CappuLoginViewModel.ProgressProvider.StartProgress())
             {
-                ConnectedToServer = await StartConnection?.Invoke();
+                ConnectedToServer = await (StartConnection?.Invoke()).ConfigureAwait(true);
             }
 
             CappuLoginViewModel.RaiseCanExecuteChanged();
@@ -90,14 +83,20 @@ namespace Chat.Client.Presenters
 
         private void CappuLoginViewModelOnLoginFailed(LoginFailedEventArgs eventArgs)
         {
-            _viewProvider.ShowMessage(Texts.Texts.LoginFailed, Texts.Texts.LoginFailedReason(eventArgs.Reason));
+            _viewProvider.ShowMessage(
+                CappuChat.Properties.Strings.LoginFailed,
+                string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.LoginFailed_Reason, eventArgs.Reason)
+            );
         }
 
         private void CappuLoginViewModelOnLoggedOut(string reason)
         {
             if (string.IsNullOrWhiteSpace(reason))
                 return;
-            _viewProvider.ShowMessage(Texts.Texts.LoggedOut, Texts.Texts.LoggedOutReason(reason));
+            _viewProvider.ShowMessage(
+                CappuChat.Properties.Strings.LoggedOut,
+                string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.LoggedOut_Reason, reason)
+            );
         }
 
         protected override void Dispose(bool disposing)

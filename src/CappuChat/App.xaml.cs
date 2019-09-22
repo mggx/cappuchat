@@ -1,20 +1,21 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using CappuChat.Configuration;
 using Chat.Client;
 using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers;
 using MahApps.Metro;
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace CappuChat
 {
-    public partial class App
+    public partial class App : Application, IDisposable
     {
         private const string SignalReconnectingError = "Data cannot be sent because the WebSocket connection is reconnecting.";
         private const string OldPrefix = "old_";
@@ -45,14 +46,14 @@ namespace CappuChat
                 Color = "Steel"
             });
 
-            ThemeManager.AddAccent("Orgadata", new Uri("pack://application:,,,/CappuChat;component/Styles/OrgadataTheme.xaml"));
+            ThemeManager.AddAccent("Orgadata", new Uri("Styles/OrgadataTheme.xaml", UriKind.Relative));
 
             var foundAccent = ThemeManager.Accents.FirstOrDefault(accent =>
                 accent.Name.Equals(colorConfiguration.Color, StringComparison.CurrentCultureIgnoreCase));
             var theme = ThemeManager.DetectAppStyle(Current);
             ThemeManager.ChangeAppStyle(Current, foundAccent, theme.Item1);
 
-            Chat.DataAccess.DataAccess.InitializeDatabase();
+            Chat.DataAccess.DatabaseClient.InitializeDatabase();
             _viewProvider = new ViewProvider();
 
             _hubConnectionHelper = new SignalHubConnectionHelper("http://" + serverConfigurationFile.Host + ":" + serverConfigurationFile.Port + "/signalr/hubs");
@@ -75,7 +76,7 @@ namespace CappuChat
             _viewProvider.Show(_cappuMainPresenter);
 
             var changelog = GetChangelog();
-            if (changelog != string.Empty)
+            if (!string.IsNullOrEmpty(changelog))
                 _cappuMainPresenter.ShowChangelog(changelog);
             _cappuMainPresenter.Load();
         }
@@ -102,7 +103,7 @@ namespace CappuChat
             foreach (var file in Directory.GetFiles(Environment.CurrentDirectory))
             {
                 var fileName = Path.GetFileName(file);
-                if (fileName.StartsWith(OldPrefix))
+                if (fileName.StartsWith(OldPrefix, StringComparison.OrdinalIgnoreCase))
                     File.Delete(fileName);
             }
         }
@@ -117,22 +118,24 @@ namespace CappuChat
 
                 while (innerException != null)
                 {
-                    message = message + string.Join(Environment.NewLine, innerException.Message);
+                    message += string.Join(Environment.NewLine, innerException.Message);
                     innerException = innerException.InnerException;
                 }
             }
             else
+            {
                 message = e.Exception.Message;
+            }
 
             if (e.Exception is InvalidOperationException && message.Contains(SignalReconnectingError))
             {
-                _viewProvider.ShowMessage(Chat.Texts.Texts.RestartRequired, Chat.Texts.Texts.RestartRequiredServerConnection);
+                _viewProvider.ShowMessage(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredServerConnection);
                 Process.Start(ResourceAssembly.Location);
                 Current.Shutdown();
                 Environment.Exit(0);
             }
 
-            _viewProvider.ShowMessage(Chat.Texts.Texts.Error, message);
+            _viewProvider.ShowMessage(CappuChat.Properties.Strings.Error, message);
         }
 
         private void ApplicationCurrentOnExit(object sender, ExitEventArgs e)
@@ -146,5 +149,29 @@ namespace CappuChat
         {
             return _hubConnectionHelper.Start();
         }
+
+        #region IDisposable Support
+        private bool alreadyDisposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!alreadyDisposed)
+            {
+                if (disposing)
+                {
+                    _cappuMainPresenter.Dispose();
+                    _viewProvider.Dispose();
+                    _hubConnectionHelper.Dispose();
+                }
+                alreadyDisposed = true;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "No one's gonna derive from App, mate...")]
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

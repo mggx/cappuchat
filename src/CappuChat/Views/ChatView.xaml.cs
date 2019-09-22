@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Windows;
 using Chat.Client.Helper;
 using Chat.Client.ViewModels;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using ChatComponents;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Chat.Client.Views
 {
     /// <summary>
     /// Interaction logic for ChatView.xaml
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "DependencyProperties...")]
     public partial class ChatView : UserControl
     {
         private WindowKeyDownHelper _windowKeyDownHelper;
@@ -22,15 +22,13 @@ namespace Chat.Client.Views
         public static readonly DependencyProperty MessageMenuItemsProperty = DependencyProperty.Register(
             "MessageMenuItems", typeof(List<ChatBubbleMenuItem>), typeof(ChatView), new PropertyMetadata(default(List<ChatBubbleMenuItem>)));
 
-        public List<ChatBubbleMenuItem> UsermessageMenuItems
-        {
-            get { return (List<ChatBubbleMenuItem>) GetValue(UsermessageMenuItemsProperty); }
+        public List<ChatBubbleMenuItem> UsermessageMenuItems {
+            get { return (List<ChatBubbleMenuItem>)GetValue(UsermessageMenuItemsProperty); }
             set { SetValue(UsermessageMenuItemsProperty, value); }
         }
 
-        public List<ChatBubbleMenuItem> MessageMenuItems
-        {
-            get { return (List<ChatBubbleMenuItem>) GetValue(MessageMenuItemsProperty); }
+        public List<ChatBubbleMenuItem> MessageMenuItems {
+            get { return (List<ChatBubbleMenuItem>)GetValue(MessageMenuItemsProperty); }
             set { SetValue(MessageMenuItemsProperty, value); }
         }
 

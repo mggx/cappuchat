@@ -6,15 +6,13 @@ namespace Chat.Models
     public class SimpleConversation : INotifyPropertyChanged
     {
         private int _newMessages;
-        public int NewMessages
-        {
+        public int NewMessages {
             get { return _newMessages; }
             set { _newMessages = value; OnPropertyChanged(); }
         }
 
         private string _lastMessage;
-        public string LastMessage
-        {
+        public string LastMessage {
             get { return _lastMessage; }
             set { _lastMessage = value; OnPropertyChanged(); }
         }

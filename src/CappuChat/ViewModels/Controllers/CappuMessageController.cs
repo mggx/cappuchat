@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using CappuChat;
+﻿using CappuChat;
 using Chat.DataAccess;
 using Chat.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Chat.Client.ViewModels.Controllers
 {
@@ -13,9 +13,7 @@ namespace Chat.Client.ViewModels.Controllers
 
         public CappuMessageController(SimpleUser user)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user), "Cannot create CappuMessageController. Given user is null.");
-            _user = user;
+            _user = user ?? throw new ArgumentNullException(nameof(user));
             _chatRepository = new ChatRepository();
         }
 
@@ -26,7 +24,7 @@ namespace Chat.Client.ViewModels.Controllers
 
         public IEnumerable<SimpleConversation> GetConversations()
         {
-            return _chatRepository.GetConversations(_user);
+            return ChatRepository.GetConversations(_user);
         }
 
         public void StoreOwnMessage(SimpleMessage message)

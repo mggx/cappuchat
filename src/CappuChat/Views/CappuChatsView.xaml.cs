@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Chat.Client.Views
@@ -13,7 +13,9 @@ namespace Chat.Client.Views
             InitializeComponent();
         }
 
+#pragma warning disable
         private void ChatViewOnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+#pragma warning restore
         {
             ChatView.BroadcastListView.LazyScrollToBottom = true;
         }

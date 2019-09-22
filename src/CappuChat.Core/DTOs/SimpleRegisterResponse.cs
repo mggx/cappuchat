@@ -12,9 +12,7 @@ namespace CappuChat.DTOs
 
         public SimpleRegisterResponse(SimpleUser user, bool success, string errorMessage) : base(success, errorMessage)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user), "Cannot create SimpleRegisterResponse. Given user is null.");
-            User = user;
+            User = user ?? throw new ArgumentNullException(nameof(user));
         }
     }
 }

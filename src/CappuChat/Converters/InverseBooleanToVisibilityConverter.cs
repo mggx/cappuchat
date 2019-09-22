@@ -10,11 +10,14 @@ namespace CappuChat.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                throw new ArgumentNullException("Cannot convert boolean to Visibility. Given value is null.");
-
-            var boolean = (bool) value;
-            return boolean ? Visibility.Collapsed : Visibility.Visible;
+            if (value is bool boolVal)
+            {
+                return boolVal ? Visibility.Collapsed : Visibility.Visible;
+            }
+            else
+            {
+                throw new ArgumentException(CappuChat.Properties.Errors.ConverterInputArgumentInvalid, nameof(value));
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

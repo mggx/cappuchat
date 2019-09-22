@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace ChatComponents
@@ -15,21 +14,18 @@ namespace ChatComponents
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
             "Command", typeof(ICommand), typeof(ChatBubbleMenuItem), new PropertyMetadata(default(ICommand)));
 
-        public string Header
-        {
-            get { return (string) GetValue(HeaderProperty); }
+        public string Header {
+            get { return (string)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 
-        public object DataContext
-        {
-            get { return (object) GetValue(DataContextProperty); }
+        public object DataContext {
+            get { return GetValue(DataContextProperty); }
             set { SetValue(DataContextProperty, value); }
         }
 
-        public ICommand Command
-        {
-            get { return (ICommand) GetValue(CommandProperty); }
+        public ICommand Command {
+            get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
     }

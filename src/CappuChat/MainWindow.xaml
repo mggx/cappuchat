@@ -7,7 +7,7 @@
                  xmlns:presenters1="clr-namespace:Chat.Client.Presenters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs"
-                 xmlns:texts="clr-namespace:Chat.Texts;assembly=CappuChat"
+                 xmlns:props="clr-namespace:CappuChat.Properties"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  xmlns:tb="http://www.hardcodet.net/taskbar"
                  xmlns:client="clr-namespace:Chat.Client"
@@ -25,7 +25,7 @@
                  WindowTitleBrush="{DynamicResource AccentBaseColorBrush}"
                  NonActiveWindowTitleBrush="{DynamicResource AccentColorBrush}"
                  ShowIconOnTitleBar="False">
-    
+
     <Window.InputBindings>
         <KeyBinding Modifiers="Control" Key="L" Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
     </Window.InputBindings>
@@ -59,11 +59,11 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding SafeMode}" Value="True">
                     <Setter Property="Title" Value="Mail"></Setter>
-                    <Setter Property="Icon" Value="safeoutlook.ico"></Setter>
+                    <Setter Property="Icon" Value="Resources/safeoutlook.ico"></Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding SafeMode}" Value="False">
                     <Setter Property="Title" Value="CappuChat"></Setter>
-                    <Setter Property="Icon" Value="chaticon.ico"></Setter>
+                    <Setter Property="Icon" Value="Resources/chaticon.ico"></Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -100,12 +100,12 @@
                     IsTabStop="False">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern Width="20" Height="20" Kind="Settings" />
-                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static texts:Texts.AppSettingsWindowTitle}" />
+                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center" Text="{x:Static props:Strings.AppSettingsWindowTitle}" />
                 </StackPanel>
             </Button>
 
             <mah:WindowCommandsItem>
-                <Button Content="{x:Static texts:Texts.Logout}"
+                <Button Content="{x:Static props:Strings.LogOut}"
                         IsTabStop="False"
                         Command="{Binding CappuLoginPresenter.CappuLoginViewModel.LogoutCommand}"/>
             </mah:WindowCommandsItem>
@@ -132,15 +132,15 @@
                     <Style TargetType="tb:TaskbarIcon">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding SafeMode}" Value="True">
-                                <Setter Property="IconSource" Value="safeoutlook.ico"></Setter>
+                                <Setter Property="IconSource" Value="Resources/safeoutlook.ico"></Setter>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding SafeMode}" Value="False">
-                                <Setter Property="IconSource" Value="chaticon.ico"></Setter>
+                                <Setter Property="IconSource" Value="Resources/chaticon.ico"></Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </tb:TaskbarIcon.Style>
-                
+
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="{Binding SafeMode, Converter={StaticResource BooleanToSaveModeConverter}}"

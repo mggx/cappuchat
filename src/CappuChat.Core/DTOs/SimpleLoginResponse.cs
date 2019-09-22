@@ -13,26 +13,20 @@ namespace CappuChat.DTOs
 
         public SimpleLoginResponse(bool success, SimpleUser user, string connectionId) : base(success)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user), "Cannot create SimpleLoginResponse. Given user is null.");
-
             if (string.IsNullOrWhiteSpace(connectionId))
-                throw new ArgumentNullException(nameof(connectionId), "Cannot create SimpleLoginResponse. Given connectionId is invalid.");
-
-            User = user;
+                throw new ArgumentNullException(nameof(connectionId));
             ConnectionId = connectionId;
-        } 
+
+            User = user ?? throw new ArgumentNullException(nameof(user));
+        }
 
         public SimpleLoginResponse(bool success, string errorMessage, SimpleUser user, string connectionId) : base(success, errorMessage)
         {
-            if (user == null)
-                throw new ArgumentNullException(nameof(user), "Cannot create SimpleLoginResponse. Given user is null.");
-
             if (string.IsNullOrWhiteSpace(connectionId))
-                throw new ArgumentNullException(nameof(connectionId), "Cannot create SimpleLoginResponse. Given connectionId is invalid.");
-
-            User = user;
+                throw new ArgumentNullException(nameof(connectionId));
             ConnectionId = connectionId;
+
+            User = user ?? throw new ArgumentNullException(nameof(user));
         }
     }
 }

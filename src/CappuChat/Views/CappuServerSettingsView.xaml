@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              xmlns:controls="clr-namespace:Chat.Client.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,7 +21,7 @@
             Padding="5">
         <StackPanel VerticalAlignment="Center"
                         HorizontalAlignment="Center">
-            <TextBlock Text="{x:Static texts:Texts.ServerSettings}"
+            <TextBlock Text="{x:Static props:Strings.ServerSettings}"
                            HorizontalAlignment="Center"
                            FontSize="24"
                            Foreground="{StaticResource AccentLightColor1}"/>
@@ -29,18 +29,18 @@
             <controls:SpecialTextBox x:Name="ServerUrlTextBox"
                                          Width="200" 
                                          Margin="5" 
-                                         Watermark="{x:Static texts:Texts.ServerUrlWatermark}"
+                                         Watermark="{x:Static props:Strings.ServerUrl_Watermark}"
                                          Text="{Binding ServerUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          BorderBrush="White"/>
 
             <controls:SpecialTextBox x:Name="ServerPortTextBox"
                                      Width="200" 
                                      Margin="5" 
-                                     Watermark="{x:Static texts:Texts.ServerPortWatermark}"
+                                     Watermark="{x:Static props:Strings.ServerPort_Watermark}"
                                      Text="{Binding ServerPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      BorderBrush="White"/>
 
-            <Button Content="{x:Static texts:Texts.Save}" 
+            <Button Content="{x:Static props:Strings.Save}" 
                         Margin="5" 
                         Command="{Binding SaveSettingsCommand}"/>
         </StackPanel>

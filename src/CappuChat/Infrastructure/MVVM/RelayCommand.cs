@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Chat.Client.Framework
@@ -10,17 +11,12 @@ namespace Chat.Client.Framework
 
         public RelayCommand(Action action)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public RelayCommand(Action action, Func<bool> canExecute)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
             _canExecute = canExecute;
         }
 
@@ -38,7 +34,8 @@ namespace Chat.Client.Framework
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            if(CanExecuteChanged != null )
+                Application.Current.Dispatcher.Invoke(() => CanExecuteChanged(this, EventArgs.Empty));
         }
 
         public event EventHandler CanExecuteChanged;
@@ -51,18 +48,13 @@ namespace Chat.Client.Framework
 
         public RelayCommand(Action<T> action)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-            _action = action;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
         }
 
         public RelayCommand(Action<T> action, Func<T, bool> canExecute)
         {
-            if (action == null)
-                throw new ArgumentNullException("Cannot create RelayCommand. Given action is null.");
-
-            _action = action;
-            _canExecute = canExecute;
+            _action = action ?? throw new ArgumentNullException(nameof(action));
+            _canExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute));
         }
 
         public bool CanExecute(object parameter)
@@ -73,7 +65,7 @@ namespace Chat.Client.Framework
             if (parameter == null)
                 parameter = default(T);
 
-            return _canExecute.Invoke((T) parameter);
+            return _canExecute.Invoke((T)parameter);
         }
 
         public void Execute(object parameter)
@@ -81,12 +73,13 @@ namespace Chat.Client.Framework
             if (parameter == null)
                 parameter = default(T);
 
-            _action?.Invoke((T) parameter);
+            _action?.Invoke((T)parameter);
         }
 
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            if (CanExecuteChanged != null)
+                Application.Current.Dispatcher.Invoke(() => CanExecuteChanged(this, EventArgs.Empty));
         }
 
         public event EventHandler CanExecuteChanged;

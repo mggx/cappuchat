@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels"
              xmlns:local="clr-namespace:Chat.Client.Views"
              xmlns:converters="clr-namespace:CappuChat.Converters"
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              xmlns:userControls="clr-namespace:Chat.Client.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -17,7 +17,7 @@
         <converters:NullToVisibilityConverter x:Key="InversedNullToVisibilityConverter"
                                               Inverse="True"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.45*"/>
@@ -58,7 +58,7 @@
                        FontSize="48"
                        Foreground="{DynamicResource AccentColorBrush3}"
                        Margin="5"
-                       Text="{x:Static texts:Texts.NoChatSelected}"
+                       Text="{x:Static props:Strings.NoChatSelected}"
                        Visibility="{Binding CurrentChatViewModel, Converter={StaticResource InversedNullToVisibilityConverter}}"/>
 
             <local:ChatView x:Name="ChatView"

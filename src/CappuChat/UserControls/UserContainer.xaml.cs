@@ -17,21 +17,18 @@ namespace Chat.Client.UserControls
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", typeof(object), typeof(UserContainer), new PropertyMetadata(default(object)));
 
-        public int NewMessages
-        {
-            get { return (int) GetValue(NewMessagesProperty); }
+        public int NewMessages {
+            get { return (int)GetValue(NewMessagesProperty); }
             set { SetValue(NewMessagesProperty, value); }
         }
 
-        public string Header
-        {
-            get { return (string) GetValue(HeaderProperty); }
+        public string Header {
+            get { return (string)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 
-        public new object Content
-        {
-            get { return (object) GetValue(ContentProperty); }
+        public new object Content {
+            get { return GetValue(ContentProperty); }
             set { SetValue(ContentProperty, value); }
         }
 

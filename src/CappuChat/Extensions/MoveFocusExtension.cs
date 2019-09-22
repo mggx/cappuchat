@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Chat.Client.Extensions
 {
-    public class MoveFocusExtension
+    public static class MoveFocusExtension
     {
         public static readonly DependencyProperty MoveFocusOnEnterProperty = DependencyProperty.RegisterAttached(
             "MoveFocusOnEnter", typeof(bool), typeof(MoveFocusExtension), new PropertyMetadata(PropertyChangedCallback));
@@ -32,12 +32,12 @@ namespace Chat.Client.Extensions
 
         public static void SetMoveFocusOnEnter(DependencyObject element, bool value)
         {
-            element.SetValue(MoveFocusOnEnterProperty, value);
+            element?.SetValue(MoveFocusOnEnterProperty, value);
         }
 
         public static bool GetMoveFocusOnEnter(DependencyObject element)
         {
-            return (bool) element.GetValue(MoveFocusOnEnterProperty);
+            return (bool)element?.GetValue(MoveFocusOnEnterProperty);
         }
     }
 }

@@ -14,8 +14,7 @@ namespace Chat.Models
         public Stream ImageStream { get; set; }
 
         private bool _imageUploading;
-        public bool ImageUploading
-        {
+        public bool ImageUploading {
             get { return _imageUploading; }
             set { _imageUploading = value; OnPropertyChanged(); }
         }
@@ -38,7 +37,7 @@ namespace Chat.Models
         {
         }
 
-        [field:NonSerialized]
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

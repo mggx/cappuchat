@@ -1,45 +1,42 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using CappuChat;
+﻿using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Models;
+using System;
+using System.Collections.ObjectModel;
 
 namespace Chat.Client.ViewModels
 {
     public abstract class CappuChatViewModelBase : ViewModelBase
     {
-        protected readonly ISignalHelperFacade SignalHelperFacade;
+        protected ISignalHelperFacade SignalHelperFacade { get; }
 
         private SimpleMessage _selectedMessage;
-        public SimpleMessage SelectedMessage
-        {
+
+        public SimpleMessage SelectedMessage {
             get { return _selectedMessage; }
             set { _selectedMessage = value; OnPropertyChanged(); RaiseCanExecuteChanged(); }
         }
 
         private string _messageImagePath;
-        public string MessageImagePath
-        {
+
+        public string MessageImagePath {
             get { return _messageImagePath; }
             set { _messageImagePath = value; OnPropertyChanged(); }
         }
 
         public SimpleUser User { get; set; }
-        
-        public ObservableCollection<OwnSimpleMessage> Messages { get; set; } = new ObservableCollection<OwnSimpleMessage>();
+
+        public ObservableCollection<OwnSimpleMessage> Messages { get; } = new ObservableCollection<OwnSimpleMessage>();
 
         public RelayCommand<string> SendMessageCommand { get; }
         public RelayCommand ClearMessagesCommand { get; set; }
         public RelayCommand<string> DataDroppedCommand { get; }
 
-        public CappuChatViewModelBase(ISignalHelperFacade signalHelperFacade)
+        protected CappuChatViewModelBase(ISignalHelperFacade signalHelperFacade)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade),
-                    "Cannot create CappuChatViewModelBase. Given signalHelperFacade is null.");
-            SignalHelperFacade = signalHelperFacade;
+            SignalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
 
             SendMessageCommand = new RelayCommand<string>(SendMessage, CanSendMessage);
             ClearMessagesCommand = new RelayCommand(ClearMessages);

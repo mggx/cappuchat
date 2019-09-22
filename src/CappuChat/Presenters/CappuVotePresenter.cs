@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
 using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.ViewModels;
+using System;
+using System.Threading.Tasks;
 
 namespace Chat.Client.Presenters
 {
@@ -11,7 +11,6 @@ namespace Chat.Client.Presenters
     {
         private readonly ISignalHelperFacade _signalHelperFacade;
         private readonly IViewProvider _viewProvider;
-        private SimpleUser _user;
 
         public CappuVoteViewModel CappuVoteViewModel { get; private set; }
         public CappuVoteResultViewModel CappuVoteResultViewModel { get; private set; }
@@ -19,13 +18,8 @@ namespace Chat.Client.Presenters
 
         public CappuVotePresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuVotePresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuVotePresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             Initialize();
         }
@@ -40,7 +34,7 @@ namespace Chat.Client.Presenters
 
         private void InitializeCappuVoteResultViewModel()
         {
-            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade, _viewProvider);
+            CappuVoteResultViewModel = new CappuVoteResultViewModel(_signalHelperFacade);
         }
 
         private void InitializeCappuVoteViewModel()
@@ -60,15 +54,14 @@ namespace Chat.Client.Presenters
 
         private void VoteSignalHelperOnFinalCappuCalled()
         {
-            _viewProvider.ShowToastNotification(Texts.Texts.GoGoCall, NotificationType.Information);
+            _viewProvider.ShowToastNotification(CappuChat.Properties.Strings.GoGoCall, NotificationType.Information);
             CappuVoteViewModel.Reset();
         }
 
         public async Task Load(SimpleUser user)
         {
-            _user = user;
-            await CappuVoteViewModel.Load(user);
-            await CappuVoteResultViewModel.Load();
+            await CappuVoteViewModel.Load(user).ConfigureAwait(false);
+            await CappuVoteResultViewModel.Load().ConfigureAwait(false);
         }
 
         protected override void Dispose(bool disposing)

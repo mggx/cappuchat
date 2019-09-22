@@ -22,13 +22,10 @@ namespace CappuChat
 
         public SimpleMessage(SimpleUser sender, string message)
         {
-            if (sender == null)
-                throw new ArgumentNullException(nameof(sender), "Cannot create SimpleMessage. Given sender is null.");
+            Sender = sender ?? throw new ArgumentNullException(nameof(sender));
 
             if (string.IsNullOrWhiteSpace(message))
-                throw new ArgumentException("Cannot create SimpleMessage. Given message is invalid.");
-
-            Sender = sender;
+                throw new ArgumentException(CappuChat.Properties.Strings.Error_MessageCannotBeEmpty, nameof(sender));
             Message = message;
         }
 

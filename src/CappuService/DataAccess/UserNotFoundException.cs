@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Chat.Server.DataAccess.Exceptions
 {
@@ -9,6 +9,9 @@ namespace Chat.Server.DataAccess.Exceptions
         }
 
         public UserNotFoundException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+        public UserNotFoundException() : base()
         {
         }
     }

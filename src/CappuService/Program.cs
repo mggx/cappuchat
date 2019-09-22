@@ -1,14 +1,12 @@
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
 using Owin;
 using System;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Owin;
-using Chat.Server;
 
 namespace Chat.Server
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -21,9 +19,11 @@ namespace Chat.Server
                     url = "http://localhost:1232";
             }
             else
+            {
                 url = "http://*:5555";
-                
-            DataAccess.DataAccess.InitializeDatabase();
+            }
+
+            DataAccess.DatabaseClient.InitializeDatabase();
 
             using (WebApp.Start(url))
             {
@@ -35,6 +35,7 @@ namespace Chat.Server
 
     public class Startup
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "OWIN weak contract")]
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(CorsOptions.AllowAll);

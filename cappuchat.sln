@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CappuChat", "src\CappuChat\CappuChat.csproj", "{09D73D87-71D4-4CD0-880F-099870A985C6}"
 EndProject
@@ -79,6 +79,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_ShowErrorsInErrorList = False
 		SolutionGuid = {E95531F1-DC18-4EF7-A6A3-2AE3D56876D2}
 	EndGlobalSection
 EndGlobal

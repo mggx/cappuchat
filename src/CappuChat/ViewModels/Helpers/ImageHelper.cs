@@ -1,11 +1,11 @@
-﻿using Chat.Client.Framework;
+using Chat.Client.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace Chat.Client.ViewModels.Helpers
 {
-    public class ImageHelper : Disposable
+    class ImageHelper : Disposable
     {
         private static readonly Dictionary<string, MemoryStream> Images = new Dictionary<string, MemoryStream>();
 
@@ -36,7 +36,7 @@ namespace Chat.Client.ViewModels.Helpers
             }
         }
 
-        public Stream GetImageStream(string imageName)
+        public static Stream GetImageStream(string imageName)
         {
             return Images.ContainsKey(imageName) ? Images[imageName] : Stream.Null;
         }

@@ -8,10 +8,10 @@ namespace CappuChat.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is bool boolean)) return Chat.Texts.Texts.SomethingWentWrong;
+            if (!(value is bool boolean)) return CappuChat.Properties.Strings.SomethingWentWrong;
             if (boolean)
-                return Chat.Texts.Texts.Voted;
-            return Chat.Texts.Texts.NotVoted;
+                return CappuChat.Properties.Strings.Voted;
+            return CappuChat.Properties.Strings.NotVoted;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

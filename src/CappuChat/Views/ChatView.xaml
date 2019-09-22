@@ -9,7 +9,7 @@
              xmlns:controls="clr-namespace:Chat.Client.Controls"
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels"
              xmlns:models="clr-namespace:Chat.Models"
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              xmlns:chatComponents="clr-namespace:ChatComponents"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:converters="clr-namespace:CappuChat.Converters"
@@ -89,7 +89,7 @@
                         CornerRadius="5"
                         Grid.Column="0">
                     <controls:SpecialTextBox x:Name="InputTextBox"
-                                             Watermark="{x:Static texts:Texts.TypeMessage}"
+                                             Watermark="{x:Static props:Strings.ChatInput_Watermark}"
                                              EnterCommand="{Binding SendMessageCommand}"
                                              Background="Transparent"
                                              WatermarkForeground="White"

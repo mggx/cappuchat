@@ -1,4 +1,7 @@
-﻿using System;
+using CappuUpdater.ArgumentTool;
+using CappuUpdater.Extensions;
+using FluentFTP;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -9,10 +12,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using CappuUpdater.ArgumentTool;
-using CappuUpdater.Extensions;
-using FluentFTP;
 
+#pragma warning disable
+//This class is so fucked, there's no point in trying to suppress specifics
 namespace CappuUpdater.ViewModels
 {
     public class UpdaterViewModel : INotifyPropertyChanged
@@ -21,16 +23,14 @@ namespace CappuUpdater.ViewModels
         private readonly UpdaterArguments _updaterArguments;
 
         private bool _isUpdating = true;
-        public bool IsUpdating
-        {
+        public bool IsUpdating {
             get { return _isUpdating; }
             set { _isUpdating = value; OnPropertyChanged(); }
         }
 
         private string _statusString;
 
-        public string StatusString
-        {
+        public string StatusString {
             get { return _statusString; }
             set { _statusString = value; OnPropertyChanged(); }
         }
@@ -80,7 +80,7 @@ namespace CappuUpdater.ViewModels
 
                         Application.Current.Dispatcher.Invoke(() => StatusString = "Extracting update...");
 
-                        RenameOldFiles(new[]{ newestFtpItem.Name });
+                        RenameOldFiles(new[] { newestFtpItem.Name });
 
                         using (var archive = new ZipArchive(fileStream))
                             archive.ExtractToDirectory(Environment.CurrentDirectory, true);
@@ -138,7 +138,7 @@ namespace CappuUpdater.ViewModels
             return true;
         }
 
-        private Version GetVersionFromZipName(string zipName)
+        private static Version GetVersionFromZipName(string zipName)
         {
             var versionString = zipName.Remove(zipName.LastIndexOf(".", StringComparison.Ordinal));
             return Version.TryParse(versionString, out Version version) ? version : Version.Parse("1.0");

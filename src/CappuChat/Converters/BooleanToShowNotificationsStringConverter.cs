@@ -9,7 +9,7 @@ namespace CappuChat.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool boolean)
-                return boolean ? Chat.Texts.Texts.PushNotificationsOn : Chat.Texts.Texts.PushNotificationsOff;
+                return boolean ? CappuChat.Properties.Strings.PushNotificationsOn : CappuChat.Properties.Strings.PushNotificationsOff;
             return string.Empty;
         }
 

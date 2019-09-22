@@ -1,25 +1,18 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Server.DataAccess;
 
 namespace Chat.Server.Controller
 {
-    public class UserController
+    public static class UserController
     {
-        private readonly UserRepository _userRepository;
-
-        public UserController()
+        public static SimpleUser CreateSimpleUser(string username, string password)
         {
-            _userRepository = new UserRepository();
+            return UserRepository.CreateSimpleUser(username, password);
         }
 
-        public SimpleUser CreateSimpleUser(string username, string password)
+        public static SimpleUser Login(string username, string password)
         {
-            return _userRepository.CreateSimpleUser(username, password);
-        }
-
-        public SimpleUser Login(string username, string password)
-        {
-            return _userRepository.Login(username, password);
+            return UserRepository.Login(username, password);
         }
     }
 }

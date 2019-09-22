@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using CappuChat;
+﻿using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Chat.Client.SignalHelpers
 {
@@ -24,9 +24,7 @@ namespace Chat.Client.SignalHelpers
 
         public LoginSignalHelper(IHubProxy loginHubProxy)
         {
-            if (loginHubProxy == null)
-                throw new ArgumentNullException(nameof(loginHubProxy), "Cannot create ChatSignalHelper. Given loginHubProxy is null.");
-            _loginHubProxy = loginHubProxy;
+            _loginHubProxy = loginHubProxy ?? throw new ArgumentNullException(nameof(loginHubProxy));
 
             RegisterHubProxyEvents();
         }
@@ -55,11 +53,8 @@ namespace Chat.Client.SignalHelpers
 
         public async Task<SimpleUser> Login(string username, string password)
         {
-            var task = _loginHubProxy.Invoke<SimpleLoginResponse>("Login", username, password);
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null task from server.");
+            var serverResponse = await _loginHubProxy.Invoke<SimpleLoginResponse>("Login", username, password).ConfigureAwait(false);
 
-            SimpleLoginResponse serverResponse = await task;
             if (!serverResponse.Success)
                 throw new LoginFailedException(serverResponse.ErrorMessage);
 
@@ -70,7 +65,7 @@ namespace Chat.Client.SignalHelpers
 
         public async Task Logout()
         {
-            await _loginHubProxy.Invoke("Logout");
+            await _loginHubProxy.Invoke("Logout").ConfigureAwait(false);
         }
     }
 }
