@@ -1,11 +1,10 @@
-﻿using CappuChat.Configuration;
+using CappuChat.Configuration;
 using MahApps.Metro;
 using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -26,10 +25,10 @@ namespace Chat.Client.Windows
         private readonly string _actualPort;
 
         public static readonly DependencyProperty ColorsProperty = DependencyProperty.Register(
-            "Colors", typeof(List<KeyValuePair<string, Color>>),typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
+            "Colors", typeof(List<KeyValuePair<string, Color>>), typeof(SettingsWindow), new PropertyMetadata(default(List<KeyValuePair<string, Color>>)));
 
-        public List<KeyValuePair<string, Color>> Colors
-        {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Setter required at runtime")]
+        public List<KeyValuePair<string, Color>> Colors {
             get { return (List<KeyValuePair<string, Color>>)GetValue(ColorsProperty); }
             set { SetValue(ColorsProperty, value); }
         }
@@ -60,7 +59,6 @@ namespace Chat.Client.Windows
             TxtBoxPort.Text = serverConfigurationFile.Port;
             FtpUserTextBox.Text = serverConfigurationFile.FtpUser;
             FtpPasswordTextBox.Password = serverConfigurationFile.FtpPassword;
-            ChatVersionTextBox.Text = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
             _actualHost = serverConfigurationFile.Host;
             _actualPort = serverConfigurationFile.Port;
@@ -103,7 +101,7 @@ namespace Chat.Client.Windows
 
         private async void ShowRestartMessage()
         {
-            await this.ShowMessageAsync(Texts.Texts.RestartRequired, Texts.Texts.RestartRequiredContent);
+            await this.ShowMessageAsync(CappuChat.Properties.Strings.RestartRequired, CappuChat.Properties.Strings.RestartRequiredContent).ConfigureAwait(true);
             DialogResult = true;
             Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();

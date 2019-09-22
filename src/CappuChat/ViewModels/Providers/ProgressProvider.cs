@@ -1,14 +1,16 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+//TODO: Annihilate this...
+#pragma warning disable
 namespace Chat.Client.ViewModels.Providers
 {
     public class ProgressProvider : INotifyPropertyChanged
     {
         private IProgressScope _progressScope;
-        public IProgressScope ProgressScope
-        {
+
+        public IProgressScope ProgressScope {
             get { return _progressScope; }
             set { _progressScope = value; OnPropertyChanged(); }
         }
@@ -29,8 +31,8 @@ namespace Chat.Client.ViewModels.Providers
     public class ProgressScope : IProgressScope, INotifyPropertyChanged
     {
         private bool _inProgress;
-        public bool InProgress
-        {
+
+        public bool InProgress {
             get { return _inProgress; }
             set { _inProgress = value; OnPropertyChanged(); }
         }

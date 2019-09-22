@@ -6,7 +6,7 @@
                                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                                       xmlns:presenters="clr-namespace:Chat.Client.Presenters"
                                       xmlns:views="clr-namespace:Chat.Client.Views"
-                                      xmlns:texts="clr-namespace:Chat.Texts"
+                                      xmlns:props="clr-namespace:CappuChat.Properties"
                                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                                       xmlns:converters="clr-namespace:CappuChat.Converters"
                                       mc:Ignorable="d" 
@@ -43,18 +43,18 @@
     </mah:MetroAnimatedSingleRowTabControl.Resources>
 
     <mah:MetroTabItem Style="{StaticResource MetroTabItemStyle}"
-                      Header="{x:Static texts:Texts.CappuCallOverview}">
+                      Header="{x:Static props:Strings.CappuCallOverview}">
         <mah:TransitioningContentControl Transition="Up">
             <mah:TransitioningContentControl.Content>
                 <views:CappuVoteResultView DataContext="{Binding CappuVotePresenter}"/>
             </mah:TransitioningContentControl.Content>
         </mah:TransitioningContentControl>
     </mah:MetroTabItem>
-    
+
     <mah:MetroTabItem Style="{StaticResource NewMessageMetroTabItemStyle}">
         <TabItem.Header>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{x:Static texts:Texts.Chats}"
+                <TextBlock Text="{x:Static props:Strings.Chats}"
                            Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:ContentControlEx}}, Path=(TextElement.Foreground)}"
                            FontSize="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mah:ContentControlEx}}, Path=(TextElement.FontSize)}"
                            HorizontalAlignment="Left"

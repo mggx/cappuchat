@@ -1,11 +1,11 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.DTOs;
 
 namespace Chat.Server.Hubs
 {
     public class VoteHub : BaseHub
     {
-        public static SimpleCappuVote ActiveCappuVote;
+        public static SimpleCappuVote ActiveCappuVote { get; private set; }
 
         public SimpleCreateVoteResponse CreateCappuVote()
         {
@@ -21,7 +21,7 @@ namespace Chat.Server.Hubs
             else
             {
                 response.Success = false;
-                response.ErrorMessage = Texts.Texts.CreatingVoteFailed(Texts.Texts.VoteAlreadyCreated);
+                response.ErrorMessage = "The requested vote was already created.";
             }
 
             return response;
@@ -34,23 +34,25 @@ namespace Chat.Server.Hubs
             if (ActiveCappuVote == null)
             {
                 response.Success = false;
-                response.ErrorMessage = Texts.Texts.NoActiveVote;
+                response.ErrorMessage = "No active vote was found";
                 return response;
             }
 
             string username = GetUsernameByConnectionId(Context.ConnectionId);
             if (ActiveCappuVote.Vote(username, answer))
+            {
                 InvokeOnVoteChanged();
+            }
             else
             {
                 response.Success = false;
-                response.ErrorMessage = Texts.Texts.UserVoteFailed(Texts.Texts.UserAlreadyVoted);
+                response.ErrorMessage = "Vote failed because the user already voted.";
             }
 
             return response;
         }
 
-        public SimpleGetActiveVoteResponse GetActiveVote()
+        public static SimpleGetActiveVoteResponse GetActiveVote()
         {
             return new SimpleGetActiveVoteResponse(ActiveCappuVote, true);
         }

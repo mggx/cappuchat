@@ -11,5 +11,9 @@ namespace Chat.Client.SignalHelpers.Contracts.Exceptions
         public RequestFailedException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
+        public RequestFailedException() : base()
+        {
+        }
     }
 }

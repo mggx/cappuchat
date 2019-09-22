@@ -13,16 +13,7 @@ namespace CappuChat.DTOs
 
         public GetOnlineUsersResponse(IEnumerable<SimpleUser> onlineUserList, bool success) : base(success)
         {
-            if (onlineUserList == null)
-                throw new ArgumentNullException(nameof(onlineUserList), "Cannot create GetOnlineUsersResponse. onlineUserList is null.");
-            OnlineUserList = onlineUserList;
-        }
-
-        public GetOnlineUsersResponse(IEnumerable<SimpleUser> onlineUserList, bool success, string errorMessage) : base(success, errorMessage)
-        {
-            if (onlineUserList == null)
-                throw new ArgumentNullException(nameof(onlineUserList), "Cannot create GetOnlineUsersResponse. onlineUserList is null.");
-            OnlineUserList = onlineUserList;
+            OnlineUserList = onlineUserList ?? throw new ArgumentNullException(nameof(onlineUserList));
         }
     }
 }

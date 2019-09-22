@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:Chat.Client.ViewModels"
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance viewModels:CappuVoteViewModel}">
@@ -13,7 +13,7 @@
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Button x:Name="CreateVoteButton"
-                    Content="{x:Static texts:Texts.CreateVote}" 
+                    Content="{x:Static props:Strings.CreateVote}" 
                     Width="120" 
                     Height="25" 
                     HorizontalAlignment="Center" 
@@ -28,7 +28,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 
                     Margin="5" 
-                    Content="{x:Static texts:Texts.GoCall}"
+                    Content="{x:Static props:Strings.GoCall}"
                     Command="{Binding GoCommand}"
                     Visibility="{Binding ElementName=GoCallButton, Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </StackPanel>

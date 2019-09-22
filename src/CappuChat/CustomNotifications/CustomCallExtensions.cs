@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using Chat.Client.CustomNotifications.Notifications;
+﻿using Chat.Client.CustomNotifications.Notifications;
+using System.Windows.Input;
 using ToastNotifications;
 
 namespace Chat.Client.CustomNotifications.Extensions

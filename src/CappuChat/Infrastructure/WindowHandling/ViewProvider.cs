@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Interop;
+﻿using CappuChat;
 using CappuChat.Configuration;
 using Chat.Client.CustomNotifications.Extensions;
 using Chat.Client.Dialogs;
@@ -13,6 +7,12 @@ using Chat.Client.Presenters;
 using Chat.Client.ViewModels.Dialogs;
 using Chat.Models;
 using MahApps.Metro.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interop;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Messages;
@@ -20,12 +20,10 @@ using ToastNotifications.Position;
 
 namespace Chat.Client
 {
-    public class ViewProvider : IViewProvider
+    public sealed class ViewProvider : IViewProvider, IDisposable
     {
-        [DllImport("user32")] public static extern int FlashWindow(IntPtr hwnd, bool bInvert);
-
         private readonly Dictionary<IDialog, Window> _windowCache = new Dictionary<IDialog, Window>();
-        private Notifier _notifier;
+        private readonly Notifier _notifier;
 
         public ViewProvider()
         {
@@ -33,7 +31,7 @@ namespace Chat.Client
             {
                 configuration.PositionProvider = new PrimaryScreenPositionProvider(
                     corner: Corner.BottomRight,
-                    offsetX: 10,  
+                    offsetX: 10,
                     offsetY: 10);
                 configuration.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
                     notificationLifetime: TimeSpan.FromSeconds(3),
@@ -46,7 +44,7 @@ namespace Chat.Client
         public void Show(IDialog dialog)
         {
             if (dialog == null)
-                throw new ArgumentNullException(nameof(dialog), "Cannot show. Given dialog is null.");
+                throw new ArgumentNullException(nameof(dialog));
 
             if (_windowCache.ContainsKey(dialog))
             {
@@ -63,7 +61,7 @@ namespace Chat.Client
         public void ShowDialog(IModalDialog modalDialog)
         {
             if (modalDialog == null)
-                throw new ArgumentNullException(nameof(modalDialog), "Cannot showDialog. Given modalDialog is null.");
+                throw new ArgumentNullException(nameof(modalDialog));
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -84,10 +82,9 @@ namespace Chat.Client
                 case CappuMainPresenter _:
                     window = new MainWindow();
                     break;
+                default:
+                    throw new InvalidOperationException($"Couldnt find window for dialog {dialog}");
             }
-
-            if (window == null)
-                throw new InvalidOperationException($"Couldnt find window for dialog {dialog}");
 
             _windowCache.Add(dialog, window);
             window.Closed += WindowOnClosed;
@@ -99,7 +96,9 @@ namespace Chat.Client
                 window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             }
             else
+            {
                 window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
 
             window.DataContext = dialog;
 
@@ -108,14 +107,12 @@ namespace Chat.Client
 
         private void WindowOnClosed(object sender, EventArgs e)
         {
-            Window window = sender as Window;
-            if (window == null)
+            if (!(sender is Window window))
                 return;
 
             window.Closed -= WindowOnClosed;
 
-            IDialog windowDataContext = window.DataContext as IDialog;
-            if (windowDataContext == null)
+            if (!(window.DataContext is IDialog windowDataContext))
                 return;
 
             _windowCache.Remove(windowDataContext);
@@ -214,9 +211,9 @@ namespace Chat.Client
             if (window == null)
                 return;
 
-            WindowInteropHelper wih = new WindowInteropHelper(window); 
+            WindowInteropHelper wih = new WindowInteropHelper(window);
             if (!window.IsFocused)
-                FlashWindow(wih.Handle, true);
+                _ = NativeMethods.FlashWindow(wih.Handle, true);
         }
 
         public bool IsMainWindowFocused()
@@ -226,5 +223,27 @@ namespace Chat.Client
                 return false;
             return window.IsFocused;
         }
+
+        #region IDisposable Support
+        private bool alreadyDisposed = false; // To detect redundant calls
+
+        public void Dispose(bool disposing)
+        {
+            if (!alreadyDisposed)
+            {
+                if (disposing)
+                {
+                    _notifier.Dispose();
+                }
+
+                alreadyDisposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

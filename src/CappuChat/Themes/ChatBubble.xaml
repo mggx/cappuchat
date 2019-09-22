@@ -238,7 +238,7 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            
+
                                             <TextBox Grid.Column="0"
                                                      Text="{TemplateBinding Text}"
                                                      FontFamily="Segoe Ui"

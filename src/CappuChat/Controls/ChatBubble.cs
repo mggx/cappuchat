@@ -1,13 +1,9 @@
-﻿using Chat.Client.Framework;
+﻿using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using MahApps.Metro.Controls;
 
 namespace ChatComponents
 {
@@ -31,33 +27,28 @@ namespace ChatComponents
         public static readonly DependencyProperty ImageUploadingProperty = DependencyProperty.Register(
             "ImageUploading", typeof(bool), typeof(ChatBubble), new PropertyMetadata(default(bool)));
 
-        public bool ImageUploading
-        {
-            get { return (bool) GetValue(ImageUploadingProperty); }
+        public bool ImageUploading {
+            get { return (bool)GetValue(ImageUploadingProperty); }
             set { SetValue(ImageUploadingProperty, value); }
         }
 
-        public MemoryStream ImageSource
-        {
-            get { return (MemoryStream) GetValue(ImageSourceProperty); }
+        public MemoryStream ImageSource {
+            get { return (MemoryStream)GetValue(ImageSourceProperty); }
             set { SetValue(ImageSourceProperty, value); }
         }
 
-        public DateTime Text
-        {
-            get { return (DateTime) GetValue(TextProperty); }
+        public DateTime Text {
+            get { return (DateTime)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
-        
-        public DateTime Time
-        {
-            get { return (DateTime) GetValue(TimeProperty); }
+
+        public DateTime Time {
+            get { return (DateTime)GetValue(TimeProperty); }
             set { SetValue(TimeProperty, value); }
         }
 
-        public string Sender
-        {
-            get { return (string) GetValue(SenderProperty); }
+        public string Sender {
+            get { return (string)GetValue(SenderProperty); }
             set { SetValue(SenderProperty, value); }
         }
 

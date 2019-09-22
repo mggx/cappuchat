@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -6,7 +6,7 @@ using WpfAnimatedGif;
 
 namespace CappuChat.Converters
 {
-    public static class StreamExtensions
+    static class StreamExtensions
     {
         public static BitmapImage ToBitmapImage(this MemoryStream memoryStream, FrameworkElement element = null)
         {

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using CappuChat;
+﻿using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels;
 using Chat.Client.ViewModels.Controllers;
 using Chat.Client.ViewModels.Delegates;
-using Chat.Client.ViewModels.Events;
 using Chat.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Chat.Client.Presenters
 {
@@ -21,32 +20,25 @@ namespace Chat.Client.Presenters
         private SimpleUser User { get; set; }
 
         private CappuChatViewModel _currentChatViewModel;
-        public CappuChatViewModel CurrentChatViewModel
-        {
+        public CappuChatViewModel CurrentChatViewModel {
             get { return _currentChatViewModel; }
             set { _currentChatViewModel = value; OnPropertyChanged(); _currentChatViewModel?.ConversationHelper.ResetNewMessages(); }
         }
 
         private int _newMessages;
-        public int NewMessages
-        {
+        public int NewMessages {
             get { return _newMessages; }
             set { _newMessages = value; OnPropertyChanged(); }
         }
 
         public event AddNewMessageHandler AddNewMessage;
 
-        public ObservableCollection<CappuChatViewModel> Conversations { get; set; } = new ObservableCollection<CappuChatViewModel>();
+        public ObservableCollection<CappuChatViewModel> Conversations { get; } = new ObservableCollection<CappuChatViewModel>();
 
         public CappuChatPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuChatPresenter. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
-
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuChatPresenter. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             Initialize();
         }
@@ -105,7 +97,7 @@ namespace Chat.Client.Presenters
             return CurrentChatViewModel == null || conversation != CurrentChatViewModel.Conversation || AddNewMessage?.Invoke(this, conversation) == true;
         }
 
-        private void ChatViewModelOnNewMessagesChanged(object sender, NewMessagesChangedEventArgs e)
+        private void ChatViewModelOnNewMessagesChanged(object sender, EventArgs e)
         {
             UpdateNewMessages();
         }

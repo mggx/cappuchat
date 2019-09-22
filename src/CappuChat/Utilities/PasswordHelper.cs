@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace Chat.Client.Helper
 {
-    public class PasswordHelper
+    static class PasswordHelper
     {
         public static readonly DependencyProperty PasswordProperty =
         DependencyProperty.RegisterAttached("Password",
@@ -55,7 +55,7 @@ namespace Chat.Client.Helper
             PasswordBox passwordBox = sender as PasswordBox;
             passwordBox.PasswordChanged -= PasswordChanged;
 
-            if (!(bool)GetIsUpdating(passwordBox))
+            if (!GetIsUpdating(passwordBox))
             {
                 passwordBox.Password = (string)e.NewValue;
             }

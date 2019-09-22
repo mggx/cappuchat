@@ -6,6 +6,8 @@
     <Authors>Maik Grigoleit, Prakti</Authors>
     <Version>1.1</Version>
     <Product>CappuChat</Product>
+    <!-- Determines that english is the fallback/default language specified in any resource file -->
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Label="ProjectSystem Configurations">

@@ -7,15 +7,13 @@ namespace Chat.Client.Helper
     public class WindowKeyDownHelper
     {
         private readonly FrameworkElement _frameworkElement;
-        private Window _window;
+        private readonly Window _window;
 
         public event EventHandler<KeyEventArgs> KeyDown;
 
         public WindowKeyDownHelper(FrameworkElement frameworkElement)
         {
-            if (frameworkElement == null)
-                throw new ArgumentNullException(nameof(frameworkElement), "Cannot create WindowKeyDownHelper. Given frameworkElement is null.");
-            _frameworkElement = frameworkElement;
+            _frameworkElement = frameworkElement ?? throw new ArgumentNullException(nameof(frameworkElement));
             _window = GetWindow();
         }
 

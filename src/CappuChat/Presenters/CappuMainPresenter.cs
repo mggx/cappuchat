@@ -1,12 +1,12 @@
-﻿using Chat.Client.Framework;
+﻿using CappuChat;
+using CappuChat.Configuration;
+using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.Viewmodels.Events;
 using Chat.Client.ViewModels.Dialogs;
+using Chat.Models;
 using System;
 using System.Windows.Input;
-using Chat.Models;
-using CappuChat.Configuration;
-using CappuChat;
 
 namespace Chat.Client.Presenters
 {
@@ -22,15 +22,13 @@ namespace Chat.Client.Presenters
             new ConfigurationController<ClientConfiguration>();
 
         private bool _showNotifications;
-        public bool ShowNotifications
-        {
+        public bool ShowNotifications {
             get => _showNotifications;
             set { _showNotifications = value; OnPropertyChanged(); }
         }
 
         private bool _safeMode;
-        public bool SafeMode
-        {
+        public bool SafeMode {
             get { return _safeMode; }
             set { _safeMode = value; OnPropertyChanged(); }
         }
@@ -40,11 +38,9 @@ namespace Chat.Client.Presenters
         public CappuVotePresenter CappuVotePresenter { get; private set; }
 
         private int _selectedTabIndex;
-        public int SelectedTabIndex
-        {
+        public int SelectedTabIndex {
             get { return _selectedTabIndex; }
-            set
-            {
+            set {
                 _selectedTabIndex = value;
                 OnPropertyChanged();
 
@@ -56,8 +52,7 @@ namespace Chat.Client.Presenters
         }
 
         private ViewModelBase _currentPresenter;
-        public ViewModelBase CurrentPresenter
-        {
+        public ViewModelBase CurrentPresenter {
             get { return _currentPresenter; }
             set { _currentPresenter = value; OnPropertyChanged(); }
         }
@@ -67,14 +62,8 @@ namespace Chat.Client.Presenters
 
         public CappuMainPresenter(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
         {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException("Cannot create CappuMainPresenter. Given controllerFacade is null.");
-
-            if (viewProvider == null)
-                throw new ArgumentNullException("Cannot create CappuMainPresenter. Given viewProvider is null.");
-
-            _signalHelperFacade = signalHelperFacade;
-            _viewProvider = viewProvider;
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
 
             ChangeShowNotificationsCommand = new RelayCommand(ChangeShowNotifications);
             ChangeSaveModeCommand = new RelayCommand(ChangeSaveMode);
@@ -84,7 +73,7 @@ namespace Chat.Client.Presenters
         private void ChangeSaveMode()
         {
             SafeMode = !_safeMode;
-            _clientConfigurationController.WriteConfiguration(new ClientConfiguration { SafeMode = _safeMode } );
+            _clientConfigurationController.WriteConfiguration(new ClientConfiguration { SafeMode = _safeMode });
         }
 
         private void ChangeShowNotifications()
@@ -138,7 +127,7 @@ namespace Chat.Client.Presenters
 
         private void RegisterViewModelOnRegisterFailed(object sender, string e)
         {
-            _viewProvider.ShowMessage(Texts.Texts.RegisterFailed, e);
+            _viewProvider.ShowMessage(CappuChat.Properties.Strings.RegistrationFailed, e);
             HandleFinishedRegister(sender as IDialog);
         }
 
@@ -149,9 +138,9 @@ namespace Chat.Client.Presenters
 
         private void HandleFinishedRegister(IDialog registerViewModel)
         {
-            CappuRegisterViewModel viewModel = registerViewModel as CappuRegisterViewModel;
-            if (viewModel == null)
-                throw new ArgumentNullException(nameof(registerViewModel), "Given registerViewModel is null or not a CappuRegisterViewModel");
+            if (registerViewModel == null)
+                throw new ArgumentNullException(nameof(registerViewModel));
+            var viewModel = registerViewModel as CappuRegisterViewModel;
 
             viewModel.RegisterCompleted -= RegisterViewModelOnRegisterCompleted;
             viewModel.RegisterFailed -= RegisterViewModelOnRegisterFailed;
@@ -166,7 +155,7 @@ namespace Chat.Client.Presenters
             InitializeCappuChatPresenter();
             InitializeCappuChatPresenterEvents();
 
-            await CappuVotePresenter.Load(eventArgs.User);
+            await CappuVotePresenter.Load(eventArgs.User).ConfigureAwait(false);
             CappuChatPresenter.Load(eventArgs.User);
 
             CurrentPresenter = this;

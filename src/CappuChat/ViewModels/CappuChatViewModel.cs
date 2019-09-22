@@ -1,4 +1,5 @@
-﻿using Chat.Client.Framework;
+﻿using CappuChat;
+using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels.Controllers;
@@ -6,7 +7,7 @@ using Chat.Client.ViewModels.Helpers;
 using Chat.Models;
 using System;
 using System.Collections.Generic;
-using CappuChat;
+using System.Globalization;
 
 namespace Chat.Client.ViewModels
 {
@@ -16,20 +17,13 @@ namespace Chat.Client.ViewModels
 
         private readonly IViewProvider _viewProvider;
 
-        public ConversationHelper ConversationHelper { get; set; } 
+        public ConversationHelper ConversationHelper { get; set; }
         public SimpleConversation Conversation { get; }
 
         public CappuChatViewModel(ISignalHelperFacade signalHelperFacade, SimpleConversation conversation, IViewProvider viewProvider) : base(signalHelperFacade)
         {
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider),
-                    "Cannot create CappuGroupChatViewModel. Given viewProvider is null");
-            _viewProvider = viewProvider;
-
-            if (conversation == null)
-                throw new ArgumentNullException(nameof(conversation),
-                    "Cannot create CappuChatViewModel. Given conversation is null.");
-            Conversation = conversation;
+            _viewProvider = viewProvider ?? throw new ArgumentNullException(nameof(viewProvider));
+            Conversation = conversation ?? throw new ArgumentNullException(nameof(conversation));
 
             Initialize();
         }
@@ -70,8 +64,11 @@ namespace Chat.Client.ViewModels
             var messageToShow = message.Replace("--urgent", string.Empty);
 
             if (!_viewProvider.IsMainWindowFocused())
-                _viewProvider.ShowToastNotification($"{Texts.Texts.PrivateMessageNotification(username, messageToShow)}",
-                    NotificationType.Dark, message.Contains("--urgent"));
+                _viewProvider.ShowToastNotification(
+                    string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.PrivateMessageNotification_UserName_Message, username, messageToShow),
+                    NotificationType.Dark,
+                    message.Contains("--urgent")
+                );
 
             Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
             _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
@@ -96,6 +93,9 @@ namespace Chat.Client.ViewModels
 
         public void Load(IEnumerable<SimpleMessage> messages)
         {
+            if (messages == null)
+                throw new ArgumentNullException(nameof(messages));
+
             foreach (var message in messages)
             {
                 Load(message);

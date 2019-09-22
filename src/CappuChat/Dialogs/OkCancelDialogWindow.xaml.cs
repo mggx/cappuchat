@@ -1,11 +1,12 @@
-﻿using System.Windows;
+using MahApps.Metro.Controls;
+using System.Windows;
 
 namespace Chat.Client.Dialogs
 {
     /// <summary>
     /// Interaction logic for OkCancelDialogWindow.xaml
     /// </summary>
-    public partial class OkCancelDialogWindow
+    public partial class OkCancelDialogWindow : MetroWindow
     {
         public OkCancelDialogWindow()
         {

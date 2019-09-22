@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace CappuUpdater.ArgumentTool
 {
@@ -14,6 +14,7 @@ namespace CappuUpdater.ArgumentTool
         public string GetFtpUser => GetArgument(FtpUser, out string retrievedArgument) ? retrievedArgument : string.Empty;
         public string GetFtpPassword => GetArgument(FtpPassword, out string retrievedArgument) ? retrievedArgument : string.Empty;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "//TODO: WTF does this even mean...? Where does the assemblyPath come from?")]
         private bool GetArgument(string argumentName, out string argument)
         {
             var retrievedArgument = GetArgument(argumentName);

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:helper="clr-namespace:Chat.Client.Helper"
              xmlns:controls="clr-namespace:Chat.Client.Controls"
@@ -28,13 +28,13 @@
             Padding="5">
         <StackPanel HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-            <TextBlock Text="{x:Static texts:Texts.Register}"
+            <TextBlock Text="{x:Static props:Strings.Register}"
                        HorizontalAlignment="Center"
                        FontSize="24"
                        Foreground="{DynamicResource AccentColorBrush}"/>
             <controls:SpecialTextBox x:Name="ShortNameTextBox"
                                     Background="Transparent"
-                                    Watermark="{x:Static texts:Texts.UsernameWatermark}" 
+                                    Watermark="{x:Static props:Strings.Username_Watermark}" 
                                     FocusedBorderBrush="{DynamicResource AccentBaseColorBrush}"
                                     Text="{Binding Username, Mode=TwoWay}"
                                     Width="200"

@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using Chat.Client.Presenters;
+﻿using Chat.Client.Presenters;
+using System.Windows;
 
 namespace Chat.Client.BindingProxies
 {

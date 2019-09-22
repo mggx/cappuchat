@@ -8,9 +8,8 @@ namespace ChatComponents
         public static readonly DependencyProperty OwnMessageProperty = DependencyProperty.Register(
             "OwnMessage", typeof(bool), typeof(ChatListViewItem), new PropertyMetadata(default(bool)));
 
-        public bool OwnMessage
-        {
-            get { return (bool) GetValue(OwnMessageProperty); }
+        public bool OwnMessage {
+            get { return (bool)GetValue(OwnMessageProperty); }
             set { SetValue(OwnMessageProperty, value); }
         }
 

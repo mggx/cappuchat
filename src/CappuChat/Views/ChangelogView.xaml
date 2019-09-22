@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dialogs="clr-namespace:Chat.Client.ViewModels.Dialogs"
-             xmlns:texts="clr-namespace:Chat.Texts"
+             xmlns:props="clr-namespace:CappuChat.Properties"
              mc:Ignorable="d"
              MaxHeight="425"
              MaxWidth="300"
@@ -22,7 +22,7 @@
                        FontSize="20"
                        Foreground="{DynamicResource AccentColorBrush}"
                        FontWeight="Bold"
-                       Text="{x:Static texts:Texts.WhatsNew}"
+                       Text="{x:Static props:Strings.Changelog_Title}"
                        HorizontalAlignment="Center"/>
 
             <ScrollViewer Grid.Row="1"
@@ -34,10 +34,10 @@
                            TextWrapping="Wrap"
                            HorizontalAlignment="Center"/>
             </ScrollViewer>
-            
+
 
             <Button Grid.Row="2"
-                    Content="{x:Static texts:Texts.GotIt}"
+                    Content="{x:Static props:Strings.Changelog_GotIt}"
                     Command="{Binding OkCommand}"
                     VerticalAlignment="Bottom"
                     Margin="5"/>

@@ -5,12 +5,12 @@ namespace Chat.Client.CustomNotifications.DisplayParts
 {
     public partial class DarkCallDisplayPart
     {
-        private MessageBase<DarkCallDisplayPart> _customNotificationBase;
+        private readonly MessageBase<DarkCallDisplayPart> _customNotificationBase;
 
         public DarkCallDisplayPart(MessageBase<DarkCallDisplayPart> customNotificationBase)
         {
             _customNotificationBase = customNotificationBase;
-            DataContext = customNotificationBase; 
+            DataContext = customNotificationBase;
             InitializeComponent();
         }
 

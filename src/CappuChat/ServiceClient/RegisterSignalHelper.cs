@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using CappuChat;
+﻿using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Microsoft.AspNet.SignalR.Client;
+using System;
+using System.Threading.Tasks;
 
 namespace Chat.Client.SignalHelpers
 {
@@ -14,18 +14,12 @@ namespace Chat.Client.SignalHelpers
 
         public RegisterSignalHelper(IHubProxy hubProxy)
         {
-            if (hubProxy == null)
-                throw new ArgumentNullException(nameof(hubProxy), "Cannot create ChatSignalHelper. Given hubProxy is null.");
-            _hubProxy = hubProxy;
+            _hubProxy = hubProxy ?? throw new ArgumentNullException(nameof(hubProxy));
         }
 
         public async Task<SimpleUser> Register(string username, string password)
         {
-            Task<SimpleRegisterResponse> task = _hubProxy.Invoke<SimpleRegisterResponse>("Register", username, password);
-            if (task == null)
-                throw new NullServerResponseException("Retrieved null server response.");
-
-            SimpleRegisterResponse serverResponse = await task;
+            var serverResponse = await _hubProxy.Invoke<SimpleRegisterResponse>("Register", username, password).ConfigureAwait(false);
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
             return serverResponse.User;

@@ -10,7 +10,7 @@ namespace CappuChat
         public SimpleUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
-                throw new ArgumentNullException(nameof(username), "Cannot create SimpleUser. Given username is invalid.");
+                throw new ArgumentException(CappuChat.Properties.Strings.Error_UserNameCannotBeEmpty, nameof(username));
             Username = username;
         }
     }

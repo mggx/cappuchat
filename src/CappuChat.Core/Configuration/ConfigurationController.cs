@@ -1,7 +1,7 @@
-using System;
-using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.IO;
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace CappuChat.Configuration
@@ -57,7 +57,7 @@ namespace CappuChat.Configuration
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
                 {
-                    JObject o2 = (JObject) JToken.ReadFrom(reader);
+                    JObject o2 = (JObject)JToken.ReadFrom(reader);
                     config = o2.ToObject<T>();
                 }
             }

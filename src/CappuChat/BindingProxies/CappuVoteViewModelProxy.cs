@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using Chat.Client.ViewModels;
+﻿using Chat.Client.ViewModels;
+using System.Windows;
 
 namespace Chat.Client.BindingProxies
 {

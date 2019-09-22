@@ -44,11 +44,11 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Width="125">
-                    <TextBlock Text="{Binding ElementName=Main, Path=Header}"
+                <TextBlock Text="{Binding ElementName=Main, Path=Header}"
                                TextTrimming="WordEllipsis"
                                FontSize="20"
                                DockPanel.Dock="Top"/>
-                    <ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ElementName=Main, Path=Content}"/>
+                <ContentPresenter DockPanel.Dock="Bottom" Content="{Binding ElementName=Main, Path=Content}"/>
             </DockPanel>
         </Grid>
     </DockPanel>

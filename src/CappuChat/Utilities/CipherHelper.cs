@@ -1,7 +1,7 @@
-﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using CappuChat;
+﻿using CappuChat;
 using CappuChat.Security;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Chat.Client.SignalHelpers.Helper
 {
@@ -31,7 +31,7 @@ namespace Chat.Client.SignalHelpers.Helper
             {
                 formatter.Serialize(memoryStream, other);
                 memoryStream.Position = 0;
-                return (T) formatter.Deserialize(memoryStream);
+                return (T)formatter.Deserialize(memoryStream);
             }
         }
     }

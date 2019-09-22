@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -17,23 +17,16 @@ namespace Chat.Client.ViewModels
 
         private SimpleCappuVote _activeVote;
         private IEnumerable<SimpleUser> _onlineUsers;
-        private IViewProvider _viewProvider;
 
         public SimpleUser User => _signalHelperFacade?.LoginSignalHelper.User;
 
-        public ObservableCollection<UsersVotes> UserVotes { get; set; } = new ObservableCollection<UsersVotes>();
+        public ObservableCollection<UsersVotes> UserVotes { get; } = new ObservableCollection<UsersVotes>();
 
         public RelayCommand FinalCappuCallCommand { get; }
-        
-        public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade, IViewProvider viewProvider)
-        {
-            if (signalHelperFacade == null)
-                throw new ArgumentNullException(nameof(signalHelperFacade), "Cannot create CappuVoteResultViewModel. Given signalHelperFacade is null.");
-            _signalHelperFacade = signalHelperFacade;
 
-            if (viewProvider == null)
-                throw new ArgumentNullException(nameof(viewProvider), "Cannot create CappuVoteResultViewModel. Given viewProvider is null.");
-            _viewProvider = viewProvider;
+        public CappuVoteResultViewModel(ISignalHelperFacade signalHelperFacade)
+        {
+            _signalHelperFacade = signalHelperFacade ?? throw new ArgumentNullException(nameof(signalHelperFacade));
 
             FinalCappuCallCommand = new RelayCommand(FinalCappuCall, CanFinalCappuCall);
 
@@ -53,13 +46,13 @@ namespace Chat.Client.ViewModels
 
         private async void VoteSignalHelperOnVoteChanged(SimpleCappuVote changedVote)
         {
-            await LoadVotes();
+            await LoadVotes().ConfigureAwait(false);
             FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
         private async void LoginSignalHelperOnOnlineUsersChanged(OnlineUsersChangedEventArgs eventArgs)
         {
-            await LoadVotes(eventArgs.OnlineUsers);
+            await LoadVotes(eventArgs.OnlineUsers).ConfigureAwait(false);
             FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
@@ -70,24 +63,24 @@ namespace Chat.Client.ViewModels
 
         private async void FinalCappuCall()
         {
-            await _signalHelperFacade.VoteSignalHelper.FinalCappuCall();
+            await _signalHelperFacade.VoteSignalHelper.FinalCappuCall().ConfigureAwait(false);
         }
 
         public async Task Load()
         {
-            await LoadVotes();
+            await LoadVotes().ConfigureAwait(false);
         }
 
         private async Task LoadVotes()
         {
-            var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers();
-            await LoadVotes(onlineUsers);
+            var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(false);
+            await LoadVotes(onlineUsers).ConfigureAwait(false);
             FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
         private async Task LoadVotes(IEnumerable<SimpleUser> users)
         {
-            _activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote();
+            _activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote().ConfigureAwait(false);
 
             var onlineUsers = users as SimpleUser[] ?? users.ToArray();
             _onlineUsers = onlineUsers;
