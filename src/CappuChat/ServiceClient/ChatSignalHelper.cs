@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
@@ -20,7 +20,6 @@ namespace Chat.Client.SignalHelpers
         public event MessageReceivedHandler MessageReceivedHandler;
         public event MessageReceivedHandler PrivateMessageReceivedHandler;
 
-
         public ChatSignalHelper(IHubProxy chatHubProxy)
         {
             _chatHubProxy = chatHubProxy ?? throw new ArgumentNullException(nameof(chatHubProxy));
@@ -41,10 +40,7 @@ namespace Chat.Client.SignalHelpers
 
         private void ChatHubProxyOnPrivateMessageReceived(SimpleMessage message)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(CipherHelper.DecryptMessage(message)));
-            });
+            Application.Current.Dispatcher.Invoke(() => PrivateMessageReceivedHandler?.Invoke(new MessageReceivedEventArgs(CipherHelper.DecryptMessage(message))));
         }
 
         public async Task<IEnumerable<SimpleUser>> GetOnlineUsers()
@@ -54,7 +50,24 @@ namespace Chat.Client.SignalHelpers
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
 
-            return serverResponse.OnlineUserList;
+            return Application.Current.Dispatcher.Invoke(() => serverResponse.OnlineUserList);
+        }
+
+        public async Task<IEnumerable<SimpleMessage>> GetPendingMessages()
+        {
+            var serverResponse = await _chatHubProxy.Invoke<GetPendingMessagesResponse>("GetPendingMessages").ConfigureAwait(false);
+
+            if (!serverResponse.Success)
+                throw new RequestFailedException(serverResponse.ErrorMessage);
+
+            IList<SimpleMessage> pendingMessages = new List<SimpleMessage>();
+
+            foreach (var pendingMessage in serverResponse.PendingMessages)
+            {
+                pendingMessages.Add(CipherHelper.DecryptMessage(pendingMessage));
+            }
+
+            return Application.Current.Dispatcher.Invoke(() => pendingMessages);
         }
 
         public async Task SendMessage(SimpleMessage message)

@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -9,6 +9,7 @@ using Chat.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Chat.Client.Presenters
 {
@@ -50,17 +51,22 @@ namespace Chat.Client.Presenters
 
         private void InitializeChatSignalHelperFacadeEvents()
         {
-            _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += ChatSignalHelperOnPrivateMessageReceived;
+            _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += SignalHelperOnMessageReceived;
         }
 
-        private void ChatSignalHelperOnPrivateMessageReceived(MessageReceivedEventArgs eventArgs)
+        private void SignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
-            var username = eventArgs.ReceivedMessage.Sender.Username;
-            TryAddCappuChatViewModel(username, false, eventArgs.ReceivedMessage);
+            HandleMessageReceived(eventArgs.ReceivedMessage);
+        }
+
+        private void HandleMessageReceived(SimpleMessage receivedMessage)
+        {
+            var username = receivedMessage.Sender.Username;
+            TryAddCappuChatViewModel(username, false, receivedMessage);
             _viewProvider.FlashWindow();
         }
 
-        private bool CheckForExistingConversation(string targetUsername, out CappuChatViewModel chatViewModel)
+        private bool TryGetConversationByUsername(string targetUsername, out CappuChatViewModel chatViewModel)
         {
             chatViewModel = Conversations.FirstOrDefault(con => con.Conversation.TargetUsername.Equals(targetUsername, StringComparison.CurrentCultureIgnoreCase));
             return chatViewModel != null;
@@ -68,7 +74,7 @@ namespace Chat.Client.Presenters
 
         public void TryAddCappuChatViewModel(string username, bool setAsCurrentChatViewModel = false, params SimpleMessage[] messages)
         {
-            if (CheckForExistingConversation(username, out var chatViewModel))
+            if (TryGetConversationByUsername(username, out var chatViewModel))
             {
                 if (setAsCurrentChatViewModel)
                     CurrentChatViewModel = chatViewModel;
@@ -116,6 +122,7 @@ namespace Chat.Client.Presenters
         {
             User = user;
             LoadConversations();
+            LoadPendingMessages();
         }
 
         private void LoadConversations()
@@ -127,12 +134,27 @@ namespace Chat.Client.Presenters
             }
         }
 
+        private async Task LoadPendingMessages()
+        {
+            var pendingMessages = await _signalHelperFacade.ChatSignalHelper.GetPendingMessages().ConfigureAwait(true);
+            if (pendingMessages.Any())
+            {
+                foreach (var pendingMessage in pendingMessages)
+                {
+                    HandleMessageReceived(pendingMessage);
+
+                    if (TryGetConversationByUsername(pendingMessage.Sender.Username, out var chatViewModel))
+                        chatViewModel.HandleReceivedMessage(pendingMessage, true);
+                }
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 _signalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -=
-                    ChatSignalHelperOnPrivateMessageReceived;
+                    SignalHelperOnMessageReceived;
 
                 foreach (var viewModel in Conversations)
                 {

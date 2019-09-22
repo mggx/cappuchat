@@ -90,7 +90,7 @@ namespace Chat.Client.ViewModels
             {
                 using (ProgressProvider.StartProgress())
                 {
-                    user = await _signalHelperFacade.LoginSignalHelper.Login(Username, Password).ConfigureAwait(false);
+                    user = await _signalHelperFacade.LoginSignalHelper.Login(Username, Password).ConfigureAwait(true);
                 }
             }
             catch (LoginFailedException e)

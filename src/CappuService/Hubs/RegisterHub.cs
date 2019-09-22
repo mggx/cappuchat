@@ -6,7 +6,7 @@ namespace Chat.Server.Hubs
 {
     public class RegisterHub : BaseHub
     {
-        public static SimpleRegisterResponse Register(string username, string password)
+        public SimpleRegisterResponse Register(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username))
                 throw new ArgumentException(CappuService.Properties.Strings.EmptyStringNotAllowed, nameof(username));

@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.SignalHelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
@@ -86,7 +86,8 @@ namespace Chat.Client.SignalHelpers
             var serverResponse = await _voteHubProxy.Invoke<SimpleGetVoteScopeMessagesResponse>("GetVoteScopeMessages").ConfigureAwait(false);
             if (!serverResponse.Success)
                 throw new RequestFailedException(serverResponse.ErrorMessage);
-            return serverResponse.VoteScopeMessages;
+
+            return Application.Current.Dispatcher.Invoke(() => serverResponse.VoteScopeMessages);
         }
     }
 }

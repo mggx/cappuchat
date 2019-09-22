@@ -30,7 +30,7 @@ namespace Chat.Server.Hubs
 
             Add(response.User.Username);
 
-            Clients.All.OnOnlineUsersChanged(GetOnlineUsers());
+            Clients.All.OnOnlineUsersChanged(GetOnlineUserList());
 
             return response;
         }
@@ -59,7 +59,7 @@ namespace Chat.Server.Hubs
                 }
             }
 
-            Clients.All.OnOnlineUsersChanged(GetOnlineUsers());
+            Clients.All.OnOnlineUsersChanged(GetOnlineUserList());
 
             Console.WriteLine($"User with userId {userId} removed from usernames. ConnectionId: {Context.ConnectionId}");
         }

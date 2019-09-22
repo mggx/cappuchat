@@ -14,5 +14,10 @@ namespace Chat.Server.Controller
         {
             return UserRepository.Login(username, password);
         }
+
+        public static SimpleUser GetUser(string username)
+        {
+            return UserRepository.GetUserByUsername(username);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -51,27 +51,33 @@ namespace Chat.Client.ViewModels
 
         private void InitializeSignalHelperFacadeEvents()
         {
-            SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += ChatSignalHelperOnMessageReceived;
+            SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler += SignalHelperOnMessageReceived;
         }
 
-        protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
+        protected override void SignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
-            if (!eventArgs.ReceivedMessage.Sender.Username.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
+            HandleReceivedMessage(eventArgs.ReceivedMessage);
+        }
+
+        public void HandleReceivedMessage(SimpleMessage receivedMessage, bool pendingMessage = false)
+        {
+            var sender = receivedMessage.Sender.Username;
+
+            if (!sender.Equals(Conversation.TargetUsername, StringComparison.CurrentCultureIgnoreCase))
                 return;
 
-            var username = eventArgs.ReceivedMessage.Sender.Username;
-            var message = eventArgs.ReceivedMessage.Message;
+            var message = receivedMessage.Message;
             var messageToShow = message.Replace("--urgent", string.Empty);
 
-            if (!_viewProvider.IsMainWindowFocused())
+            if (!_viewProvider.IsMainWindowFocused() && !pendingMessage)
                 _viewProvider.ShowToastNotification(
-                    string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.PrivateMessageNotification_UserName_Message, username, messageToShow),
+                    string.Format(CultureInfo.CurrentCulture, CappuChat.Properties.Strings.PrivateMessageNotification_UserName_Message, sender, messageToShow),
                     NotificationType.Dark,
                     message.Contains("--urgent")
                 );
 
-            Messages.Add(new OwnSimpleMessage(eventArgs.ReceivedMessage));
-            _cappuMessageController.StoreMessage(eventArgs.ReceivedMessage);
+            Messages.Add(new OwnSimpleMessage(receivedMessage));
+            _cappuMessageController.StoreMessage(receivedMessage);
         }
 
         protected override void SendMessage(string message)
@@ -106,7 +112,7 @@ namespace Chat.Client.ViewModels
         {
             if (disposing)
             {
-                SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
+                SignalHelperFacade.ChatSignalHelper.PrivateMessageReceivedHandler -= SignalHelperOnMessageReceived;
                 ConversationHelper.Dispose();
             }
 

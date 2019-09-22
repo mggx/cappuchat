@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.DTOs;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
