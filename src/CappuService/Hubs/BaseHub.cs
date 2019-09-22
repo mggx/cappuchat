@@ -37,7 +37,7 @@ namespace Chat.Server.Hubs
             return UsernameConnectionIdCache.TryGetValue(NormalizeUsernameForCache(username), out id);
         }
 
-        private static string NormalizeUsernameForCache(string username)
+        protected static string NormalizeUsernameForCache(string username)
         {
             return username.ToUpperInvariant();
         }
@@ -63,7 +63,7 @@ namespace Chat.Server.Hubs
             return string.Empty;
         }
 
-        public static IList<SimpleUser> GetOnlineUsers()
+        protected static IList<SimpleUser> GetOnlineUserList()
         {
             return OnlineUsers;
         }

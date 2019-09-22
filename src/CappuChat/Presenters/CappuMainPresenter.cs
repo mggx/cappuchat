@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.Configuration;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
@@ -155,7 +155,7 @@ namespace Chat.Client.Presenters
             InitializeCappuChatPresenter();
             InitializeCappuChatPresenterEvents();
 
-            await CappuVotePresenter.Load(eventArgs.User).ConfigureAwait(false);
+            await CappuVotePresenter.Load(eventArgs.User).ConfigureAwait(true);
             CappuChatPresenter.Load(eventArgs.User);
 
             CurrentPresenter = this;

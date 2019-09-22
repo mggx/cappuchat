@@ -117,14 +117,116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
   <data name="AppSettingsWindowTitle" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="CappuCalled" xml:space="preserve">
+    <value>Cappu Aufruf - JETZT ANTWORTEN</value>
+  </data>
+  <data name="CappuCallOverview" xml:space="preserve">
+    <value>Cappu Abstimmung - Überblick</value>
+  </data>
+  <data name="Changelog_GotIt" xml:space="preserve">
+    <value>Machen wir!</value>
+  </data>
+  <data name="Changelog_Title" xml:space="preserve">
+    <value>Was ist neu?</value>
+  </data>
+  <data name="ChatInput_Watermark" xml:space="preserve">
+    <value>Gebe eine Nachricht ein...</value>
+  </data>
+  <data name="Chats" xml:space="preserve">
+    <value>Chats</value>
+  </data>
+  <data name="ClickToReconnect" xml:space="preserve">
+    <value>Klicken um neu zu verbinden</value>
+  </data>
+  <data name="ConnectedToServer" xml:space="preserve">
+    <value>Verbindung hergestellt</value>
+  </data>
+  <data name="CreateVote" xml:space="preserve">
+    <value>Cappu Abstimmung</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="GoCall" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="GoGoCall" xml:space="preserve">
+    <value>GOGOGOGOGOGOGOGOGO</value>
+  </data>
+  <data name="LoggedOut" xml:space="preserve">
+    <value>Ausgeloggt</value>
+  </data>
+  <data name="LoggedOut_Reason" xml:space="preserve">
+    <value>Du wurdest ausgeloggt. Grund{0}</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginFailed" xml:space="preserve">
+    <value>Login fehlgeschlagen</value>
+  </data>
+  <data name="LoginFailed_Reason" xml:space="preserve">
+    <value>Login fehlgeschlagen. Grund: {0}</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Ausloggen</value>
+  </data>
+  <data name="NoChatSelected" xml:space="preserve">
+    <value>Kein Chat ausgewählt</value>
+  </data>
+  <data name="NotConnectedToServer" xml:space="preserve">
+    <value>Verbindung nicht hergestellt</value>
+  </data>
+  <data name="NotVoted" xml:space="preserve">
+    <value>NICHT ABGESTIMMT</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Password_Watermark" xml:space="preserve">
+    <value>Dein Passwort?...</value>
+  </data>
+  <data name="PrivateMessageNotification_UserName_Message" xml:space="preserve">
+    <value>"(DM) {0}: {1}"</value>
+  </data>
+  <data name="PushNotificationsOff" xml:space="preserve">
+    <value>Benachrichtigungen aus</value>
+  </data>
+  <data name="PushNotificationsOn" xml:space="preserve">
+    <value>Benachrichtigungen an</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Registrieren</value>
+  </data>
+  <data name="RegistrationFailed" xml:space="preserve">
+    <value>Registrieren fehlgeschlagen</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>Neustart benötigt</value>
+  </data>
+  <data name="RestartRequiredContent" xml:space="preserve">
+    <value>Aufgrund der Änderungen muss der Client neugestartet werden</value>
+  </data>
+  <data name="RestartRequiredServerConnection" xml:space="preserve">
+    <value>Die Verbindung zum Server wurde unterbrochen. Starte neu...</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
+  </data>
+  <data name="ServerPort_Watermark" xml:space="preserve">
+    <value>Server Port...</value>
+  </data>
+  <data name="ServerSettings" xml:space="preserve">
+    <value>Server Einstellungen</value>
+  </data>
+  <data name="ServerUrl_Watermark" xml:space="preserve">
+    <value>Server Url...</value>
   </data>
   <data name="Settings_FTP_Password" xml:space="preserve">
     <value>Passwort</value>
@@ -132,28 +234,31 @@
   <data name="Settings_FTP_Username" xml:space="preserve">
     <value>Benutzername</value>
   </data>
-  <data name="Chats" xml:space="preserve">
-    <value>Unterhaltungen</value>
+  <data name="Settings_Host" xml:space="preserve">
+    <value>Host</value>
   </data>
-  <data name="Error" xml:space="preserve">
-    <value>Fehler</value>
+  <data name="Settings_Port" xml:space="preserve">
+    <value>Port</value>
   </data>
-  <data name="Register" xml:space="preserve">
-    <value>Registrieren</value>
+  <data name="Settings_Theme" xml:space="preserve">
+    <value>Aussehen</value>
   </data>
-  <data name="RegistrationFailed" xml:space="preserve">
-    <value>Registrierung fehlgeschlagen</value>
+  <data name="SomethingWentWrong" xml:space="preserve">
+    <value>Etwas ist schiefgelaufen...</value>
   </data>
-  <data name="RestartRequired" xml:space="preserve">
-    <value>Ein Neustart ist notwending</value>
-  </data>
-  <data name="RestartRequiredServerConnection" xml:space="preserve">
-    <value>Die Verbindung zum Server ist abgebrochen. Starte neu...</value>
+  <data name="TitleVoteAlreadyCreated" xml:space="preserve">
+    <value>Bereits erstellt</value>
   </data>
   <data name="UserInGroupChat" xml:space="preserve">
     <value>Benutzer online:</value>
   </data>
   <data name="Username_Watermark" xml:space="preserve">
     <value>Dein Benutzername?...</value>
+  </data>
+  <data name="VoteAlreadyCreated" xml:space="preserve">
+    <value>Zu spät! Es wurde bereits eine Abstimmung erstellt...</value>
+  </data>
+  <data name="Voted" xml:space="preserve">
+    <value>Abgestimmt</value>
   </data>
 </root>

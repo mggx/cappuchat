@@ -78,6 +78,6 @@ namespace Chat.Client.ViewModels
         }
 
         protected abstract void SendMessage(string message);
-        protected abstract void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs);
+        protected abstract void SignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs);
     }
 }

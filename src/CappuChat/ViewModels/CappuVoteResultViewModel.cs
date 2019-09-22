@@ -73,14 +73,14 @@ namespace Chat.Client.ViewModels
 
         private async Task LoadVotes()
         {
-            var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(false);
+            var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(true);
             await LoadVotes(onlineUsers).ConfigureAwait(false);
             FinalCappuCallCommand.RaiseCanExecuteChanged();
         }
 
         private async Task LoadVotes(IEnumerable<SimpleUser> users)
         {
-            _activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote().ConfigureAwait(false);
+            _activeVote = await _signalHelperFacade.VoteSignalHelper.GetActiveVote().ConfigureAwait(true);
 
             var onlineUsers = users as SimpleUser[] ?? users.ToArray();
             _onlineUsers = onlineUsers;

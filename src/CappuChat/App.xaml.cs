@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -26,6 +27,8 @@ namespace CappuChat
 
         private void AppOnStartup(object sender, StartupEventArgs e)
         {
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+
             Current.DispatcherUnhandledException += ApplicationCurrentOnDispatcherUnhandledException;
             Current.Exit += ApplicationCurrentOnExit;
 

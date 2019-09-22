@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
@@ -75,7 +75,7 @@ namespace Chat.Client.ViewModels
         {
             try
             {
-                await _signalHelperFacade.VoteSignalHelper.Vote(true).ConfigureAwait(false);
+                await _signalHelperFacade.VoteSignalHelper.Vote(true).ConfigureAwait(true);
 
                 if (focus)
                     _viewProvider.BringToFront();
@@ -107,7 +107,7 @@ namespace Chat.Client.ViewModels
 
             try
             {
-                var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(false);
+                var onlineUsers = await _signalHelperFacade.ChatSignalHelper.GetOnlineUsers().ConfigureAwait(true);
                 UpdateOnlineCappuUsers(onlineUsers);
                 await CheckForActiveVote().ConfigureAwait(false);
             }

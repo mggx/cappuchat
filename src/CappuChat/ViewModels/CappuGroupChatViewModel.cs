@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
@@ -66,7 +66,7 @@ namespace Chat.Client.ViewModels
 
         private void InitializeSignalHelperFacadeEvents()
         {
-            SignalHelperFacade.ChatSignalHelper.MessageReceivedHandler += ChatSignalHelperOnMessageReceived;
+            SignalHelperFacade.ChatSignalHelper.MessageReceivedHandler += SignalHelperOnMessageReceived;
         }
 
         protected override async void SendMessage(string message)
@@ -97,12 +97,12 @@ namespace Chat.Client.ViewModels
                 Messages.Add(simpleMessage);
 
                 simpleMessage.ImageUploading = true;
-                await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage).ConfigureAwait(false);
+                await SignalHelperFacade.ChatSignalHelper.SendMessage(simpleMessage).ConfigureAwait(true);
                 simpleMessage.ImageUploading = false;
             }
         }
 
-        protected override void ChatSignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
+        protected override void SignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs)
         {
             var ownSimpleMessage = new OwnSimpleMessage(eventArgs.ReceivedMessage);
 
@@ -133,7 +133,7 @@ namespace Chat.Client.ViewModels
             if (disposing)
             {
                 _imageHelper.Dispose();
-                SignalHelperFacade.ChatSignalHelper.MessageReceivedHandler -= ChatSignalHelperOnMessageReceived;
+                SignalHelperFacade.ChatSignalHelper.MessageReceivedHandler -= SignalHelperOnMessageReceived;
             }
 
             base.Dispose(disposing);

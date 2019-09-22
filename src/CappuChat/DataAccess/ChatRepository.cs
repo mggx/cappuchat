@@ -33,7 +33,7 @@ namespace Chat.DataAccess
                 string message = (string)reader["message"];
                 string username = (string)reader["username"];
                 string dateTimeString = (string)reader["messagesentdatetime"];
-                DateTime dateTime = DateTime.Parse(dateTimeString, CultureInfo.InvariantCulture);
+                DateTime dateTime = DateTime.Parse(dateTimeString);
 
                 SimpleMessage simpleMessage = new SimpleMessage(new SimpleUser(username), new SimpleUser("testempfaengername"), message)
                 {

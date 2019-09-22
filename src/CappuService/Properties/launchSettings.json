@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CappuService": {
+      "commandName": "Project",
+      "commandLineArgs": "-debug"
+    }
+  }
+}

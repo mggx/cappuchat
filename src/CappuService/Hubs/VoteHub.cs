@@ -52,7 +52,7 @@ namespace Chat.Server.Hubs
             return response;
         }
 
-        public static SimpleGetActiveVoteResponse GetActiveVote()
+        public SimpleGetActiveVoteResponse GetActiveVote()
         {
             return new SimpleGetActiveVoteResponse(ActiveCappuVote, true);
         }
