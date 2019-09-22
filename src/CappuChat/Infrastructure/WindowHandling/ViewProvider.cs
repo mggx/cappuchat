@@ -1,4 +1,4 @@
-﻿using CappuChat;
+using CappuChat;
 using CappuChat.Configuration;
 using Chat.Client.CustomNotifications.Extensions;
 using Chat.Client.Dialogs;
@@ -157,7 +157,7 @@ namespace Chat.Client
             switch (notificationType)
             {
                 case NotificationType.Information:
-                    _notifier.ShowInformation(message);
+                    _notifier.ShowDarkMessage(message, string.Empty);
                     break;
                 case NotificationType.Success:
                     _notifier.ShowSuccess(message);
