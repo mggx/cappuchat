@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Chat.Client.UserControls
@@ -17,6 +17,9 @@ namespace Chat.Client.UserControls
         public new static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", typeof(object), typeof(UserContainer), new PropertyMetadata(default(object)));
 
+        public new static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
+            "IsActive", typeof(bool), typeof(UserContainer), new PropertyMetadata(default(bool)));
+
         public int NewMessages {
             get { return (int)GetValue(NewMessagesProperty); }
             set { SetValue(NewMessagesProperty, value); }
@@ -30,6 +33,12 @@ namespace Chat.Client.UserControls
         public new object Content {
             get { return GetValue(ContentProperty); }
             set { SetValue(ContentProperty, value); }
+        }
+
+        public bool IsActive
+        {
+            get { return (bool)GetValue(IsActiveProperty); }
+            set { SetValue(IsActiveProperty, value); }
         }
 
         public UserContainer()

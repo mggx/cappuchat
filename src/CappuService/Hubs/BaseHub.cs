@@ -23,12 +23,12 @@ namespace Chat.Server.Hubs
                 UsernameConnectionIdCache.Remove(normalizedUserName);
                 UsernameConnectionIdCache.Add(normalizedUserName, Context.ConnectionId);
                 OnlineUsers.Remove(GetSimpleUser(username));
-                OnlineUsers.Add(new SimpleUser(username));
+                OnlineUsers.Add(new SimpleUser(username) { IsActive = true });
                 return false;
             }
 
             UsernameConnectionIdCache.Add(normalizedUserName, Context.ConnectionId);
-            OnlineUsers.Add(new SimpleUser(username));
+            OnlineUsers.Add(new SimpleUser(username) { IsActive = true });
             return true;
         }
 

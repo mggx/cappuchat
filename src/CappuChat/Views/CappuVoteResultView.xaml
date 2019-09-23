@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Chat.Client.Views.CappuVoteResultView"
+<UserControl x:Class="Chat.Client.Views.CappuVoteResultView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -56,7 +56,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:UsersVotes}">
                     <userControls:UserContainer x:Name="UserContainer"
-                                                Header="{Binding Username}">
+                                                Header="{Binding Username}"
+                                                IsActive="{Binding IsActive}">
                         <userControls:UserContainer.ToolTip>
                             <TextBlock Text="{Binding Username}" />
                         </userControls:UserContainer.ToolTip>
