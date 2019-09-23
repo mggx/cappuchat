@@ -1,8 +1,9 @@
-﻿using CappuChat;
+using CappuChat;
 using Chat.Client.Framework;
 using Chat.Client.Signalhelpers.Contracts;
 using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 
@@ -41,6 +42,13 @@ namespace Chat.Client.ViewModels
             SendMessageCommand = new RelayCommand<string>(SendMessage, CanSendMessage);
             ClearMessagesCommand = new RelayCommand(ClearMessages);
             DataDroppedCommand = new RelayCommand<string>(DataDropped);
+
+            SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
+        }
+
+        private void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            ChangedStatus(e.Reason);
         }
 
         protected virtual void Initialize()
@@ -74,9 +82,11 @@ namespace Chat.Client.ViewModels
                 Messages.Clear();
             }
 
+            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             base.Dispose(disposing);
         }
 
+        protected abstract void ChangedStatus(SessionSwitchReason switchReason);
         protected abstract void SendMessage(string message);
         protected abstract void SignalHelperOnMessageReceived(MessageReceivedEventArgs eventArgs);
     }

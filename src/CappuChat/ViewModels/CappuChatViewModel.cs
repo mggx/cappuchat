@@ -5,6 +5,7 @@ using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.ViewModels.Controllers;
 using Chat.Client.ViewModels.Helpers;
 using Chat.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -89,6 +90,11 @@ namespace Chat.Client.ViewModels
             Messages.Add(simpleMessage);
             simpleMessage.IsLocalMessage = false;
             SignalHelperFacade.ChatSignalHelper.SendPrivateMessage(simpleMessage);
+        }
+
+        protected override void ChangedStatus(SessionSwitchReason switchReason)
+        {
+            SendMessage(switchReason.ToString());
         }
 
         public void Load(SimpleMessage message)

@@ -7,6 +7,7 @@ using Chat.Client.ViewModels.Extensions;
 using Chat.Client.ViewModels.Helpers;
 using Chat.Client.ViewModels.Providers;
 using Chat.Models;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Windows;
@@ -137,6 +138,11 @@ namespace Chat.Client.ViewModels
             }
 
             base.Dispose(disposing);
+        }
+
+        protected override async void ChangedStatus(SessionSwitchReason switchReason)
+        {
+            await SignalHelperFacade.UserStatusSignalHelper.SetUserStatus(switchReason).ConfigureAwait(true);
         }
     }
 }
