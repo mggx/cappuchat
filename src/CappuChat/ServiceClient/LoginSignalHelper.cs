@@ -72,7 +72,7 @@ namespace Chat.Client.SignalHelpers
 
         public async Task SwitchStatus(string username, SessionSwitchReason switchReason)
         {
-            await _loginHubProxy.Invoke("SwitchUserStatus", username).ConfigureAwait(false);
+            await _loginHubProxy.Invoke("SwitchUserStatus", username, switchReason).ConfigureAwait(false);
         }
     }
 }
