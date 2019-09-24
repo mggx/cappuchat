@@ -92,9 +92,9 @@ namespace Chat.Client.ViewModels
             SignalHelperFacade.ChatSignalHelper.SendPrivateMessage(simpleMessage);
         }
 
-        protected override void ChangedStatus(SessionSwitchReason switchReason)
+        protected override async void ChangedStatus(SessionSwitchReason switchReason)
         {
-            SendMessage(switchReason.ToString());
+            await SignalHelperFacade.LoginSignalHelper.SwitchStatus(User.Username, switchReason).ConfigureAwait(false);
         }
 
         public void Load(SimpleMessage message)

@@ -1,6 +1,5 @@
 using CappuChat;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
-using Chat.Client.SignalHelpers.Contracts.Events;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
