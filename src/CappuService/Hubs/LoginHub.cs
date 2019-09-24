@@ -87,7 +87,7 @@ namespace Chat.Server.Hubs
             if (switchReason == SessionSwitchReason.SessionLock)
                 OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = false;
             else if (switchReason == SessionSwitchReason.SessionUnlock)
-                OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = false;
+                OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = true;
 
             Clients.All.OnOnlineUsersChanged(GetOnlineUserList());
         }
