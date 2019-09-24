@@ -27,9 +27,9 @@ steps:
     displayName: 'Package CappuChat desktop client artifact'
     inputs:
       artifactName: Client
-      targetPath: "./src/CappuChat/bin/release/net451/win"
+      targetPath: "./release/CappuChat/net451/win"
   - task: PublishPipelineArtifact@0
     displayName: 'Package CappuChat service artifact'
     inputs:
       artifactName: CappuService
-      targetPath: "./src/CappuService/bin/release/net451/win"
+      targetPath: "./release/CappuService/net451/win"

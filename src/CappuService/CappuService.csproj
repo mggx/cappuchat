@@ -3,6 +3,7 @@
     <TargetFramework>net451</TargetFramework>
     <OutputType>Exe</OutputType>
     <RuntimeIdentifier>win</RuntimeIdentifier>
+    <OutputPath>..\..\release\CappuService</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.SignalR.Owin" Version="1.2.2" />
