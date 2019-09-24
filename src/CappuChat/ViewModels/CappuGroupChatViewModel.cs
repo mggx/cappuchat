@@ -142,7 +142,7 @@ namespace Chat.Client.ViewModels
 
         protected override async void ChangedStatus(SessionSwitchReason switchReason)
         {
-            await SignalHelperFacade.UserStatusSignalHelper.SetUserStatus(switchReason).ConfigureAwait(true);
+            await SignalHelperFacade.LoginSignalHelper.SwitchStatus(User.Username, switchReason).ConfigureAwait(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 using CappuChat.DTOs;
 using Chat.Server.Controller;
+using Microsoft.Win32;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -79,6 +80,16 @@ namespace Chat.Server.Hubs
             Clients.Caller.OnHeaderChanged(Context.ConnectionId);
 
             return base.OnReconnected();
+        }
+
+        public void SwitchUserStatus(string username, SessionSwitchReason switchReason)
+        {
+            if (switchReason == SessionSwitchReason.SessionLock)
+                OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = false;
+            else if (switchReason == SessionSwitchReason.SessionUnlock)
+                OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = false;
+
+            Clients.All.OnOnlineUsersChanged(GetOnlineUserList());
         }
     }
 }

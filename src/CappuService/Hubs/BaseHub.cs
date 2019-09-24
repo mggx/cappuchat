@@ -32,6 +32,14 @@ namespace Chat.Server.Hubs
             return true;
         }
 
+        protected void ChangeUserStatus(string username, bool status)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException("Cannot add user with an empty name.");
+
+            OnlineUsers.FirstOrDefault(x => x.Username.ToLower() == username.ToLower()).IsActive = status;
+        }
+
         protected static bool TryGetUserIDFromCache(string username, out string id)
         {
             return UsernameConnectionIdCache.TryGetValue(NormalizeUsernameForCache(username), out id);

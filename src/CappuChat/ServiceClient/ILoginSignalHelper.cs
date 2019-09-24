@@ -1,6 +1,7 @@
 using CappuChat;
 using Chat.Client.SignalHelpers.Contracts.Delegates;
 using Chat.Client.SignalHelpers.Contracts.Events;
+using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
 
@@ -16,5 +17,6 @@ namespace Chat.Client.Signalhelpers.Contracts
 
         Task<SimpleUser> Login(string username, string password);
         Task Logout();
+        Task SwitchStatus(string username, SessionSwitchReason switchReason);
     }
 }

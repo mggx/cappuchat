@@ -1,5 +1,4 @@
 using CappuChat.Configuration;
-using CappuChat.ServiceClient;
 using Chat.Client;
 using Chat.Client.Presenters;
 using Chat.Client.Signalhelpers.Contracts;
@@ -67,8 +66,7 @@ namespace CappuChat
                 ChatSignalHelper = new ChatSignalHelper(_hubConnectionHelper.CreateHubProxy("ChatHub")),
                 LoginSignalHelper = new LoginSignalHelper(_hubConnectionHelper.CreateHubProxy("LoginHub")),
                 RegisterSignalHelper = new RegisterSignalHelper(_hubConnectionHelper.CreateHubProxy("RegisterHub")),
-                VoteSignalHelper = new VoteSignalHelper(_hubConnectionHelper.CreateHubProxy("VoteHub")),
-                UserStatusSignalHelper = new UserStatusSignalHelper(_hubConnectionHelper.CreateHubProxy("UserStatusHub"))  
+                VoteSignalHelper = new VoteSignalHelper(_hubConnectionHelper.CreateHubProxy("VoteHub"))
             };
 
             _cappuMainPresenter = new CappuMainPresenter(signalHelperFacade, _viewProvider)
