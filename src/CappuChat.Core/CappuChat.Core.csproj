@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net451</TargetFramework>
     <RootNamespace>CappuChat</RootNamespace>
+    <OutputPath>..\..\release\CappuCore</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />

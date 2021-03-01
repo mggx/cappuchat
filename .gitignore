@@ -4,6 +4,7 @@
 # CSProj build directories
 [Bb]in/
 [Oo]bj/
+[Rr]elease/
 
 # CSProj User-specific configs
 *.csproj.user

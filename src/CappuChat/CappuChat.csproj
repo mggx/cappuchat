@@ -5,6 +5,7 @@
     <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
     <ApplicationIcon>Resources\chaticon.ico</ApplicationIcon>
     <RuntimeIdentifier>win</RuntimeIdentifier>
+    <OutputPath>..\..\release\CappuChat</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
