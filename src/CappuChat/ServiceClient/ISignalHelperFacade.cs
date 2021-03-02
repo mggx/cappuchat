@@ -1,4 +1,4 @@
-﻿using Chat.Client.SignalHelpers.Contracts;
+using Chat.Client.SignalHelpers.Contracts;
 
 namespace Chat.Client.Signalhelpers.Contracts
 {

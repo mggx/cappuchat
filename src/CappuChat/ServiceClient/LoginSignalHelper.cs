@@ -6,6 +6,7 @@ using Chat.Client.SignalHelpers.Contracts.Events;
 using Chat.Client.SignalHelpers.Contracts.Exceptions;
 using Chat.Client.SignalHelpers.Helper;
 using Microsoft.AspNet.SignalR.Client;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -67,6 +68,11 @@ namespace Chat.Client.SignalHelpers
         public async Task Logout()
         {
             await _loginHubProxy.Invoke("Logout").ConfigureAwait(false);
+        }
+
+        public async Task SwitchStatus(string username, SessionSwitchReason switchReason)
+        {
+            await _loginHubProxy.Invoke("SwitchUserStatus", username, switchReason).ConfigureAwait(false);
         }
     }
 }

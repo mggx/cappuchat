@@ -90,7 +90,7 @@ namespace Chat.Client.ViewModels
             foreach (var user in onlineUsers)
             {
                 bool voted = _activeVote?.UserAnswerCache.ContainsKey(user.Username) == true;
-                UserVotes.Add(new UsersVotes { Username = user.Username, Voted = voted });
+                UserVotes.Add(new UsersVotes { Username = user.Username, Voted = voted, IsActive = user.IsActive});
             }
 
             OnPropertyChanged(nameof(UserVotes));
