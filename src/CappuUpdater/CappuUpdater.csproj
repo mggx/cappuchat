@@ -5,7 +5,7 @@
     <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
     <ApplicationIcon>chaticon.ico</ApplicationIcon>
     <RuntimeIdentifier>win</RuntimeIdentifier>
-    <OutputPath>..\..\release\CappuUpdater</OutputPath>
+    <OutputPath>..\..\release\CappuChat</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
